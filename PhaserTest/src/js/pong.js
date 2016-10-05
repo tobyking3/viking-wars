@@ -22,6 +22,8 @@ var paddle;
 
 var cursors;
 
+var entity;
+
 function create() {
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -68,6 +70,8 @@ function create() {
     paddle.body.immovable = true;
 
     cursors = game.input.keyboard.createCursorKeys();
+
+    entity = new Entity(999);
 }
 
 function update() {
@@ -95,7 +99,7 @@ function update() {
 
     game.physics.arcade.collide(ball, paddle, ballHitPaddle, null, this);
 
-    scoreText.text = "Score: " + score;
+    scoreText.text = "Score: " + score + entity;
 }
 
 function onDragStart() {
@@ -154,3 +158,23 @@ function ballHitPaddle(_ball, _paddle) {
     }
 
 }
+
+function Entity(id) {
+    this.id = id;
+}
+
+Entity.prototype = {
+    constructor: Entity,
+
+    addComponent: function(component) {
+        //println("added component " + component);
+    },
+
+    addControl: function(control) {
+        //println("added control " + control);
+    },
+
+    toString: function() {
+        return "Entity@" + this.id;
+    }
+};
