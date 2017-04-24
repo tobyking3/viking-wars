@@ -1,5 +1,24 @@
 var game;
 
+class Rectangle {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    get area() {
+        return this.calcArea();
+    }
+
+    calcArea() {
+        return this.height * this.width;
+    }
+}
+
+const rect = new Rectangle(800, 600);
+
+console.log(rect.area);
+
 function main() {
     game = new Phaser.Game(800, 600, Phaser.AUTO, '', { create: create });
 }
