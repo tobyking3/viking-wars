@@ -4,7 +4,7 @@
 
 - General Approach
 - Content
-- Tutorials and Assessments
+- Assessments
 
 ---
 
