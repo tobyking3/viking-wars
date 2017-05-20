@@ -10,13 +10,13 @@
 
 <span style="color: #e49436">General Approach</span>
 
-1. 2hrs lectures + 1hr tutorial per week
-2. Extensive programming
-3. Interactive (you get to decide the module focus)
+- 2hrs lectures + 1hr tutorial per week
+- Extensive programming
+- Interactive (you get to decide the module focus)
 
 ---
 
-<span style="color: #e49436">Content (High-level)</span>
+<span style="color: #e49436">Content</span>
 
 - Game architectures for single / multi player
 - Game engine development
@@ -24,25 +24,73 @@
 
 ---
 
-<span style="color: #e49436">Content (Low-level)</span>
+<span style="color: #e49436">Main Loop</span>
 
-- Main Loop
-- Game World
-- Gameplay
-- Maths & Physics
-- AI
-- Graphics
-- Audio
 - Input
-- I/O
-- Networking
+- Update
+- Render
+
+---
+
+<span style="color: #e49436">Game World</span>
+
+- Entities
+- Queries
+- Simulations (no input)
+
+---
+
+<span style="color: #e49436">Gameplay</span>
+
+- Story
+- Achievements
+- Level Design
+
+---
+
+<span style="color: #e49436">Math & Physics</span>
+
+- Points & Vectors
+- Transformations
+- Collisions
+
+---
+
+<span style="color: #e49436">AI</span>
+
+- Pathfinding
+- Complex Behaviour
+- Goal Oriented Action Planning
+
+---
+
+<span style="color: #e49436">Graphics</span>
+
+- Animations
+- Particles
+- Post-processing
+
+---
+
+<span style="color: #e49436">Audio</span>
+
+- Music & Sounds
+- Sound Effects
+
+---
+
+<span style="color: #e49436">I/O & Networking</span>
+
 - Asset Management
+- Custom Data Structures & Serialization
+- Error Handling
+- Transport Layer Protocols
 
 ---
 
 <span style="color: #e49436">Technology</span>
 
-Phaser
+- Phaser - JS Game Engine
 
 ---
 
@@ -56,5 +104,5 @@ Phaser
 ### Summary
 
 - A lot of games and programming
-- Key Terminology
-- How it Works (high-level)
+- Cross-disciplinary
+- Challenging but fun
