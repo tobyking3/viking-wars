@@ -34,17 +34,9 @@
 
 <span style="color: #e49436">Game World</span>
 
-- Entities
-- Queries
-- Simulations (no input)
-
----
-
-<span style="color: #e49436">Gameplay</span>
-
-- Story
-- Achievements
+- Entities & Queries
 - Level Design
+- Simulations (no input)
 
 ---
 
@@ -53,14 +45,6 @@
 - Points & Vectors
 - Transformations
 - Collisions
-
----
-
-<span style="color: #e49436">AI</span>
-
-- Pathfinding
-- Complex Behaviour
-- Goal Oriented Action Planning
 
 ---
 
@@ -76,6 +60,14 @@
 
 - Music & Sounds
 - Sound Effects
+
+---
+
+<span style="color: #e49436">AI</span>
+
+- Pathfinding
+- Complex Behaviour
+- Goal Oriented Action Planning
 
 ---
 
