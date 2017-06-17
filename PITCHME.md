@@ -24,19 +24,11 @@
 
 ---
 
-<span style="color: #e49436">Main Loop</span>
+<span style="color: #e49436">Main Loop & Game World</span>
 
 - Input
 - Update
 - Render
-
----
-
-<span style="color: #e49436">Game World</span>
-
-- Entities & Queries
-- Level Design
-- Simulations (no input)
 
 ---
 
@@ -53,13 +45,6 @@
 - Animations
 - Particles
 - Post-processing
-
----
-
-<span style="color: #e49436">Audio</span>
-
-- Music & Sounds
-- Sound Effects
 
 ---
 
