@@ -24,15 +24,7 @@
 
 ---
 
-<span style="color: #e49436">Main Loop & Game World</span>
-
-- Input
-- Update
-- Render
-
----
-
-<span style="color: #e49436">Math & Physics</span>
+<span style="color: #e49436">Maths & Physics</span>
 
 - Points & Vectors
 - Transformations
@@ -52,13 +44,11 @@
 
 - Pathfinding
 - Complex Behaviour
-- Goal Oriented Action Planning
 
 ---
 
-<span style="color: #e49436">I/O & Networking</span>
+<span style="color: #e49436">Networking</span>
 
-- Asset Management
 - Custom Data Structures & Serialization
 - Error Handling
 - Transport Layer Protocols
