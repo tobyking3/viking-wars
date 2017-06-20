@@ -12,7 +12,6 @@
 
 - 2hrs lectures + 1hr tutorial per week
 - Extensive programming
-- Interactive (you get to decide the module focus)
 
 ---
 
@@ -32,14 +31,6 @@
 
 ---
 
-<span style="color: #e49436">Graphics</span>
-
-- Animations
-- Particles
-- Post-processing
-
----
-
 <span style="color: #e49436">AI</span>
 
 - Pathfinding
@@ -49,9 +40,9 @@
 
 <span style="color: #e49436">Networking</span>
 
-- Custom Data Structures & Serialization
+- Data Structures
 - Error Handling
-- Transport Layer Protocols
+- Architecture
 
 ---
 
