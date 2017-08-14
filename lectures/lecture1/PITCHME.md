@@ -4,7 +4,7 @@
 
 - Module Overview
 - Content
-- Assessment
+- Assessments
 
 ---
 
@@ -21,53 +21,115 @@
 
 - 2hrs lectures + 1hr tutorial per week
 - Extensive programming
+- Interactive (you get to decide the module focus)
 
 ---
 
-#### Content
+#### Game Architecture
 
-- Game architectures for single / multi player
+- Main Loop (Input, Update, Render)
+- Asset Handling
 - Game engine development
-- Software development techniques
+
+---
+
+#### Software Development
+
+- Write clean and robust code
+- Good programming practices
+- Software design & modular code
+
+---
+
+#### Tech
+
+- JavaScript
+- Phaser - JS Game Engine
+- GitHub + git
+- IDE of choice (WebStorm, Brackets, Atom, etc)
+- Gitter
+
+---
+
+#### Game World
+
+- Entities
+- Queries
+- Simulations (no input)
+
+---
+
+#### Gameplay
+
+- Story
+- Achievements
+- Level Design
 
 ---
 
 #### Maths
 
 - Points & Vectors
-- Transformations
-- Collisions
+- Transformations (Scale, Translate, Rotate)
+
+---
+
+#### Physics
+
+- Collision Detection: AABB, SAT
+- Forces: Movement, Gravity
+
+---
+
+#### Graphics
+
+- Animations (UI, Sprite Sheet)
+- Particles
+- Post-processing
 
 ---
 
 #### AI
 
-- Pathfinding
-- Complex Behaviour
+- Pathfinding: A*
+- Behaviour: Btree, GOAP, FSM
 
 ---
 
+#### Tiles
 
+- Tile based design
+- Level editor
+- Level parser
+
+---
+
+#### Save / Load
+
+- Serialization
+- Data types
+
+---
+
+#### Networking (Sem 2)
 
 - Data Structures
 - Error Handling
-- Architecture
+- Server-Client Architecture Types
+- Transport Layer Protocols
 
 ---
 
-
-- Phaser - JS Game Engine
-
----
-
+#### Assessments
 
 - Standalone single player game (40%)
 - Multiplayer network game (60%)
 
 ---
 
-### Conclusion
+#### Conclusion
 
+- Code in JS
 - A lot of games and programming
 - Cross-disciplinary
 - Challenging but fun
