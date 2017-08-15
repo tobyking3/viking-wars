@@ -25,6 +25,16 @@
 
 ---
 
+#### Level 6 (Final Year)
+
+> "Systematic understanding of key aspects"
+
+> "Accurately deploy established techniques of analysis"
+
+> "Ability to manage their own learning"
+
+---
+
 #### Game Architecture
 
 - Main Loop (Input, Update, Render)
