@@ -63,7 +63,7 @@
 #### How to Manage Time (Deadlines)
 
 - Know your deadlines (including other modules)
-- Calculate `softer` deadlines from `hard` deadlines
+- Calculate **softer** deadlines from **hard** deadlines
 
 ---
 
