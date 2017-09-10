@@ -99,13 +99,16 @@
 
 #### High-level Usage
 
-- Old school
+Old school
+
 ```java
 if (obj1.collidesWith(obj2)) {
     // do smth
 }
 ```
-- Modern
+
+Modern
+
 ```java
 addHandler(type1, type2, (obj1, obj2) -> {
     // do smth
