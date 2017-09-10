@@ -83,10 +83,34 @@
 
 ---
 
+#### Special Cases
+
+- Circle-circle collision
+- Polygon clipping
+
+---
+
 #### Applying Concepts
 
 - Demo AABB
 - Demo SAT
+
+---
+
+#### High-level Usage
+
+- Old school
+```java
+if (obj1.collidesWith(obj2)) {
+    // do smth
+}
+```
+- Modern
+```java
+addHandler(type1, type2, (obj1, obj2) -> {
+    // do smth
+})
+```
 
 ---
 
