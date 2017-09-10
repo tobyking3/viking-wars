@@ -79,8 +79,8 @@ How to write ...
 
 #### Conclusion
 
-- Follow established guidelines to avoid writing bad code
-- Can't replace experience
+- Can't replace experience (expect to put in hours), but ...
+- Can avoid writing bad code by following guides
 
 ----
 
