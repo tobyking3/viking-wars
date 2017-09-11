@@ -14,14 +14,17 @@ How to write ...
 
 - Capture goals and data
 - Flexible - requirements change
+- Modular units
 - YAGNI, KISS, DRY
 
 ---
 
 #### Classes
 
+- Short
 - Single Responsibility Principle
 - Encapsulate data
+- Abstract layers (interfaces vs implementations)
 
 ---
 
@@ -29,19 +32,26 @@ How to write ...
 
 > "FUNCTIONS SHOULD DO ONE THING. THEY SHOULD DO IT WELL. THEY SHOULD DO IT ONLY."
 
+- Short
+
 ---
 
 #### Comments / Documentation
 
 - Only if it adds value
-- Explain intent (why and NOT what)
+- Explain intent (why and **NOT** what)
 - Keep up to date, or don't keep at all
 
 ---
 
 #### Using 3rd Party Code
 
-- Isolate via own bridge / adapter
+Write new code only if
+
+- library too complex for use case
+- library doesn't cover use case fully
+
+When using a library isolate via own bridge / adapter
 
 ---
 
@@ -73,14 +83,21 @@ How to write ...
 #### Continuous Integration
 
 - Automates the process
-- Travis-CI
+- Early and frequent integrations avoid "merge/integration hell" to an extent
+- Examples: Travis, Jenkis, AppVeyor
+
+---
+
+#### Case Study (Simple Game)
+
+- Refactor existing dirty-ish codebase to be cleaner
 
 ---
 
 #### Conclusion
 
 - Can't replace experience (expect to put in hours), but ...
-- Can avoid writing bad code by following guides
+- Can avoid writing _some_ bad code by following guides
 
 ----
 
