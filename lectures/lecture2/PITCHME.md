@@ -4,7 +4,6 @@
 
 - Assignment
 - Generic Architecture of Games
-- Time Management
 
 ---
 
@@ -17,7 +16,7 @@
 #### Game Architecture (Start)
 
 - Entry point (take control from environment)
-- Sanity check your environment (harware, software)
+- Sanity check your environment (hardware, software)
 
 ---
 
@@ -52,26 +51,10 @@
 
 ---
 
-#### How to Manage Time (Tasks)
+#### Case Study (Simple Game)
 
-- Decompose one big problem into many smaller ones
-- Identify tasks need to complete each problem
-- Assign priorities (core or optional) and order
-
----
-
-#### How to Manage Time (Deadlines)
-
-- Know your deadlines (including other modules)
-- Calculate **softer** deadlines from **hard** deadlines
-
----
-
-#### How to Manage Time (Timeline)
-
-- Estimate how long each core task takes
-- Use Gantt chart (or alternative) to map core tasks to timeline
-- Consider optional tasks if possible
+- Read sample game code and identify architectural concepts
+- In pseudocode write a simple game
 
 ---
 
@@ -79,4 +62,3 @@
 
 - Assignment
 - One architecture design, infinitely many implementations
-- Managing time - always have a plan
