@@ -73,10 +73,19 @@ When using a library isolate via own bridge / adapter
 
 #### Testing
 
-- Do it!
+- Test the interface, **NOT** the implementation
+- Test the code, **NOT** the language
 - Should be small (one feature), fast and serve as a specification
-- Successive refinement (incremental, the system always works / passes tests)
 - Easier refactoring
+
+---
+
+#### Test Driven Development
+
+- Red, Green, Refactor
+- Works best when specification is clear and well-defined
+- The test is written before the code
+- Successive refinement (incremental, the system always works / passes tests)
 
 ---
 
