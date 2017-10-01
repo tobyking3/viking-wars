@@ -12,8 +12,9 @@
 
 - Background: CS, SE and Game Dev
 - Researcher in Automated Diagram Generation
-- Shipped code in C++, Java, Delphi & others
-- Maintain FXGL game engine 
+- Shipped code in C++, Java, Kotlin & others
+- Maintain FXGL game engine
+- YouTube game dev channel
 
 ---
 
@@ -143,3 +144,9 @@
 - A lot of games and programming
 - Cross-disciplinary
 - Challenging but fun
+
+---
+
+#### Tutorial
+
+- Explore games for assignment

@@ -7,6 +7,12 @@
 
 ---
 
+#### Last Week Recap
+
+- Project Management, Phaser Architecture
+
+---
+
 #### Game Dev Maths
 
 - Fundamental to the field
@@ -91,3 +97,9 @@
 
 - Maths - very important for games
 - Not complex in 2D
+
+---
+
+#### Tutorial
+
+- Apply Maths to your game / use case

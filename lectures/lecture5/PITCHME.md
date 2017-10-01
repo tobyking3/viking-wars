@@ -6,6 +6,12 @@
 
 ---
 
+#### Last Week Recap
+
+- Game Maths
+
+---
+
 #### Representing Game Objects
 
 - Objects have dimensions, e.g. width, height, depth
@@ -122,3 +128,9 @@ addHandler(type1, type2, (obj1, obj2) -> {
 - Physics, same as maths, very important for games
 - Don't have to get exactly right
 - Cheap and cheerful algorithms exist
+
+---
+
+#### Tutorial
+
+- Use collision callbacks in your game

@@ -7,6 +7,12 @@
 
 ---
 
+#### Last Week Recap
+
+- Game Architecture
+
+---
+
 #### How to Manage Time (Case Study)
 
 - Design and build Mario clone
@@ -77,3 +83,9 @@
 
 - Managing time - always have a plan
 - Phaser architecture - simplifies software design
+
+---
+
+#### Tutorial
+
+- Explore Phaser

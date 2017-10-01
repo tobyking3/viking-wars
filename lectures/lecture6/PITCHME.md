@@ -10,6 +10,12 @@ How to write ...
 
 ---
 
+#### Last Week Recap
+
+- Game Physics
+
+---
+
 #### Software Design
 
 - Capture goals and data
@@ -114,3 +120,9 @@ When using a library isolate via own bridge / adapter
 
 - Clean Code
 - Game Programming Patterns
+
+---
+
+#### Tutorial
+
+- Clean up your code

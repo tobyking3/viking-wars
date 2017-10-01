@@ -62,3 +62,10 @@
 
 - Assignment
 - One architecture design, infinitely many implementations
+
+---
+
+#### Tutorial
+
+- Explore ideas for assignment
+- Design your game architecture
