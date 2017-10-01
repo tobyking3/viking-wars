@@ -62,6 +62,17 @@
 
 ---
 
+#### Tech (Links Showcase)
+
+- Phaser (https://phaser.io/)
+- GitHub (https://github.com/)
+- WebStorm (https://www.jetbrains.com/webstorm/)
+- Brackets (http://brackets.io/)
+- Atom (https://atom.io/)
+- Gitter (https://gitter.im/UoBComputing/CI328_2017)
+
+---
+
 #### Game World
 
 - Entities
