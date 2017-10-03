@@ -13,6 +13,13 @@
 
 ---
 
+#### Question
+
+- How do you (software) design a game?
+- Example: Mario
+
+---
+
 #### Game Architecture (Start)
 
 - Entry point (take control from environment)
@@ -62,6 +69,13 @@
 
 - Assignment
 - One architecture design, infinitely many implementations
+
+---
+
+#### Next Week
+
+- Project Management
+- Phaser Architecture
 
 ---
 
