@@ -36,6 +36,13 @@
 
 ---
 
+#### Game Architecture (Post Init)
+
+- Main Menu
+- Options (Audio, Video, Controls, etc)
+
+---
+
 #### Game Architecture (Main Loop)
 
 - Input
@@ -100,7 +107,7 @@ init() {
 
 #### Case Study (Mario) (Main Loop)
 
-Simple conceptual old school loop. Modern concepts covered later.
+Simple conceptual old school loop.
 
 ```java
 loop() {
@@ -126,6 +133,36 @@ loop() {
         }
     }
 }
+```
+
+---
+
+#### Case Study (Mario) (Main Loop)
+
+Modern (framework-style) loop. Anything missing?
+
+```java
+loop() {
+    while (!exit) {
+
+    }
+}
+```
+
+---
+
+#### Case Study (Mario) (Main Loop)
+
+Where did it all go? Callbacks!
+
+```java
+onKey(Key.W, { 
+    // jump
+})
+
+onCollision(PLAYER, COIN, {
+    // handle collision
+})
 ```
 
 ---
@@ -162,5 +199,7 @@ exitGame() {
 
 #### Tutorial
 
+- Create a GitHub repo for the assignment
+- Deploy a static webpage
 - Explore ideas for assignment
-- Design your game architecture
+- Design your game architecture (use GitHub issues)
