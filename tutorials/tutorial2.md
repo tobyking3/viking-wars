@@ -12,3 +12,8 @@
 
 After a few seconds, if you access the link from step 6, you will see an example Phaser app.
 You can use most of these steps to set up static pages for other repositories.
+
+You can also use GitHub fork to simplify some processes above but it is more beneficial for you to know
+how to do the setup from scratch.
+If you want to know the basics of `git` and GitHub,
+a simple [introduction video](https://www.youtube.com/watch?v=awD-5Dp-WAg) is available.
