@@ -42,6 +42,23 @@
 
 ---
 
+#### How to Manage Time (Quality vs Time)
+
+- Settle for "good enough" and move on
+- Swap a complex task for a simple one
+- Implement the simplest thing that works, then refine
+- Always have a working system
+
+---
+
+#### How to Manage Time (Scoped vs Real-world)
+
+- Fixed tasks vs variable tasks
+- Tasks carefully chosen vs unknown territory
+- Academic support vs field experts
+
+---
+
 #### Game Architecture (Start)
 
 - Entry point - browser open page
@@ -86,6 +103,15 @@
 
 ---
 
+#### Next Week
+
+- Game Maths
+
+---
+
 #### Tutorial
 
-- Explore Phaser
+- Identify tasks specific to your game
+- Use GitHub repo Milestones and Issues to capture tasks
+- Explore Phaser, play around with example games
+- Start populating your GitHub repo with basic examples
