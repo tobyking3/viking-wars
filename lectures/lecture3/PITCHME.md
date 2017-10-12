@@ -48,6 +48,7 @@
 - Swap a complex task for a simple one
 - Implement the simplest thing that works, then refine
 - Always have a working system
+- Avoid burnout
 
 ---
 
@@ -59,40 +60,28 @@
 
 ---
 
-#### Game Architecture (Start)
+#### Assignment Game Idea
+
+- Can implement 100% now? - Too easy
+- Don't know how to implement at all? - Too complex
+- Roughly 50-50 know-don't know? - Probably a good idea
+
+---
+
+#### Game Architecture (Start - Exit)
 
 - Entry point - browser open page
-- Sanity check your environment (hardware, software)
-
----
-
-#### Game Architecture (Init)
-
-- Phaser
-
----
-
-#### Game Architecture (Main Loop)
-
-- Phaser
-
----
-
-#### Game Architecture (Cleanup)
-
-- Phaser
-
----
-
-#### Game Architecture (Exit)
-
-- Browser tab close
+- Init / Loop
+- Exit - Browser tab close
 
 ---
 
 #### Case Study (Simple Phaser Game)
 
-- Read sample game code written with Phaser
+To provide a point of reference ...
+
+- Examine [Phaser Invaders](https://github.com/AlmasB/CI328Demo)
+- Examine [FXGL Invaders](https://github.com/AlmasB/FXGLGames/tree/master/SpaceInvaders)
 
 ---
 
