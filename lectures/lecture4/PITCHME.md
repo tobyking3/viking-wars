@@ -100,6 +100,13 @@
 
 ---
 
+#### Next Week
+
+- Game Physics
+- Presentations
+
+---
+
 #### Tutorial
 
-- Apply Maths to your game / use case
+- Apply Maths to your game (movement)
