@@ -23,6 +23,7 @@
 
 #### Point
 
+- Ordered pair: (x, y)
 - Location / position in space
 - Extendible to n dimensions
 - Crucial to most games
@@ -46,6 +47,7 @@
 
 #### Vector
 
+- Ordered pair: (x, y) - yes, same as point
 - Displacement with direction and length (magnitude)
 - Describes velocity, acceleration, direction, etc.
 - Extendible to n dimensions
@@ -109,4 +111,5 @@
 
 #### Tutorial
 
+- Start preparing the presentation
 - Apply Maths to your game (movement)
