@@ -29,8 +29,8 @@
 
 #### Collision Detection Phases
 
-- Broadphase
-- Narrowphase
+- Broad phase
+- Narrow phase
 
 ---
 
@@ -57,7 +57,7 @@
 - Fast
 - Easy to implement
 - Extends to n dimensions
-- Works in tile / grid based cases, as broadphase
+- Works in tile / grid based cases, as broad phase
 
 ---
 
@@ -66,7 +66,7 @@
 - Speed depends on use case
 - Harder to get "right"
 - Extends to n dimensions
-- Works only as broadphase
+- Works only as broad phase
 
 ---
 
@@ -85,7 +85,6 @@
 - Harder to get "right"
 - Extends to n dimensions
 - Mainly for fast moving objects or simulations
-- Works only as broadphase
 
 ---
 
