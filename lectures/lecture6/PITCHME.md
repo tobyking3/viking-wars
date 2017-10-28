@@ -113,13 +113,14 @@ When using a library isolate via own bridge / adapter
 
 - Can't replace experience (expect to put in hours), but ...
 - Can avoid writing _some_ bad code by following guides
+- Don't alter the problem to fit the pattern, alter the pattern to fit the problem
 
 ----
 
 #### Further Reading
 
 - Clean Code
-- Game Programming Patterns
+- [Game Programming Patterns](http://gameprogrammingpatterns.com/contents.html)
 
 ---
 
