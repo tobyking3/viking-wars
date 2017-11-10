@@ -27,7 +27,7 @@
 - Nodes represent rooms / tiles / a single movement block
 - Edges represent the existence of a path between 2 rooms / tiles / blocks
 
-----
+---
 
 #### Game World -> Graph
 
@@ -45,14 +45,14 @@ graph.nodes.forEachPair(node1, node2 =>
 
 The result is a _connected_ graph, assuming you can get to any tile from any other tile.
 
-----
+---
 
 #### Apply Algorithms
 
 We have converted a specific problem to a generic problem.
 We can now apply existing algorithms to solve our problem.
 
-----
+---
 
 #### Apply A*
 
@@ -62,7 +62,7 @@ let path = A*.apply(graph, startTile, endTile);
 
 `path` contains a list of tiles, which is the shortest route from `startTile` to `endTile`.
 
-----
+---
 
 #### AI Behaviour Types
 
@@ -71,14 +71,14 @@ let path = A*.apply(graph, startTile, endTile);
 - GOAP (Goal Oriented Action Planning)
 - Squad Tactics
 
-----
+---
 
 #### FSM
 
 - Can only be in 1 state at a time
 - Works for most simple AI
 
-----
+---
 
 #### BTrees
 
@@ -86,7 +86,7 @@ let path = A*.apply(graph, startTile, endTile);
 - It's like the ECS pattern of AI (can mix and match tree elements)
 - Flexible
 
-----
+---
 
 #### GOAP
 
@@ -94,14 +94,14 @@ let path = A*.apply(graph, startTile, endTile);
 - Use game world queries to determine its state
 - Build a chain of actions that will lead AI to the "best" world state
 
-----
+---
 
 #### Squad AI
 
 - Game world queries (identify valid position, filter out rest based on e.g. threat)
 - Squad "center of mass" (dynamic)
 
-----
+---
 
 #### AI Behaviour
 

@@ -66,10 +66,9 @@ entity.addComponent(new MoveableComponent());
 
 #### Advantages
 
-- Composition over Inheritance (no inheritance hell, all objects are at the same level)
-- Can mix components easily, e.g. add `AIComponent` to player entity,
-add `PlayerComponent` to enemy entity
-- Scaling and management (each component has a clearly defined dependency) 
+- Composition over Inheritance (no inheritance hell)
+- Can mix components easily
+- Scaling and management (clearly defined dependency) 
 
 ---
 
@@ -124,9 +123,19 @@ but who controls the Systems?
 
 #### ECS - Game World
 
-- Collection of Systems (which are a collection of entities)
+- Collection of Systems (which are a collection of entities / components)
 - _Can_ be a collection of entities based on its architecture (e.g. Entity Component Control mechanism)
 - Responsible for entity updates and queries
+
+---
+
+#### Game World - Queries
+
+- By type
+- By layer
+- By position
+- Random
+- etc.
 
 ---
 
