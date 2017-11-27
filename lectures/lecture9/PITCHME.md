@@ -51,8 +51,25 @@
 
 - Integrate tutorials as part of gameplay / story
 - Do not dump all information from start, only on a need-to-know basis
-- Increase difficulty linearly
 - Consider AI and points of interest
+
+---
+
+#### Difficulty
+
+Player scaling vs world scaling
+
+- Increase linearly
+- Use a sine wave, increasing min/max each time
+- Define own curve
+
+---
+
+#### Serialization
+
+- Automatic
+- Manual
+- Check points
 
 ---
 

@@ -2,7 +2,7 @@
 
 ### CI328 Lecture 11 - Feedback Session
 
-- DOs and DON'Ts
+- Quick DOs and DON'Ts
 
 ---
 
@@ -40,9 +40,10 @@ If not your work, **reference** it:
 #### Code
 
 - Remember and, importantly, **use** good practices
+- Naming conventions
 - Only valuable comments
 - Short and simple classes / functions
-- Make sure it works (test using GitHub pages and a different machine) -- we won't fix it for you
+- Make sure it works (test using GitHub pages and Uni PC) -- we won't fix it for you
 - Structure your code **and** your assets
 
 ---
