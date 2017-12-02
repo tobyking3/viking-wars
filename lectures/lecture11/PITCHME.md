@@ -42,7 +42,7 @@ If not your work, **reference** it:
 - Remember and, importantly, **use** good practices
 - Naming conventions
 - Only valuable comments
-- Short and simple classes / functions
+- Short and simple classes / functions (_monadic_), but avoid contrived classes
 - Make sure it works (test using GitHub pages and Uni PC) -- we won't fix it for you
 - Structure your code **and** your assets
 
