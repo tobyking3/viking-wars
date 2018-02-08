@@ -8,17 +8,21 @@
 
 ---
 
-#### Structure
+#### Feedback from Semester 1
 
-- Fewer lectures / more tutorials to facilitate learning
+- Assignments
+- References
+- Importance of Feedback
 
 ---
 
-#### Multiplayer Types
+#### Structure
 
-- Co-op
-- PvP (Solo, Teams)
-- MMO
+- Fewer lectures / more tutorials to facilitate learning
+- Multiplayer Game Architecture
+- Application Layer Architecture
+- Data Structures
+- Error Handling / Latency
 
 ---
 
@@ -27,6 +31,24 @@
 Server-Client: (1-1), (1-n), (m-n)
 
 Implementation details: "dumb" client, client-side prediction, client replication
+
+---
+
+#### Data Structures
+
+- Basic Concepts
+- Serialization / Deserialization
+- Efficiency
+- Performance
+- Security
+
+---
+
+#### Multiplayer Types
+
+- Co-op
+- PvP (Solo, Teams)
+- MMO
 
 ---
 
@@ -56,7 +78,7 @@ Question: what problems do we deal with when writing a network based game?
 
 #### Assignment
 
-- A multiplayer game
+- A multiplayer game (Server - any language, Client - JS)
 - Recommended 2 students per team, min 1, max 3
 - 60% of the module
 - Released 1-2 weeks of Sem 2
