@@ -11,6 +11,8 @@
 
 On StudentCentral
 
+**Do NOT forget NSS survey!**
+
 ---
 
 #### Game Architecture
@@ -46,6 +48,15 @@ How does this translate to multiplayer?
 3. Client Render
 
 What's the catch?
+
+---
+
+#### Network Details
+
+- Internal / External IP
+- Port
+- Transport Layer Protocol: TCP / UDP
+- Packet and data
 
 ---
 
