@@ -7,6 +7,48 @@
 
 ---
 
+#### Sem2 Assignment
+
+On StudentCentral
+
+---
+
+#### Game Architecture
+
+Question: What does a single player game architecture look like?
+
+---
+
+#### Game Architecture
+
+1. Enter
+2. Init
+3. Main Loop
+4. Destroy
+5. Exit
+
+---
+
+#### Main Loop
+
+1. Input
+2. Update
+3. Render
+
+How does this translate to multiplayer?
+
+---
+
+#### Main Loop (Multiplayer)
+
+1. Client Input
+2. Server Update
+3. Client Render
+
+What's the catch?
+
+---
+
 #### Architecture Types 1
 
 Server-Client: (1-1)
