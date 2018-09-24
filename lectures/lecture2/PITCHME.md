@@ -15,8 +15,39 @@
 
 #### Question
 
-- How do you (software) design a game?
+- How do you design a game?
 - Example: Mario
+
+---
+
+#### Game Design
+
+- From idea to design
+- What are the required aspects?
+- What do you want your game to be?
+
+---
+
+#### Genre
+
+- Platformer / RPG / casual / arcade / side-scroller
+- The game genre has a profound effect on its design *and* implementation
+
+---
+
+#### Style
+
+- Modern / retro / contemporary / cartoon
+- The style affects the general feel and aesthetic design
+- Especially assets will be affected
+
+---
+
+#### Software Design
+
+- Now think about an application lifecycle
+- How does the app start?
+- What are the processes (behind scenes) that happen during start?
 
 ---
 

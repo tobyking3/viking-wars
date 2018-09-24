@@ -21,6 +21,13 @@
 
 ---
 
+#### 2D Maths
+
+- Luckily, not very complex
+- Transtive skills from / to UI design
+
+---
+
 #### Point
 
 - Ordered pair: (x, y)

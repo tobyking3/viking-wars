@@ -12,6 +12,14 @@
 
 ---
 
+#### Objective
+
+- Mainly to give you a bit of taste for physics breadth in game dev
+- Don't worry if you don't understand *all* of it
+- Phaser takes care of most things for us
+
+---
+
 #### Representing Game Objects
 
 - Objects have dimensions, e.g. width, height, depth

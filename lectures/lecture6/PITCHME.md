@@ -22,6 +22,7 @@ How to write ...
 - Flexible - requirements change
 - Modular units
 - YAGNI, KISS, DRY
+- When in doubt, go for simple, most direct solution
 
 ---
 
@@ -72,6 +73,7 @@ When using a library isolate via own bridge / adapter
 
 - Clear project directory structure
 - Source code management
+- Build (dependency management) tools
 - Consistent indentation
 - Naming conventions
 

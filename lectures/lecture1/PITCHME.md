@@ -10,9 +10,9 @@
 
 #### About
 
-- Background: CS, SE and Game Dev
-- Researcher in Automated Diagram Generation
-- Shipped code in C++, Java, Kotlin & others
+- Background: SE and Game Dev
+- Researcher in CS
+- Shipped code in Java, Kotlin, C++, JS & others
 - Maintain FXGL game engine
 - YouTube game dev channel
 
@@ -21,7 +21,7 @@
 #### Structure
 
 - 2hrs lectures + 1hr tutorial per week
-- Extensive programming
+- Fair bit of programming
 - Interactive (you get to decide the module focus)
 
 ---
@@ -55,8 +55,8 @@
 #### Tech
 
 - JavaScript
-- Phaser - JS Game Engine
-- GitHub + git
+- Phaser 3 - JS Game Engine
+- GitHub + git (recommended)
 - IDE of choice (WebStorm, Brackets, Atom, etc)
 - Gitter
 
@@ -69,7 +69,7 @@
 - WebStorm (https://www.jetbrains.com/webstorm/)
 - Brackets (http://brackets.io/)
 - Atom (https://atom.io/)
-- Gitter (https://gitter.im/UoBComputing/CI328_2017)
+- Gitter (https://gitter.im/UoBComputing/CI328_2018)
 
 ---
 
@@ -114,7 +114,7 @@
 #### AI
 
 - Pathfinding: A*
-- Behaviour: Btree, GOAP, FSM
+- Behaviour: FSM
 
 ---
 
@@ -144,7 +144,7 @@
 
 #### Assessments
 
-- Standalone single player game (40%)
+- Single player game (40%)
 - Multiplayer network game (60%)
 
 ---

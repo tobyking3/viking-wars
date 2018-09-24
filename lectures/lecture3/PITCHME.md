@@ -21,7 +21,7 @@
 
 #### How to Manage Time (Tasks)
 
-- Decompose one big problem into many smaller ones
+- Decompose one big problem into many smaller ones (OO approach)
 - Identify tasks need to complete each problem
 - Assign priorities (core or optional) and order
 
