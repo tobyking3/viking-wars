@@ -112,11 +112,12 @@
 #### Next Week
 
 - Game Physics
-- Presentations
 
 ---
 
 #### Tutorial
 
-- Start preparing the presentation
-- Apply Maths to your game (movement)
+- Complete the presentation
+- Start writing up your report
+- Produce a software design for the game
+- Start implementatio and apply Maths to your game (movement)
