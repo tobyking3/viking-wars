@@ -1,2 +1,2 @@
-# CI328
-This repo contains some examples seen in lectures
+# Viking Wars
+A multiplayer viking game, it's the last man standing!
