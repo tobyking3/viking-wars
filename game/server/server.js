@@ -1,5 +1,10 @@
 const PORT = 55000;
 
+var gameProperties = {
+    gameWidth: 4329, 
+    gameHeight: 1080,
+}
+
 // Make a new HTTP server
 var server = require('http').createServer();
 
@@ -54,9 +59,9 @@ io.on('connection', function(socket) {
                 socket.isInGame = true;
 
                 socket.player = {
-                    id: socket.id,
-                    x: getAllPlayers().length == 0 ? 100 : 600,
-                    y: 100
+                    id: server.lastPlayerID++,
+                    x: getAllPlayers().length == 0 ? 100 : gameProperties.gameWidth - 100,
+                    y: gameProperties.gameHeight - 100
                 };
 
                 socket.emit('allplayers',getAllPlayers());
