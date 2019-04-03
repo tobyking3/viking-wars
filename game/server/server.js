@@ -1,20 +1,20 @@
 const PORT = 55000;
 
-var gameProperties = {
+let gameProperties = {
     gameWidth: 4329, 
     gameHeight: 1080,
-}
+};
 
 // Make a new HTTP server
-var server = require('http').createServer();
+let server = require('http').createServer();
 
 //Socket takes in the HTTP server created above, and adds it's own
 //layer on top of it for ease of use. 'io' is the Socket.io server object. You could call it
 // 'socketIOServer' or something similar if you wish, but all of the documentation for Socket.io uses just 'io'.
-var io = require('socket.io')(server);
+let io = require('socket.io')(server);
 
 //Use to manage the players in the game
-var players = {};
+let players = {};
 
 /*
  *  socket.on('event_name', function(optionalData){ ... );  - Adds an event listener to this socket.
@@ -42,14 +42,14 @@ io.on('connection', function(socket) {
 
     console.log("Connect made and socket ID is: " + socket.id);
 
-    //add to socket object
+    // Add to socket object
     socket.username = 'DEFAULT NAME';
     socket.score = 0;
     socket.isInGame = false;
 
     // Using the socket object that was passed in, events can be sent to the client that socket belongs to using .emit(...)
     
-    if(getAllPlayers().length <= 1){
+    if (getAllPlayers().length <= 1) {
 
         socket.on('newplayer',function() {
             console.log(socket.score);
@@ -98,11 +98,14 @@ server.listen(PORT, function(){
 server.lastPlayerID = 0;
 
 function getAllPlayers(){
-    var players = [];
+    let players = [];
     Object.keys(io.sockets.connected).forEach(function(socketID){
-        var player = io.sockets.connected[socketID].player;
-        if(player) players.push(player);
+        let player = io.sockets.connected[socketID].player;
+        if (player) {
+            players.push(player);
+        }
     });
+
     return players;
 }
 
