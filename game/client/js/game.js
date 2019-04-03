@@ -6,15 +6,19 @@ var gameProperties = {
     in_game: false,
 }
 
-var sprite
-var radius = 150
-var cX
-var cY
-var angle = 0
-var speed=1
-var fireAngle=0
+var tank = null;
+var turret = null;
+var flame = null;
+var bullet = null;
 
-var leftKey, rightKey
+var background = null;
+var targets = null;
+
+var power = 300;
+var powerText = null;
+
+var cursors = null;
+var fireButton = null;
 
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
@@ -23,90 +27,100 @@ Game.init = function(){
 Game.preload = function() {
     game.load.image('background', './assets/backgrounds/long_scene_uncropped.png');
     game.load.image('ball', './assets/pangball.png');
-
     game.load.image('circle', './assets/circle.png');
     game.load.image('arrow', './assets/arrow.png');
-    game.load.image('ball', './assets/pangball.png');
+    game.load.image('bullet', './assets/coin.png');
+    game.load.image('tank', './assets/tank.png');
+    game.load.image('turret', './assets/turret.png');
 
 };
 
 Game.create = function(){
-
-    this.mountainsBack = this.game.add.tileSprite(0, 0, gameProperties.gameWidth, gameProperties.gameHeight, 'background');
-
     Game.playerMap = {};
 
-    //scale manager resizes the canvas to fill the viewport
+    background = game.add.tileSprite(0, 0, gameProperties.gameWidth, gameProperties.gameHeight, 'background');
+    
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    game.physics.arcade.gravity.y = 1000;
+
     game.world.setBounds(0, 0, gameProperties.gameWidth, gameProperties.gameHeight, false, false, false, false);
     
     game.input.onTap.add(Game.getCoordinates, this);
+
+    //--------------------------------------------------------------------------------------------------------
+
+    targets = game.add.group(game.world, 'targets', false, true, Phaser.Physics.ARCADE);
+
+    targets.create(400, 800, 'ball');
+    targets.create(500, 800, 'ball');
+    targets.create(600, 800, 'ball');
+    targets.create(700, 800, 'ball');
+
+    targets.setAll('body.allowGravity', false);
+
+    bullet = game.add.sprite(0, 0, 'bullet');
+
+    bullet.exists = false;
+
+    tank = game.add.sprite(24, 800, 'tank');
+
+    turret = game.add.sprite(tank.x + 100, tank.y + 14, 'turret');
+
+    game.physics.arcade.enable(bullet);
+    bullet.body.collideWorldBounds=true;
+    bullet.body.bounce.setTo(0.1, 0.5);
+
+    power = 800;
+    powerText = game.add.text(8, 8, 'Power: 800', { font: "18px Arial", fill: "#ffffff" });
+    powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
+    powerText.fixedToCamera = true;
+
+    cursors = game.input.keyboard.createCursorKeys();
+    
+    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    fireButton.onDown.add(fire, this);
+
+    //--------------------------------------------------------------------------------------------------------
     
     Client.askNewPlayer();
 
-    //---------------------------------------------------------------------------------------------
-
-    game.forceSingleUpdate=true
-
-    cX = 400
-    cY = 800
-
-    circle = game.add.graphics()    
-    circle.lineStyle(2,0xFF0000)
-    circle.drawCircle(cX,cY,radius*2)
-    
-    sprite = game.add.sprite(0, 0, 'ball');
-    sprite.anchor.set(0.5)
-    
-    // give it an initial position
-   moveSpriteOnCircle(angle)
-   
-   leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-   rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-   spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
 };
 
-Game.update = function(){
+function fire() {
+    if (bullet.exists){return;}
 
-    var moved=false
+    bullet.reset(turret.x, turret.y);
 
-    if(spaceKey.isDown) {
-        fireAngle = angle
-    }
+    var p = new Phaser.Point(turret.x, turret.y);
 
-    if(leftKey.isDown && angle < 0) {
-        angle+=speed
-        moved=true
-    }
-    
-    if(rightKey.isDown  && angle > -90) {
-        angle-=speed
-        moved=true
-    }
-    
-    if(angle>=360) 
-    {
-        angle=360-angle
-    }
-    
-    if(moved) {
-        moveSpriteOnCircle(angle)
-    }
+    p.rotate(p.x, p.y, turret.rotation, false, 34);
+
+    game.camera.follow(bullet);
+
+    game.physics.arcade.velocityFromRotation(turret.rotation, power, bullet.body.velocity);
 }
 
-function moveSpriteOnCircle(deg) {
-    if(deg >= -90 && deg <= 0){
-        var p = new Phaser.Point(cX, cY)
-        p.rotate(cX, cY, 270-deg, true, radius) 
-        sprite.x = p.x
-        sprite.y = p.y
-        sprite.angle=0-deg
-    }
+Game.update = function() {
+        if (cursors.left.isDown && power > 100){
+            power -= 5;
+        }
+        else if (cursors.right.isDown && power < 1200){
+            power += 5;
+        }
+
+        if (cursors.up.isDown && turret.angle > -90){
+            turret.angle--;
+        }
+        else if (cursors.down.isDown && turret.angle < 0){
+            turret.angle++;
+        }
+
+        powerText.text = 'Power: ' + power;
 }
+
 
 Game.getCoordinates = function(pointer){
     Client.sendClick(pointer.worldX,pointer.worldY);
@@ -134,7 +148,6 @@ Game.addNewPlayer = function(id,x,y){
 
     player.body.collideWorldBounds=true;
     player.body.bounce.setTo(0.1, 0.5);
-    player.body.gravity.y = 1000;
 
     Game.playerMap[id] = player;
     game.camera.follow(player);
@@ -143,20 +156,12 @@ Game.addNewPlayer = function(id,x,y){
 Game.movePlayer = function(id,x,y){
     var player = Game.playerMap[id];
 
-    console.log(angle);
-    fireX = -angle * 20;
-    fireY = (angle + 90) * 40;
-
-    console.log(fireX);
-
-    game.camera.follow(player);
-
     if(id === 0){
-        player.body.velocity.x = 400 + fireX;
-        player.body.velocity.y = -fireY;
+        player.body.velocity.x = 1000;
+        player.body.velocity.y = -1000;
     } else {
-        player.body.velocity.x = 400 + fireX;
-        player.body.velocity.y = -fireY;
+        player.body.velocity.x = 1000;
+        player.body.velocity.y = -1000;
     }
 };
 
