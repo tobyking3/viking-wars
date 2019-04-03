@@ -60,7 +60,7 @@ io.on('connection', function(socket) {
 
                 socket.player = {
                     id: server.lastPlayerID++,
-                    x: getAllPlayers().length == 0 ? 100 : gameProperties.gameWidth - 100,
+                    x: getAllPlayers().length == 0 ? 300 : gameProperties.gameWidth - 300,
                     y: gameProperties.gameHeight - 100
                 };
 

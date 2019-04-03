@@ -6,14 +6,15 @@ var gameProperties = {
     in_game: false,
 }
 
-var circle
-var spriteGroup
 var sprite
-var hitZone
 var radius = 150
 var cX
 var cY
-var theta 
+var angle = 0
+var speed=1
+var fireAngle=0
+
+var leftKey, rightKey
 
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
@@ -21,7 +22,7 @@ Game.init = function(){
 
 Game.preload = function() {
     game.load.image('background', './assets/backgrounds/long_scene_uncropped.png');
-    game.load.image('sprite', 'assets/coin.png');
+    game.load.image('ball', './assets/pangball.png');
 
     game.load.image('circle', './assets/circle.png');
     game.load.image('arrow', './assets/arrow.png');
@@ -48,6 +49,8 @@ Game.create = function(){
 
     //---------------------------------------------------------------------------------------------
 
+    game.forceSingleUpdate=true
+
     cX = 400
     cY = 800
 
@@ -55,49 +58,54 @@ Game.create = function(){
     circle.lineStyle(2,0xFF0000)
     circle.drawCircle(cX,cY,radius*2)
     
-    spriteGroup = game.add.group()
-    
-    sprite = game.add.sprite(0, 0, 'phaser');
+    sprite = game.add.sprite(0, 0, 'ball');
     sprite.anchor.set(0.5)
     
-    hitZone = game.add.sprite(0,0)
-    hitZone.anchor.set(0.5)
-    hitZone.inputEnabled=true
-    hitZone.input.useHandCursor=true
-    
-    spriteGroup.add(hitZone)
-    spriteGroup.add(sprite)
-
-    var g = game.add.graphics(0,0)
-    g.beginFill(0xFF0000,0.5)
-    g.drawCircle(0,0,100)
-    g.endFill();
-    
-    hitZone.addChild(g)
-
-    this.game.input.mouse.mouseMoveCallback = onMouseMove;
+    // give it an initial position
+   moveSpriteOnCircle(angle)
    
-    moveSpriteOnCircle(cX,0)
+   leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+   rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+   spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 };
 
-function onMouseMove(e) {
-   console.log("move", hitZone.input.pointerDown())
-   if(hitZone.input.pointerDown() && hitZone.input.pointerOver()) {
-       moveSpriteOnCircle(e.x,e.y)
-   }
+Game.update = function(){
 
+    var moved=false
+
+    if(spaceKey.isDown) {
+        fireAngle = angle
+    }
+
+    if(leftKey.isDown && angle < 0) {
+        angle+=speed
+        moved=true
+    }
+    
+    if(rightKey.isDown  && angle > -90) {
+        angle-=speed
+        moved=true
+    }
+    
+    if(angle>=360) 
+    {
+        angle=360-angle
+    }
+    
+    if(moved) {
+        moveSpriteOnCircle(angle)
+    }
 }
 
-function moveSpriteOnCircle(x,y) {
-    
-    theta = Math.atan2(x-cX, y-cY)
-    
-    var newX = Math.sin(theta) * radius;
-    var newY = Math.cos(theta) * radius;
-    
-    spriteGroup.x=cX + newX;
-    spriteGroup.y=cY + newY;
+function moveSpriteOnCircle(deg) {
+    if(deg >= -90 && deg <= 0){
+        var p = new Phaser.Point(cX, cY)
+        p.rotate(cX, cY, 270-deg, true, radius) 
+        sprite.x = p.x
+        sprite.y = p.y
+        sprite.angle=0-deg
+    }
 }
 
 Game.getCoordinates = function(pointer){
@@ -107,7 +115,7 @@ Game.getCoordinates = function(pointer){
 Game.addNewPlayer = function(id,x,y){
     //uses Phaser’s graphics to draw a circle
     player = game.add.graphics(x, y);
-    player.radius = 50;
+    player.radius = 30;
 
     if(id === 0){
         player.beginFill(0x0000ff);
@@ -135,14 +143,20 @@ Game.addNewPlayer = function(id,x,y){
 Game.movePlayer = function(id,x,y){
     var player = Game.playerMap[id];
 
+    console.log(angle);
+    fireX = -angle * 20;
+    fireY = (angle + 90) * 40;
+
+    console.log(fireX);
+
     game.camera.follow(player);
 
     if(id === 0){
-        player.body.velocity.x = 1000;
-        player.body.velocity.y = -1000;
+        player.body.velocity.x = 400 + fireX;
+        player.body.velocity.y = -fireY;
     } else {
-        player.body.velocity.x = -1000;
-        player.body.velocity.y = -1000;
+        player.body.velocity.x = 400 + fireX;
+        player.body.velocity.y = -fireY;
     }
 };
 
