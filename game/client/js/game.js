@@ -6,16 +6,14 @@ var gameProperties = {
     in_game: false,
 }
 
-var arrow;
-var target;
-var circle;
-
-var circleWorks;
-var spriteWorks;
-var radius = 50;
-var cX;
-var cY;
-var theta;
+var circle
+var spriteGroup
+var sprite
+var hitZone
+var radius = 150
+var cX
+var cY
+var theta 
 
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
@@ -28,8 +26,6 @@ Game.preload = function() {
     game.load.image('circle', './assets/circle.png');
     game.load.image('arrow', './assets/arrow.png');
     game.load.image('ball', './assets/pangball.png');
-
-    game.load.image('ballWorks', './assets/pangball.png');
 
 };
 
@@ -50,61 +46,58 @@ Game.create = function(){
     
     Client.askNewPlayer();
 
-    //-----------------------------------------------------
-    circle = game.add.sprite(150, 730, 'circle');
-
-    game.physics.arcade.enable(circle);
-
-    circle.anchor.set(0.5);
-
-    circle.body.setCircle(112);
-    circle.body.collideWorldBounds = true;
-    circle.body.gravity.y = 0;
-
-    arrow = game.add.sprite(200, 850, 'arrow');
-    arrow.anchor.setTo(0.1, 0.5);
-
-    target = game.add.sprite(200, 850, 'ball');
-    target.anchor.setTo(0.5, 0.5);
-    target.inputEnabled = true;
-    target.input.enableDrag(true);
-    target.input.boundsSprite = circle.body;
-    //-----------------------------------------------------
-
-    //--------------------Working Example-----------------------
-    //---------------------Working Example-----------------------
+    //---------------------------------------------------------------------------------------------
 
     cX = 400
     cY = 800
 
-    circleWorks = game.add.graphics()    
-    circleWorks.lineStyle(2,0xFF0000)
-    circleWorks.drawCircle(cX,cY,radius*2)
+    circle = game.add.graphics()    
+    circle.lineStyle(2,0xFF0000)
+    circle.drawCircle(cX,cY,radius*2)
     
-    spriteWorks = game.add.sprite(0, 0, 'phaser');
-    spriteWorks.anchor.set(0.5)
+    spriteGroup = game.add.group()
+    
+    sprite = game.add.sprite(0, 0, 'phaser');
+    sprite.anchor.set(0.5)
+    
+    hitZone = game.add.sprite(0,0)
+    hitZone.anchor.set(0.5)
+    hitZone.inputEnabled=true
+    hitZone.input.useHandCursor=true
+    
+    spriteGroup.add(hitZone)
+    spriteGroup.add(sprite)
 
-    //---------------------Working Example-----------------------
-    //---------------------Working Example-----------------------
+    var g = game.add.graphics(0,0)
+    g.beginFill(0xFF0000,0.5)
+    g.drawCircle(0,0,100)
+    g.endFill();
+    
+    hitZone.addChild(g)
+
+    this.game.input.mouse.mouseMoveCallback = onMouseMove;
+   
+    moveSpriteOnCircle(cX,0)
+
 };
 
-Game.update = function(){
-    arrow.rotation = game.physics.arcade.angleBetween(arrow, target);
+function onMouseMove(e) {
+   console.log("move", hitZone.input.pointerDown())
+   if(hitZone.input.pointerDown() && hitZone.input.pointerOver()) {
+       moveSpriteOnCircle(e.x,e.y)
+   }
 
-    //---------------------Working Example-----------------------
-    //---------------------Working Example-----------------------
-    var mouseX = game.input.x;
-    var mouseY = game.input.y;
+}
+
+function moveSpriteOnCircle(x,y) {
     
-    theta = Math.atan2(mouseX-cX, mouseY-cY)
+    theta = Math.atan2(x-cX, y-cY)
     
     var newX = Math.sin(theta) * radius;
     var newY = Math.cos(theta) * radius;
     
-    spriteWorks.x=cX + newX;
-    spriteWorks.y=cY + newY;
-    //---------------------Working Example-----------------------
-    //---------------------Working Example-----------------------
+    spriteGroup.x=cX + newX;
+    spriteGroup.y=cY + newY;
 }
 
 Game.getCoordinates = function(pointer){
