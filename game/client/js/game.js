@@ -14,8 +14,6 @@ Game.create = function(){
     var testKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     
     game.input.onTap.add(Game.getCoordinates, this);
-    
-    Client.askNewPlayer();
 };
 
 Game.getCoordinates = function(pointer){
