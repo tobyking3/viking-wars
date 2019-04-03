@@ -4,7 +4,7 @@ var gameProperties = {
     gameWidth: 4329, 
     gameHeight: 1080,
     in_game: false,
-}
+};
 
 var tank = null;
 var turret = null;
@@ -30,9 +30,8 @@ Game.preload = function() {
     game.load.image('circle', './assets/circle.png');
     game.load.image('arrow', './assets/arrow.png');
     game.load.image('bullet', './assets/coin.png');
-    game.load.image('tank', './assets/tank.png');
+    game.load.atlas('tank', 'assets/brown_idle.png', 'assets/viking_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('turret', './assets/turret.png');
-
 };
 
 Game.create = function(){
@@ -65,7 +64,13 @@ Game.create = function(){
 
     bullet.exists = false;
 
-    tank = game.add.sprite(24, 800, 'tank');
+    let layer = game.add.group();
+    let tank = layer.create(24, 800, 'tank');
+    tank.scale.setTo(0.5, 0.5);
+    tank.anchor.setTo(.5,.5);
+    tank.scale.x *= -1;
+    tank.animations.add('idle');
+    tank.animations.play('idle', 10, true);
 
     turret = game.add.sprite(tank.x + 100, tank.y + 14, 'turret');
 
