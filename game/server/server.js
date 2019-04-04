@@ -40,8 +40,6 @@ io.on('connection', function(socket) {
 
     console.log(getAllPlayers().length);
 
-    console.log("Connect made and socket ID is: " + socket.id);
-
     //add to socket object
     socket.username = 'DEFAULT NAME';
     socket.score = 0;

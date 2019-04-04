@@ -115,24 +115,32 @@ Game.getCoordinates = function(pointer){
 Game.addNewPlayer = function(id,x,y){
 
     vikingGroup = game.add.group(game.world, 'vikingGroup');
+    var viking;
 
-    var viking = game.add.sprite(x, y, 'brown_viking');
-    viking.scale.setTo(0.5, 0.5);
+    if(id === 0){
+        viking = game.add.sprite(x, y, 'brown_viking');
+        viking.scale.setTo(-0.5, 0.5);
+        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
+        turret.anchor.x = 0;
+        turret.anchor.y = 0;
+    } else if (id === 1){
+        viking = game.add.sprite(x, y, 'brown_viking');
+        viking.scale.setTo(0.5, 0.5);
+        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret');
+        turret.anchor.x = 1;
+        turret.anchor.y = 0;
+    }
+
     viking.anchor.setTo(0.5,0.5);
-    viking.scale.x *= -1;
     viking.animations.add('idle');
     viking.animations.play('idle', 10, true);
 
-    // game.physics.arcade.enable(viking);
-    // viking.body.allowGravity = false;
-
     vikingGroup.add(viking);
+    vikingGroup.add(turret);
 
     game.camera.follow(viking);
 
-    turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
-
-    Game.playerMap[id] = viking;
+    Game.playerMap[id] = vikingGroup;
 };
 
 Game.movePlayer = function(id,x,y){
