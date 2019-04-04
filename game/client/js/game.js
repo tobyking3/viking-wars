@@ -1,13 +1,12 @@
-var Game = {
+let Game = {
     width: 4329, 
     height: 1080,
 };
 
-var clickable = true;
+let clickable = true;
 
-var turret = null;
-
-let angle = 0;
+let turret = null;
+let fakeAngle = 0;
 let power = 300;
 let powerText = null;
 
@@ -50,15 +49,13 @@ Game.update = function() {
         power += 5;
     }
 
-    if (cursors.up.isDown && turret.angle > -90) {
-        angle = turret.angle - 1;
-        Client.turretAngle(angle);
-        console.log(angle);
+    if (cursors.up.isDown && fakeAngle > -90) {
+        let angleToSend = fakeAngle--;
+        Client.turretAngle(angleToSend);
 
-    } else if (cursors.down.isDown && turret.angle < 0) {       
-        angle = turret.angle + 1;
-        Client.turretAngle(angle);   
-        console.log(angle);   
+    } else if (cursors.down.isDown && fakeAngle < 0) {
+        let angleToSend = fakeAngle++;
+        Client.turretAngle(angleToSend);
     }
 
     powerText.text = 'Power: ' + power;
