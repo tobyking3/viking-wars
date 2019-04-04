@@ -120,14 +120,16 @@ Game.addNewPlayer = function(id,x,y){
     game.camera.follow(viking);
 
     Game.playerMap[id] = vikingGroup;
+
+    Game.playerMap[id]
 };
 
 
 Game.fireBullet = function(activeId, activePower, activeAngle) {
 
-    console.log(activePower);
+    let playerId = activeId - 1;    
 
-    let bullet = game.add.sprite(turret.x, turret.y, 'bullet');
+    let bullet = game.add.sprite(Game.playerMap[playerId].children[1].x, Game.playerMap[playerId].children[1].y, 'bullet');
 
     game.physics.arcade.enable(bullet);
     bullet.body.collideWorldBounds=true;
