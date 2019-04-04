@@ -127,21 +127,21 @@ Game.fireBullet = function(activeId, activePower, activeAngle) {
 
     console.log(activePower);
 
-    let bullet = game.add.sprite(0, 0, 'bullet');
+    let bullet = game.add.sprite(turret.x, turret.y, 'bullet');
 
     game.physics.arcade.enable(bullet);
     bullet.body.collideWorldBounds=true;
     bullet.body.bounce.setTo(0.1, 0.5);
 
-    bullet.reset(turret.x, turret.y);
-
-    bullet = Game.bulletMap[activeId];
+    Game.bulletMap[activeId] = bullet;
 
     let p = new Phaser.Point(turret.x, turret.y);
     p.rotate(p.x, p.y, turret.rotation, false, 34);
 
     game.camera.follow(bullet);
     game.physics.arcade.velocityFromRotation(turret.rotation, activePower, bullet.body.velocity);
+
+    console.log(turret.rotation);
 };
 
 Game.removePlayer = function(id) {
