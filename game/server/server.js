@@ -45,7 +45,11 @@ io.on('connection', function(socket) {
 
     });
 
-    socket.on('turntaken',function(activePlayerID) {
+    socket.on('space',function(data) {
+        io.emit('fire', data.power, data.angle, socket.player);
+    });
+
+    socket.on('turntaken',function() {
         socket.player.turn = !socket.player.turn;
     });
 

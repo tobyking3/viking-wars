@@ -28,7 +28,10 @@ Game.preload = function() {
 Game.create = function() {
     Game.playerMap = {};
     Game.vikingMap = {};
-    game.input.onDown.add(Game.getCoordinates, this);
+    // game.input.onDown.add(Game.getCoordinates, this);
+
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = 1000;
 
     power = 800;
     powerText = game.add.text(8, 8, 'Power: 800', { font: "18px Arial", fill: "#ffffff"});
@@ -71,7 +74,7 @@ Game.updateTurretAngle = function(turretAngle, playerId) {
 };
 
 Game.fireProperties = function() {
-    Client.sendSpace(power, angle);
+    Client.sendSpace(power, fakeAngle);
 };
 
 Game.getCoordinates = function(pointer) {
@@ -111,23 +114,53 @@ Game.addNewPlayer = function(id, x, y) {
     Game.vikingMap[id] = playerGroup;
 };
 
-Game.movePlayer = function(id, x, y, turn){
-    if (turn) {
-        clickable = false;
-        let player = Game.playerMap[id];
-        let distance = Phaser.Math.distance(player.x, player.y, x, y);
-        let tween = game.add.tween(player);
-        let duration = distance*10;
-        tween.to({x: x, y: y}, duration);
-        tween.start();
+Game.fireBullet = function(power, angle, player) {
+    if (player.turn) {
+        let bullet;
 
-        this.id = id;
-        tween.onComplete.add(registerTurn, this);
+        if (player.id === 0) {
+            bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'left_turret');
+        } else {
+            bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'right_turret');
+        }
+
+        bullet.scale.setTo(0.5, 0.5);
+        game.physics.arcade.enable(bullet);
+        bullet.body.collideWorldBounds=true;
+        bullet.body.bounce.setTo(0.1, 0.5);
+
+        let p = new Phaser.Point(turret.x, turret.y);
+        p.rotate(p.x, p.y, turret.rotation, false, 34);
+
+        if (player.id === 0) {
+            game.physics.arcade.velocityFromRotation(angle, power, bullet.body.velocity);
+        } else {
+            game.physics.arcade.velocityFromRotation(angle, power, +bullet.body.velocity);
+        }
+
+        // Detect if the bullet hit before destroying
+        registerTurn();
+        // bullet.destroy();
     }
 };
 
-function registerTurn(that) {
-    Client.turnTaken(that.id);
+Game.movePlayer = function(id, x, y, turn){
+    // if (turn) {
+    //     clickable = false;
+    //     let player = Game.playerMap[id];
+    //     let distance = Phaser.Math.distance(player.x, player.y, x, y);
+    //     let tween = game.add.tween(player);
+    //     let duration = distance*10;
+    //     tween.to({x: x, y: y}, duration);
+    //     tween.start();
+    //
+    //     this.id = id;
+    //     tween.onComplete.add(registerTurn, this);
+    // }
+};
+
+function registerTurn() {
+    Client.turnTaken();
     clickable = true;
 }
 
