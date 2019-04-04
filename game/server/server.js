@@ -56,15 +56,32 @@ io.on('connection', function(socket) {
                     y: gameProperties.gameHeight - 100
                 };
 
+                socket.bullet = {
+                    id: server.lastPlayerID,
+                    power: 0,
+                    angle: 0
+                };
+
                 socket.emit('allplayers', getAllPlayers());
 
                 socket.broadcast.emit('serverNewPlayer', socket.player);
 
-                socket.on('click',function(data) {
-                    socket.player.x = data.x;
-                    socket.player.y = data.y;
-                    io.emit('move',socket.player);
+
+
+
+
+                socket.on('space',function(data) {
+                    socket.bullet.power = data.power;
+                    socket.bullet.angle = data.angle;
+                    
+                    io.emit('fire', socket.bullet);
                 });
+
+
+
+
+
+
 
                 socket.on('disconnect',function() {
                     io.emit('remove', socket.player.id);
