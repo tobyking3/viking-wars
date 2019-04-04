@@ -45,19 +45,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on('turntaken',function(activePlayerID) {
-        Object.keys(socket.player).forEach(function (key) {
-            if (key === 'turn') {
-                if (socket.player[key]) {
-
-                    socket.player[key] = false;
-
-                } else {
-
-                    socket.player[key] = true;
-
-                }
-            }
-        });
+        socket.player.turn = !socket.player.turn;
     });
     
 });
