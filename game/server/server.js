@@ -1,20 +1,20 @@
 const PORT = 55000;
 
-var gameProperties = {
+let gameProperties = {
     gameWidth: 4329, 
     gameHeight: 1080,
-}
+};
 
 // Make a new HTTP server
-var server = require('http').createServer();
+let server = require('http').createServer();
 
-//Socket takes in the HTTP server created above, and adds it's own
-//layer on top of it for ease of use. 'io' is the Socket.io server object. You could call it
+// Socket takes in the HTTP server created above, and adds it's own
+// layer on top of it for ease of use. 'io' is the Socket.io server object. You could call it
 // 'socketIOServer' or something similar if you wish, but all of the documentation for Socket.io uses just 'io'.
-var io = require('socket.io')(server);
+let io = require('socket.io')(server);
 
-//Use to manage the players in the game
-var players = {};
+// Use to manage the players in the game
+let players = {};
 
 /*
  *  socket.on('event_name', function(optionalData){ ... );  - Adds an event listener to this socket.
@@ -37,34 +37,28 @@ var players = {};
 // The socket object is passed in automatically by io when a connection is made.
 
 io.on('connection', function(socket) {
-
-    console.log(getAllPlayers().length);
-
-    //add to socket object
+    // Add to socket object
     socket.username = 'DEFAULT NAME';
     socket.score = 0;
     socket.isInGame = false;
 
     // Using the socket object that was passed in, events can be sent to the client that socket belongs to using .emit(...)
-    
-    if(getAllPlayers().length <= 1){
 
-        socket.on('newplayer',function() {
-            console.log(socket.score);
-            console.log(socket.isInGame);
-
-            if(socket.isInGame === false){
+    // Check if there is 2 players
+    if (getAllPlayers().length <= 1){
+        socket.on('clientNewPlayer', function() {
+            if (socket.isInGame === false) {
                 socket.isInGame = true;
 
                 socket.player = {
                     id: server.lastPlayerID++,
-                    x: getAllPlayers().length == 0 ? 300 : gameProperties.gameWidth - 300,
+                    x: getAllPlayers().length === 0 ? 300 : gameProperties.gameWidth - 300,
                     y: gameProperties.gameHeight - 100
                 };
 
-                socket.emit('allplayers',getAllPlayers());
+                socket.emit('allplayers', getAllPlayers());
 
-                socket.broadcast.emit('newplayer',socket.player);
+                socket.broadcast.emit('serverNewPlayer', socket.player);
 
                 socket.on('click',function(data) {
                     socket.player.x = data.x;
@@ -74,6 +68,7 @@ io.on('connection', function(socket) {
 
                 socket.on('disconnect',function() {
                     io.emit('remove', socket.player.id);
+                    server.lastPlayerID--;
                     console.log('disconnecting: ' + socket.player.id);
                 });
             } else {
@@ -84,7 +79,6 @@ io.on('connection', function(socket) {
     } else {
         console.log("NO GAME AVAILABLE");
     }
-    
 });
 
 //--------------------------------------------------------------------------------
@@ -96,15 +90,12 @@ server.listen(PORT, function(){
 server.lastPlayerID = 0;
 
 function getAllPlayers(){
-    var players = [];
+    let players = [];
     Object.keys(io.sockets.connected).forEach(function(socketID){
-        var player = io.sockets.connected[socketID].player;
+        let player = io.sockets.connected[socketID].player;
         if(player) players.push(player);
     });
-    return players;
-}
 
-function randomInt(low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
-}
+    return players;
+};
 

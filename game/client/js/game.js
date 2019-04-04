@@ -1,6 +1,6 @@
-var Game = {};
+let Game = {};
 
-var gameProperties = {
+let gameProperties = {
     gameWidth: 4329, 
     gameHeight: 1080,
     in_game: false,
@@ -8,18 +8,18 @@ var gameProperties = {
 
 let vikings;
 
-var tank = null;
-var turret = null;
-var bullet = null;
+let tank = null;
+let turret = null;
+let bullet = null;
 
-var background = null;
-var targets = null;
+let background = null;
+let targets = null;
 
-var power = 300;
-var powerText = null;
+let power = 300;
+let powerText = null;
 
-var cursors = null;
-var fireButton = null;
+let cursors = null;
+let fireButton = null;
 
 let viking = null;
 
@@ -66,7 +66,7 @@ Game.create = function(){
     bullet.body.bounce.setTo(0.1, 0.5);
 
     power = 800;
-    powerText = game.add.text(8, 8, 'Power: 800', { font: "18px Arial", fill: "#ffffff" });
+    powerText = game.add.text(8, 8, 'Power: 800', { font: "18px Arial", fill: "#ffffff"});
     powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
     powerText.fixedToCamera = true;
 
@@ -82,7 +82,7 @@ function fire() {
     if (bullet.exists){return;}
     bullet.reset(turret.x, turret.y);
 
-    var p = new Phaser.Point(turret.x, turret.y);
+    let p = new Phaser.Point(turret.x, turret.y);
     p.rotate(p.x, p.y, turret.rotation, false, 34);
 
     game.camera.follow(bullet);
@@ -90,23 +90,22 @@ function fire() {
 }
 
 Game.update = function() {
-    if (cursors.left.isDown && power > 100){
+    if (cursors.left.isDown && power > 100) {
         power -= 5;
     }
-    else if (cursors.right.isDown && power < 1200){
+    else if (cursors.right.isDown && power < 1200) {
         power += 5;
     }
 
-    if (cursors.up.isDown && turret.angle > -90){
+    if (cursors.up.isDown && turret.angle > -90) {
         turret.angle--;
     }
-    else if (cursors.down.isDown && turret.angle < 0){
+    else if (cursors.down.isDown && turret.angle < 0) {
         turret.angle++;
     }
 
     powerText.text = 'Power: ' + power;
-}
-
+};
 
 Game.getCoordinates = function(pointer){
     Client.sendClick(pointer.worldX,pointer.worldY);
@@ -114,16 +113,16 @@ Game.getCoordinates = function(pointer){
 
 Game.addNewPlayer = function(id,x,y){
 
-    vikingGroup = game.add.group(game.world, 'vikingGroup');
-    var viking;
+    let vikingGroup = game.add.group(game.world, 'vikingGroup');
+    let viking;
 
-    if(id === 0){
+    if (id === 0) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(-0.5, 0.5);
         turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
-    } else if (id === 1){
+    } else if (id === 1) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(0.5, 0.5);
         turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret');
@@ -143,11 +142,11 @@ Game.addNewPlayer = function(id,x,y){
     Game.playerMap[id] = vikingGroup;
 };
 
-Game.movePlayer = function(id,x,y){
-    var player = Game.playerMap[id];
+Game.movePlayer = function(id, x, y) {
+    let player = Game.playerMap[id];
 };
 
-Game.removePlayer = function(id){
+Game.removePlayer = function(id) {
     Game.playerMap[id].destroy();
     delete Game.playerMap[id];
 };
