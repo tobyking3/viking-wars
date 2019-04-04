@@ -21,7 +21,8 @@ Game.preload = function() {
     game.load.image('sprite', 'assets/coin.png');
     game.load.atlas('brown_viking', 'assets/brown_idle.png', 'assets/brown_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_idle.png', 'assets/red_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.image('turret', './assets/viking-archer/body_parts_spriter_file/arrow.png');
+    game.load.image('left_turret', './assets/left_arrow.png');
+    game.load.image('right_turret', './assets/right_arrow.png');
 };
 
 Game.create = function() {
@@ -87,13 +88,13 @@ Game.addNewPlayer = function(id, x, y) {
     if (id === 0) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(-0.5, 0.5);
-        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
+        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'left_turret');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
     } else if (id === 1) {
         viking = game.add.sprite(x, y, 'red_viking');
         viking.scale.setTo(0.5, 0.5);
-        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret');
+        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'right_turret');
         turret.anchor.x = 1;
         turret.anchor.y = 0;
     }
