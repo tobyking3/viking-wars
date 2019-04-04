@@ -62,24 +62,26 @@ Game.update = function() {
 };
 
 Game.updateTurretAngle = function(turretAngle, playerId) {
-    Game.vikingMap[playerId].children[1].angle = turretAngle;
-}
+    if (playerId === 0) {
+        Game.vikingMap[playerId].children[1].angle = turretAngle;
+    } else {
+        Game.vikingMap[playerId].children[1].angle = -turretAngle;
+    }
+};
 
-Game.fireProperties = function(space) {
+Game.fireProperties = function() {
     Client.sendSpace(power, angle);
 };
 
 Game.getCoordinates = function(pointer) {
-    if(clickable){
+    if (clickable) {
         Client.sendClick(pointer.worldX,pointer.worldY);
     }
 };
 
 Game.addNewPlayer = function(id, x, y) {
     Game.playerMap[id] = game.add.sprite(x,y,'sprite');
-
     let playerGroup = game.add.group(game.world, 'playerGroup');
-
     let viking;
 
     if (id === 0) {
@@ -111,11 +113,11 @@ Game.addNewPlayer = function(id, x, y) {
 Game.movePlayer = function(id, x, y, turn){
     if (turn) {
         clickable = false;
-        var player = Game.playerMap[id];
-        var distance = Phaser.Math.distance(player.x,player.y,x,y);
-        var tween = game.add.tween(player);
-        var duration = distance*10;
-        tween.to({x:x,y:y}, duration);
+        let player = Game.playerMap[id];
+        let distance = Phaser.Math.distance(player.x, player.y, x, y);
+        let tween = game.add.tween(player);
+        let duration = distance*10;
+        tween.to({x: x, y: y}, duration);
         tween.start();
 
         this.id = id;
