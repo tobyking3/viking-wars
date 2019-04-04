@@ -30,7 +30,8 @@ Game.preload = function() {
     game.load.image('circle', './assets/circle.png');
     game.load.image('arrow', './assets/arrow.png');
     game.load.image('bullet', './assets/coin.png');
-    game.load.atlas('tank', 'assets/brown_idle.png', 'assets/viking_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    game.load.atlas('brown_viking', 'assets/brown_idle.png', 'assets/brown_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    game.load.atlas('red_viking', 'assets/red_idle.png', 'assets/red_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('turret', './assets/turret.png');
 };
 
@@ -65,14 +66,14 @@ Game.create = function(){
     bullet.exists = false;
 
     let layer = game.add.group();
-    let tank = layer.create(24, 800, 'tank');
-    tank.scale.setTo(0.5, 0.5);
-    tank.anchor.setTo(.5,.5);
-    tank.scale.x *= -1;
-    tank.animations.add('idle');
-    tank.animations.play('idle', 10, true);
+    let playerOne = layer.create(24, 800, 'brown_viking');
+    playerOne.scale.setTo(0.5, 0.5);
+    playerOne.anchor.setTo(.5,.5);
+    playerOne.scale.x *= -1;
+    playerOne.animations.add('idle');
+    playerOne.animations.play('idle', 10, true);
 
-    turret = game.add.sprite(tank.x + 100, tank.y + 14, 'turret');
+    turret = game.add.sprite(playerOne.x + 100, playerOne.y + 14, 'turret');
 
     game.physics.arcade.enable(bullet);
     bullet.body.collideWorldBounds=true;
@@ -91,7 +92,6 @@ Game.create = function(){
     //--------------------------------------------------------------------------------------------------------
     
     Client.askNewPlayer();
-
 };
 
 function fire() {
