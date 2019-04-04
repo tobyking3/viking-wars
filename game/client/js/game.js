@@ -141,7 +141,11 @@ Game.fireBullet = function(activeId, activePower, activeAngle) {
     p.rotate(p.x, p.y, turret.rotation, false, 34);
 
     game.camera.follow(bullet);
-    game.physics.arcade.velocityFromRotation(turret.rotation, activePower, bullet.body.velocity);
+    if (playerId === 0) {
+        game.physics.arcade.velocityFromRotation(turret.rotation, activePower, bullet.body.velocity);
+    } else {
+        game.physics.arcade.velocityFromRotation(turret.rotation, -activePower, bullet.body.velocity);
+    }
 
     console.log(turret.rotation);
 };
