@@ -23,14 +23,14 @@ io.on('connection', function(socket) {
 
         socket.player = {
             id: playerId,
-            x: 200,
-            y: 100,
+            x: playerId === 0 ? 100 : 680,
+            y: 450,
             turn: playerId === 0 ? true : false
         };
 
         socket.emit('allplayers',getAllPlayers());
 
-        socket.broadcast.emit('newplayer',socket.player);
+        socket.broadcast.emit('newplayer', socket.player);
 
         socket.on('click',function(data) {
             socket.player.x = data.x;
@@ -39,6 +39,7 @@ io.on('connection', function(socket) {
         });
 
         socket.on('disconnect',function() {
+            socket.lastPlayerID--;
             io.emit('remove', socket.player.id);
         });
 
@@ -46,6 +47,10 @@ io.on('connection', function(socket) {
 
     socket.on('turntaken',function(activePlayerID) {
         socket.player.turn = !socket.player.turn;
+    });
+
+    socket.on('turretangle', function(turretAngle) {
+        io.emit('updateturretangle', turretAngle, socket.player);
     });
     
 });
