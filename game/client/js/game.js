@@ -6,9 +6,10 @@ var gameProperties = {
     in_game: false,
 };
 
+let vikings;
+
 var tank = null;
 var turret = null;
-var flame = null;
 var bullet = null;
 
 var background = null;
@@ -20,19 +21,19 @@ var powerText = null;
 var cursors = null;
 var fireButton = null;
 
+let viking = null;
+
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
 };
 
 Game.preload = function() {
     game.load.image('background', './assets/backgrounds/long_scene_uncropped.png');
-    game.load.image('ball', './assets/pangball.png');
-    game.load.image('circle', './assets/circle.png');
-    game.load.image('arrow', './assets/arrow.png');
-    game.load.image('bullet', './assets/coin.png');
+    game.load.image('turret', './assets/turret.png');
+    game.load.image('house', './assets/viking-houses/pngs/large_house_complete.png');
     game.load.atlas('brown_viking', 'assets/brown_idle.png', 'assets/brown_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_idle.png', 'assets/red_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.image('turret', './assets/turret.png');
+    game.load.image('bullet', './assets/coin.png');
 };
 
 Game.create = function(){
@@ -41,39 +42,24 @@ Game.create = function(){
     background = game.add.tileSprite(0, 0, gameProperties.gameWidth, gameProperties.gameHeight, 'background');
     
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
     game.physics.arcade.gravity.y = 1000;
-
     game.world.setBounds(0, 0, gameProperties.gameWidth, gameProperties.gameHeight, false, false, false, false);
-    
     game.input.onTap.add(Game.getCoordinates, this);
 
-    //--------------------------------------------------------------------------------------------------------
 
     targets = game.add.group(game.world, 'targets', false, true, Phaser.Physics.ARCADE);
-
-    targets.create(400, 800, 'ball');
-    targets.create(500, 800, 'ball');
-    targets.create(600, 800, 'ball');
-    targets.create(700, 800, 'ball');
-
+    targets.create(400, 1000, 'house');
+    targets.create(500, 1000, 'house');
+    targets.create(600, 1000, 'house');
+    targets.create(700, 1000, 'house');
+    targets.scale.setTo(0.3, 0.3);
     targets.setAll('body.allowGravity', false);
 
     bullet = game.add.sprite(0, 0, 'bullet');
-
     bullet.exists = false;
 
-    let layer = game.add.group();
-    let playerOne = layer.create(24, 800, 'brown_viking');
-    playerOne.scale.setTo(0.5, 0.5);
-    playerOne.anchor.setTo(.5,.5);
-    playerOne.scale.x *= -1;
-    playerOne.animations.add('idle');
-    playerOne.animations.play('idle', 10, true);
-
-    turret = game.add.sprite(playerOne.x + 100, playerOne.y + 14, 'turret');
+    // const rightViking = game.add.sprite(24, 800, 'brown_viking');
 
     game.physics.arcade.enable(bullet);
     bullet.body.collideWorldBounds=true;
@@ -88,42 +74,37 @@ Game.create = function(){
     
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     fireButton.onDown.add(fire, this);
-
-    //--------------------------------------------------------------------------------------------------------
     
     Client.askNewPlayer();
 };
 
 function fire() {
     if (bullet.exists){return;}
-
     bullet.reset(turret.x, turret.y);
 
     var p = new Phaser.Point(turret.x, turret.y);
-
     p.rotate(p.x, p.y, turret.rotation, false, 34);
 
     game.camera.follow(bullet);
-
     game.physics.arcade.velocityFromRotation(turret.rotation, power, bullet.body.velocity);
 }
 
 Game.update = function() {
-        if (cursors.left.isDown && power > 100){
-            power -= 5;
-        }
-        else if (cursors.right.isDown && power < 1200){
-            power += 5;
-        }
+    if (cursors.left.isDown && power > 100){
+        power -= 5;
+    }
+    else if (cursors.right.isDown && power < 1200){
+        power += 5;
+    }
 
-        if (cursors.up.isDown && turret.angle > -90){
-            turret.angle--;
-        }
-        else if (cursors.down.isDown && turret.angle < 0){
-            turret.angle++;
-        }
+    if (cursors.up.isDown && turret.angle > -90){
+        turret.angle--;
+    }
+    else if (cursors.down.isDown && turret.angle < 0){
+        turret.angle++;
+    }
 
-        powerText.text = 'Power: ' + power;
+    powerText.text = 'Power: ' + power;
 }
 
 
@@ -132,42 +113,30 @@ Game.getCoordinates = function(pointer){
 };
 
 Game.addNewPlayer = function(id,x,y){
-    //uses Phaser’s graphics to draw a circle
-    player = game.add.graphics(x, y);
-    player.radius = 30;
 
-    if(id === 0){
-        player.beginFill(0x0000ff);
-        player.lineStyle(2, 0x0000ff, 1);
-    } else {
-        player.beginFill(0xff0000);
-        player.lineStyle(2, 0xff0000, 1);
-    }
+    vikingGroup = game.add.group(game.world, 'vikingGroup');
 
-    player.drawCircle(0, 0, player.radius * 2);
-    player.endFill();
-    player.anchor.setTo(0.5,0.5);
-    player.body_size = player.radius;
+    var viking = game.add.sprite(x, y, 'brown_viking');
+    viking.scale.setTo(0.5, 0.5);
+    viking.anchor.setTo(0.5,0.5);
+    viking.scale.x *= -1;
+    viking.animations.add('idle');
+    viking.animations.play('idle', 10, true);
 
-    game.physics.arcade.enable(player);
+    // game.physics.arcade.enable(viking);
+    // viking.body.allowGravity = false;
 
-    player.body.collideWorldBounds=true;
-    player.body.bounce.setTo(0.1, 0.5);
+    vikingGroup.add(viking);
 
-    Game.playerMap[id] = player;
-    game.camera.follow(player);
+    game.camera.follow(viking);
+
+    turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
+
+    Game.playerMap[id] = viking;
 };
 
 Game.movePlayer = function(id,x,y){
     var player = Game.playerMap[id];
-
-    if(id === 0){
-        player.body.velocity.x = 1000;
-        player.body.velocity.y = -1000;
-    } else {
-        player.body.velocity.x = 1000;
-        player.body.velocity.y = -1000;
-    }
 };
 
 Game.removePlayer = function(id){
