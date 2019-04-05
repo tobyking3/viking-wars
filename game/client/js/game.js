@@ -22,7 +22,8 @@ Game.init = function(){
 Game.preload = function() {
     game.load.image('sprite', 'assets/coin.png');
     game.load.atlas('brown_viking', 'assets/brown_idle.png', 'assets/brown_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.atlas('red_viking', 'assets/red_idle.png', 'assets/red_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    // game.load.atlas('red_viking', 'assets/red_idle.png', 'assets/red_idle.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+    game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('left_turret', './assets/left_arrow.png');
     game.load.image('right_turret', './assets/right_arrow.png');
 };
@@ -111,10 +112,12 @@ Game.addNewPlayer = function(id, x, y) {
         turret.anchor.y = 0;
     }
 
+    viking.animations.add('death', [0,1,2,3,4,5,6,7], 10);
+    viking.animations.add('idle', [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32], 10, true);
+    viking.animations.play('idle');
+
     turret.scale.setTo(0.25, 0.25);       
     viking.anchor.setTo(0.5,0.5);
-    viking.animations.add('idle');
-    viking.animations.play('idle', 10, true);
     game.physics.arcade.enable(viking);
     viking.body.immovable = true;
     viking.body.gravity.y = 0;
@@ -165,9 +168,9 @@ Game.movePlayer = function(id, x, y, turn){
     // }
 };
 
-function hitBounds() {
-    bullet.body.enable = false;
-}
+Game.killPlayer = function(playerId) {
+    Game.vikingMap[playerId].children[0].animations.play('death');
+};
 
 function registerTurn() {
     Client.turnTaken();

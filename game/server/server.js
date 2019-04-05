@@ -55,9 +55,8 @@ io.on('connection', function(socket) {
         if (socket.player.turn) {
             if (socket.player.health > 20) {
                 socket.player.health -= 20;
-                console.log(socket.player.health);
             } else {
-                console.log('Player dead', socket.player.id);
+                io.emit('playerdied', socket.player.id);
             }
         }
     });
