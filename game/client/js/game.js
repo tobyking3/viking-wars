@@ -115,7 +115,7 @@ Game.addNewPlayer = function(id, x, y) {
 };
 
 Game.fireBullet = function(power, angle, player) {
-    if (player.turn) {
+    // if (player.turn) {
         let bullet;
 
         if (player.id === 0) {
@@ -126,22 +126,22 @@ Game.fireBullet = function(power, angle, player) {
 
         bullet.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(bullet);
-        bullet.body.collideWorldBounds=true;
+        bullet.body.collideWorldBounds = true;
         bullet.body.bounce.setTo(0.1, 0.5);
 
         let p = new Phaser.Point(turret.x, turret.y);
         p.rotate(p.x, p.y, turret.rotation, false, 34);
 
         if (player.id === 0) {
-            game.physics.arcade.velocityFromRotation(angle, power, bullet.body.velocity);
+            game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, power, bullet.body.velocity);
         } else {
-            game.physics.arcade.velocityFromRotation(angle, power, +bullet.body.velocity);
+            game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
         }
 
         // Detect if the bullet hit before destroying
         registerTurn();
         // bullet.destroy();
-    }
+    // }
 };
 
 Game.movePlayer = function(id, x, y, turn){

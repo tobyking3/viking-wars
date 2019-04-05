@@ -23,7 +23,7 @@ io.on('connection', function(socket) {
 
         socket.player = {
             id: playerId,
-            x: playerId === 0 ? 100 : 680,
+            x: playerId === 0 ? 200 : 780,
             y: 450,
             turn: playerId === 0 ? true : false
         };
