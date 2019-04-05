@@ -1,8 +1,72 @@
 {"frames": [
 
 {
+	"filename": "__viking_archer_die_000.png",
+	"frame": {"x":893,"y":1,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_001.png",
+	"frame": {"x":1,"y":1,"w":389,"h":538},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":158,"y":33,"w":389,"h":538},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_002.png",
+	"frame": {"x":392,"y":1,"w":499,"h":417},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":171,"y":122,"w":499,"h":417},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_003.png",
+	"frame": {"x":596,"y":2240,"w":551,"h":270},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":180,"y":279,"w":551,"h":270},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_004.png",
+	"frame": {"x":596,"y":2512,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_005.png",
+	"frame": {"x":596,"y":2512,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_006.png",
+	"frame": {"x":596,"y":2512,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_die_007.png",
+	"frame": {"x":596,"y":2512,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
 	"filename": "__viking_archer_idle_000.png",
-	"frame": {"x":1787,"y":561,"w":299,"h":557},
+	"frame": {"x":893,"y":1,"w":299,"h":557},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
@@ -10,7 +74,7 @@
 },
 {
 	"filename": "__viking_archer_idle_001.png",
-	"frame": {"x":1788,"y":1,"w":299,"h":557},
+	"frame": {"x":392,"y":420,"w":299,"h":557},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
@@ -18,7 +82,7 @@
 },
 {
 	"filename": "__viking_archer_idle_002.png",
-	"frame": {"x":1787,"y":1120,"w":299,"h":557},
+	"frame": {"x":1,"y":541,"w":299,"h":557},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
@@ -26,7 +90,7 @@
 },
 {
 	"filename": "__viking_archer_idle_003.png",
-	"frame": {"x":2088,"y":1119,"w":297,"h":557},
+	"frame": {"x":1590,"y":560,"w":297,"h":557},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":18,"w":297,"h":557},
@@ -34,7 +98,7 @@
 },
 {
 	"filename": "__viking_archer_idle_004.png",
-	"frame": {"x":1,"y":1,"w":297,"h":558},
+	"frame": {"x":693,"y":560,"w":297,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
@@ -42,7 +106,7 @@
 },
 {
 	"filename": "__viking_archer_idle_005.png",
-	"frame": {"x":1,"y":561,"w":297,"h":558},
+	"frame": {"x":302,"y":979,"w":297,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
@@ -50,7 +114,7 @@
 },
 {
 	"filename": "__viking_archer_idle_006.png",
-	"frame": {"x":300,"y":1121,"w":296,"h":558},
+	"frame": {"x":1590,"y":1119,"w":296,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
@@ -58,7 +122,7 @@
 },
 {
 	"filename": "__viking_archer_idle_007.png",
-	"frame": {"x":598,"y":1121,"w":296,"h":558},
+	"frame": {"x":601,"y":1120,"w":296,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
@@ -66,7 +130,7 @@
 },
 {
 	"filename": "__viking_archer_idle_008.png",
-	"frame": {"x":599,"y":1,"w":296,"h":558},
+	"frame": {"x":300,"y":1539,"w":296,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
@@ -74,7 +138,7 @@
 },
 {
 	"filename": "__viking_archer_idle_009.png",
-	"frame": {"x":897,"y":1,"w":295,"h":558},
+	"frame": {"x":1197,"y":1120,"w":295,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
@@ -82,7 +146,7 @@
 },
 {
 	"filename": "__viking_archer_idle_010.png",
-	"frame": {"x":897,"y":561,"w":295,"h":558},
+	"frame": {"x":1494,"y":1679,"w":295,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
@@ -90,7 +154,7 @@
 },
 {
 	"filename": "__viking_archer_idle_011.png",
-	"frame": {"x":1194,"y":1,"w":295,"h":558},
+	"frame": {"x":598,"y":1680,"w":295,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
@@ -98,7 +162,7 @@
 },
 {
 	"filename": "__viking_archer_idle_012.png",
-	"frame": {"x":1491,"y":561,"w":294,"h":558},
+	"frame": {"x":1192,"y":1680,"w":294,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":294,"h":558},
@@ -106,7 +170,7 @@
 },
 {
 	"filename": "__viking_archer_idle_013.png",
-	"frame": {"x":1491,"y":1121,"w":294,"h":558},
+	"frame": {"x":1488,"y":2239,"w":294,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":294,"h":558},
@@ -114,7 +178,7 @@
 },
 {
 	"filename": "__viking_archer_idle_014.png",
-	"frame": {"x":1194,"y":561,"w":295,"h":558},
+	"frame": {"x":299,"y":2099,"w":295,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
@@ -122,7 +186,7 @@
 },
 {
 	"filename": "__viking_archer_idle_015.png",
-	"frame": {"x":1194,"y":1121,"w":295,"h":558},
+	"frame": {"x":1,"y":2220,"w":295,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
@@ -130,7 +194,7 @@
 },
 {
 	"filename": "__viking_archer_idle_016.png",
-	"frame": {"x":1491,"y":1,"w":295,"h":558},
+	"frame": {"x":895,"y":1680,"w":295,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
@@ -138,7 +202,7 @@
 },
 {
 	"filename": "__viking_archer_idle_017.png",
-	"frame": {"x":599,"y":561,"w":296,"h":558},
+	"frame": {"x":1,"y":1660,"w":296,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
@@ -146,7 +210,7 @@
 },
 {
 	"filename": "__viking_archer_idle_018.png",
-	"frame": {"x":896,"y":1121,"w":296,"h":558},
+	"frame": {"x":899,"y":1120,"w":296,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
@@ -154,7 +218,7 @@
 },
 {
 	"filename": "__viking_archer_idle_019.png",
-	"frame": {"x":1,"y":1121,"w":297,"h":558},
+	"frame": {"x":1,"y":1100,"w":297,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
@@ -162,7 +226,7 @@
 },
 {
 	"filename": "__viking_archer_idle_020.png",
-	"frame": {"x":300,"y":1,"w":297,"h":558},
+	"frame": {"x":992,"y":560,"w":297,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
@@ -170,7 +234,7 @@
 },
 {
 	"filename": "__viking_archer_idle_021.png",
-	"frame": {"x":300,"y":561,"w":297,"h":558},
+	"frame": {"x":1291,"y":560,"w":297,"h":558},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
@@ -178,7 +242,7 @@
 },
 {
 	"filename": "__viking_archer_idle_022.png",
-	"frame": {"x":2088,"y":560,"w":299,"h":557},
+	"frame": {"x":1194,"y":1,"w":299,"h":557},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
@@ -186,7 +250,7 @@
 },
 {
 	"filename": "__viking_archer_idle_023.png",
-	"frame": {"x":2089,"y":1,"w":299,"h":557},
+	"frame": {"x":1495,"y":1,"w":299,"h":557},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
@@ -195,10 +259,10 @@
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "brown_idle.png",
+	"image": "brown_viking.png",
 	"format": "RGBA8888",
-	"size": {"w":2389,"h":1680},
+	"size": {"w":1888,"h":2798},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:4d33b124a0355c5b67097781ed6df401:1db5590cae700f19a6251be0c52ece1d:2fceb9362d78dce32fc623937920e4b9$"
+	"smartupdate": "$TexturePacker:SmartUpdate:aeb704f0a99ee152db237f664549109b:ad8f563de44ca0b107860691eb8f65c0:cb472836b9c5a75e413f082efdd8d47a$"
 }
 }
