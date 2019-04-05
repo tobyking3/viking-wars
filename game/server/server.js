@@ -6,39 +6,37 @@ var server = require('http').createServer();
 //Socket takes in the HTTP server created above, and adds it's own
 //layer on top of it for ease of use. 'io' is the Socket.io server object. You could call it
 // 'socketIOServer' or something similar if you wish, but all of the documentation for Socket.io uses just 'io'.
-var io = require('socket.io')(server);
+let io = require('socket.io')(server);
 
-//Use to manage the players in the game
-var players = {};
-
-var activePlayer = 0;
+// Use to manage the players in the game
+let players = {};
+let activePlayer = 0;
 
 io.on('connection', function(socket) {
 
-    socket.isInGame = false;
-
     socket.on('newplayer',function() {
 
-        var playerId = server.lastPlayerID++
+        let playerId = server.lastPlayerID++;
 
         socket.player = {
             id: playerId,
             x: playerId === 0 ? 200 : 780,
             y: 450,
+            health: 100,
             turn: playerId === 0 ? true : false
         };
 
-        socket.emit('allplayers',getAllPlayers());
+        socket.emit('allplayers', getAllPlayers());
 
         socket.broadcast.emit('newplayer', socket.player);
 
-        socket.on('click',function(data) {
+        socket.on('click', function(data) {
             socket.player.x = data.x;
             socket.player.y = data.y;
             io.emit('move',socket.player);
         });
 
-        socket.on('disconnect',function() {
+        socket.on('disconnect', function() {
             socket.lastPlayerID--;
             io.emit('remove', socket.player.id);
         });
@@ -54,7 +52,14 @@ io.on('connection', function(socket) {
     });
 
     socket.on('playerhit', function() {
-        console.log('Game over');
+        if (socket.player.turn) {
+            if (socket.player.health > 20) {
+                socket.player.health -= 20;
+                console.log(socket.player.health);
+            } else {
+                console.log('Player dead', socket.player.id);
+            }
+        }
     });
 
     socket.on('turretangle', function(turretAngle) {
@@ -71,11 +76,12 @@ server.listen(PORT, function(){
 server.lastPlayerID = 0;
 
 function getAllPlayers(){
-    var players = [];
+    let players = [];
     Object.keys(io.sockets.connected).forEach(function(socketID){
-        var player = io.sockets.connected[socketID].player;
+        let player = io.sockets.connected[socketID].player;
         if(player) players.push(player);
     });
+
     return players;
 }
 
