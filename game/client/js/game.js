@@ -1,6 +1,6 @@
 let Game = {
-    width: 4329, 
-    height: 1080,
+    worldWidth: 4329,
+    worldHeight: 1080,
 };
 
 let clickable = true;
@@ -20,7 +20,7 @@ Game.init = function(){
 };
 
 Game.preload = function() {
-    game.load.image('sprite', 'assets/coin.png');
+    game.load.image('background', 'assets/backgrounds/long_scene.png');
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('left_turret', './assets/left_arrow.png');
@@ -30,13 +30,15 @@ Game.preload = function() {
 Game.create = function() {
     Game.playerMap = {};
     Game.vikingMap = {};
-    // game.input.onDown.add(Game.getCoordinates, this);
 
+    game.add.sprite(0, 0, 'background');
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    // game.physics.arcade.gravity.y = 1000;
+
+    game.world.setBounds(0, 0, Game.worldWidth, Game.worldHeight, false, false, false, false);
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     power = 800;
-    powerText = game.add.text(8, 8, 'Power: 800', { font: "18px Arial", fill: "#ffffff"});
+    powerText = game.add.text(8, 8, 'Power: 800', {font: "18px Arial", fill: "#ffffff"});
     powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
     powerText.fixedToCamera = true;
 
@@ -93,7 +95,6 @@ Game.getCoordinates = function(pointer) {
 };
 
 Game.addNewPlayer = function(id, x, y) {
-    Game.playerMap[id] = game.add.sprite(x,y,'sprite');
     let playerGroup = game.add.group(game.world, 'playerGroup');
     let viking;
 
@@ -137,6 +138,9 @@ Game.fireBullet = function(power, angle, player) {
         bullet.body.bounce.setTo(0.1, 0.5);
         bullet.body.gravity.y = 1000;
 
+        bullet.anchor.setTo(0.5, 0.5);
+        game.camera.follow(bullet);
+
         let p = new Phaser.Point(turret.x, turret.y);
         p.rotate(p.x, p.y, turret.rotation, false, 34);
 
@@ -152,21 +156,6 @@ Game.fireBullet = function(power, angle, player) {
     }
 };
 
-Game.movePlayer = function(id, x, y, turn){
-    // if (turn) {
-    //     clickable = false;
-    //     let player = Game.playerMap[id];
-    //     let distance = Phaser.Math.distance(player.x, player.y, x, y);
-    //     let tween = game.add.tween(player);
-    //     let duration = distance*10;
-    //     tween.to({x: x, y: y}, duration);
-    //     tween.start();
-    //
-    //     this.id = id;
-    //     tween.onComplete.add(registerTurn, this);
-    // }
-};
-
 Game.killPlayer = function(playerId) {
     Game.vikingMap[playerId].children[0].animations.play('death');
 };
@@ -177,6 +166,6 @@ function registerTurn() {
 }
 
 Game.removePlayer = function(id) {
-    Game.playerMap[id].destroy();
-    delete Game.playerMap[id];
+    // Game.playerMap[id].destroy();
+    // delete Game.playerMap[id];
 };
