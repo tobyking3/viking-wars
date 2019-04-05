@@ -9,6 +9,10 @@ Client.sendClick = function(x, y) {
   Client.socket.emit('click',{x: x, y: y});
 };
 
+Client.playerHit = function() {
+    Client.socket.emit('playerhit');
+};
+
 Client.turnTaken = function(activePlayerID) {
   Client.socket.emit('turntaken', activePlayerID);
 };

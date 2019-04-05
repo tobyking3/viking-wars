@@ -45,12 +45,16 @@ io.on('connection', function(socket) {
 
     });
 
-    socket.on('space',function(data) {
+    socket.on('space', function(data) {
         io.emit('fire', data.power, data.angle, socket.player);
     });
 
-    socket.on('turntaken',function() {
+    socket.on('turntaken', function() {
         socket.player.turn = !socket.player.turn;
+    });
+
+    socket.on('playerhit', function() {
+        console.log('Game over');
     });
 
     socket.on('turretangle', function(turretAngle) {

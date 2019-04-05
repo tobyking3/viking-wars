@@ -4,6 +4,7 @@ let Game = {
 };
 
 let clickable = true;
+let target = null;
 
 let turret = null;
 let bullet = null;
@@ -32,7 +33,7 @@ Game.create = function() {
     // game.input.onDown.add(Game.getCoordinates, this);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 1000;
+    // game.physics.arcade.gravity.y = 1000;
 
     power = 800;
     powerText = game.add.text(8, 8, 'Power: 800', { font: "18px Arial", fill: "#ffffff"});
@@ -65,6 +66,9 @@ Game.update = function() {
 
     if (bullet) {
         bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x);
+        if (game.physics.arcade.collide(bullet, target)) {
+            Client.playerHit();
+        }
     }
 
     powerText.text = 'Power: ' + power;
@@ -111,6 +115,9 @@ Game.addNewPlayer = function(id, x, y) {
     viking.anchor.setTo(0.5,0.5);
     viking.animations.add('idle');
     viking.animations.play('idle', 10, true);
+    game.physics.arcade.enable(viking);
+    viking.body.immovable = true;
+    viking.body.gravity.y = 0;
 
     playerGroup.add(viking);
     playerGroup.add(turret);
@@ -126,14 +133,17 @@ Game.fireBullet = function(power, angle, player) {
         game.physics.arcade.enable(bullet);
         bullet.body.collideWorldBounds = true;
         bullet.body.bounce.setTo(0.1, 0.5);
+        bullet.body.gravity.y = 1000;
 
         let p = new Phaser.Point(turret.x, turret.y);
         p.rotate(p.x, p.y, turret.rotation, false, 34);
 
         if (player.id === 0) {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, power, bullet.body.velocity);
+            target = Game.vikingMap[player.id + 1].children[0];
         } else {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
+            target = Game.vikingMap[player.id - 1].children[0];
         }
 
         registerTurn();
@@ -154,6 +164,10 @@ Game.movePlayer = function(id, x, y, turn){
     //     tween.onComplete.add(registerTurn, this);
     // }
 };
+
+function hitBounds() {
+    bullet.body.enable = false;
+}
 
 function registerTurn() {
     Client.turnTaken();
