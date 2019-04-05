@@ -6,6 +6,7 @@ let Game = {
 let clickable = true;
 
 let turret = null;
+let bullet = null;
 let fakeAngle = 0;
 let power = 300;
 let powerText = null;
@@ -62,6 +63,10 @@ Game.update = function() {
         Client.turretAngle(angleToSend);
     }
 
+    if (bullet) {
+        bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x);
+    }
+
     powerText.text = 'Power: ' + power;
 };
 
@@ -79,7 +84,7 @@ Game.fireProperties = function() {
 
 Game.getCoordinates = function(pointer) {
     if (clickable) {
-        Client.sendClick(pointer.worldX,pointer.worldY);
+        Client.sendClick(pointer.worldX, pointer.worldY);
     }
 };
 
@@ -115,15 +120,8 @@ Game.addNewPlayer = function(id, x, y) {
 };
 
 Game.fireBullet = function(power, angle, player) {
-    // if (player.turn) {
-        let bullet;
-
-        if (player.id === 0) {
-            bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'left_turret');
-        } else {
-            bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'right_turret');
-        }
-
+    if (player.turn) {
+        bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'left_turret');
         bullet.scale.setTo(0.5, 0.5);
         game.physics.arcade.enable(bullet);
         bullet.body.collideWorldBounds = true;
@@ -138,10 +136,8 @@ Game.fireBullet = function(power, angle, player) {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
         }
 
-        // Detect if the bullet hit before destroying
         registerTurn();
-        // bullet.destroy();
-    // }
+    }
 };
 
 Game.movePlayer = function(id, x, y, turn){
