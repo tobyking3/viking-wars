@@ -64,6 +64,10 @@ io.on('connection', function(socket) {
     socket.on('turretangle', function(turretAngle) {
         io.emit('updateturretangle', turretAngle, socket.player);
     });
+
+    socket.on('turretpower', function(turretPower) {
+        io.emit('updateturretpower', turretPower, socket.player);
+    });
     
 });
 

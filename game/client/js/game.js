@@ -15,6 +15,8 @@ let powerText = null;
 let cursors = null;
 let fireButton = null;
 
+let fireAllowed = false;
+
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
 };
@@ -52,9 +54,11 @@ Game.create = function() {
 Game.update = function() {
     if (cursors.left.isDown && power > 100) {
         power -= 5;
+        Client.turretPower(power);
 
     } else if (cursors.right.isDown && power < 1200) {
         power += 5;
+        Client.turretPower(power);
     }
 
     if (cursors.up.isDown && fakeAngle > -90) {
@@ -84,6 +88,14 @@ Game.updateTurretAngle = function(turretAngle, playerId) {
     }
 };
 
+Game.updateTurretPower = function(turretPower, playerId) {
+    if (playerId === 0) {
+        Game.vikingMap[playerId].children[1].width = turretPower;
+    } else {
+        Game.vikingMap[playerId].children[1].width = turretPower;
+    }
+};
+
 Game.fireProperties = function() {
     Client.sendSpace(power, fakeAngle);
 };
@@ -104,19 +116,28 @@ Game.addNewPlayer = function(id, x, y) {
         turret = game.add.sprite(viking.x + 100, viking.y + 14, 'left_turret');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
+        game.camera.x = x + (viking.width / 2);
     } else if (id === 1) {
         viking = game.add.sprite(x, y, 'red_viking');
         viking.scale.setTo(0.5, 0.5);
         turret = game.add.sprite(viking.x - 100, viking.y + 14, 'right_turret');
         turret.anchor.x = 1;
         turret.anchor.y = 0;
+
+        let playerOneTween = game.add.tween(game.camera).to( { x: 4000 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
+        let playerTwoTween = game.add.tween(game.camera).to( { x: 100 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
+        playerOneTween.chain(playerTwoTween);
+        playerTwoTween.onComplete.add(allowFire, this);
+        playerOneTween.start();
+        
     }
 
     viking.animations.add('death', [0,1,2,3,4,5,6,7], 10);
     viking.animations.add('idle', [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32], 10, true);
     viking.animations.play('idle');
 
-    turret.scale.setTo(0.25, 0.25);       
+    turret.scale.setTo(0.25, 0.25);
+
     viking.anchor.setTo(0.5,0.5);
     game.physics.arcade.enable(viking);
     viking.body.immovable = true;
@@ -124,15 +145,22 @@ Game.addNewPlayer = function(id, x, y) {
 
     playerGroup.add(viking);
     playerGroup.add(turret);
-    game.camera.follow(viking);
+
+    game.camera.y = y;
 
     Game.vikingMap[id] = playerGroup;
 };
 
+function allowFire() {
+    console.log("allow fire called");
+    fireAllowed = true;
+}
+
 Game.fireBullet = function(power, angle, player) {
-    if (player.turn) {
+    if (player.turn && fireAllowed) {
+        console.log("SHOTS FIRED");
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'left_turret');
-        bullet.scale.setTo(0.5, 0.5);
+        bullet.scale.setTo(0.2, 0.2);
         game.physics.arcade.enable(bullet);
         bullet.body.collideWorldBounds = true;
         bullet.body.bounce.setTo(0.1, 0.5);

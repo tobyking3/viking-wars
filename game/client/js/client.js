@@ -25,6 +25,10 @@ Client.turretAngle = function(turretAngle) {
   Client.socket.emit('turretangle', turretAngle);
 };
 
+Client.turretPower = function(turretPower) {
+  Client.socket.emit('turretpower', turretPower);
+};
+
 Client.socket.on('playerdied', function(playerId) {
     console.log('Kill the player!');
     Game.killPlayer(playerId);
@@ -32,6 +36,10 @@ Client.socket.on('playerdied', function(playerId) {
 
 Client.socket.on('updateturretangle', function(turretAngle, player) {
     Game.updateTurretAngle(turretAngle, player.id);
+});
+
+Client.socket.on('updateturretpower', function(turretPower, player) {
+    Game.updateTurretPower(turretPower, player.id);
 });
 
 Client.sendSpace = function(power, angle) {
