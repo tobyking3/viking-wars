@@ -141,17 +141,18 @@ Game.addNewPlayer = function(id, x, y) {
         playerOneTween.chain(playerTwoTween);
         playerTwoTween.onComplete.add(allowFire, this);
         playerOneTween.start();
-        
     }
 
     viking.animations.add('death', [0,1,2,3,4,5,6,7], 10);
-    viking.animations.add('idle', [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32], 10, true);
+    viking.animations.add('shoot', [8,9,10,11,12,13], 10);
+    viking.animations.add('idle', [14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38], 10, true);
     viking.animations.play('idle');
 
     turret.width = power / 4;
 
     viking.anchor.setTo(0.5,0.5);
     game.physics.arcade.enable(viking);
+    viking.body.setSize(303, 167, 0, 0);
     viking.body.immovable = true;
     viking.body.gravity.y = 0;
 
@@ -179,7 +180,10 @@ Game.fireBullet = function(power, angle, player) {
         bullet.body.gravity.y = 900;
 
         bullet.anchor.setTo(0.5, 0.5);
-        bullet.body.blocked.down === true;
+
+        Game.vikingMap[player.id].children[0].animations.play('shoot').onComplete.add(function() {
+            Game.vikingMap[player.id].children[0].animations.play('idle');
+        });
 
         game.camera.follow(bullet);
 
@@ -199,6 +203,7 @@ Game.fireBullet = function(power, angle, player) {
 };
 
 Game.killPlayer = function(playerId) {
+    Game.vikingMap[playerId].children[0].animations.stop();
     Game.vikingMap[playerId].children[0].animations.play('death');
 };
 
