@@ -25,8 +25,8 @@ Game.preload = function() {
     game.load.image('background', 'assets/backgrounds/long_scene.png');
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.image('left_turret', './assets/left_arrow.png');
-    game.load.image('right_turret', './assets/right_arrow.png');
+    game.load.image('arrow', './assets/left_arrow.png');
+    game.load.image('turret', './assets/turret.png');
 };
 
 Game.create = function() {
@@ -113,14 +113,14 @@ Game.addNewPlayer = function(id, x, y) {
     if (id === 0) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(-0.5, 0.5);
-        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'left_turret');
+        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
         game.camera.x = x + (viking.width / 2);
     } else if (id === 1) {
         viking = game.add.sprite(x, y, 'red_viking');
         viking.scale.setTo(0.5, 0.5);
-        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'right_turret');
+        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret');
         turret.anchor.x = 1;
         turret.anchor.y = 0;
 
@@ -159,7 +159,7 @@ function allowFire() {
 Game.fireBullet = function(power, angle, player) {
     if (player.turn && fireAllowed) {
         console.log("SHOTS FIRED");
-        bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'left_turret');
+        bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
         game.physics.arcade.enable(bullet);
         bullet.body.collideWorldBounds = true;
