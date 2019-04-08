@@ -28,6 +28,7 @@ Game.preload = function() {
     game.load.image('arrow', './assets/left_arrow.png');
     game.load.image('turret_player_1', './assets/turret-player1.png');
     game.load.image('turret_player_2', './assets/turret-player2.png');
+    game.load.image('ground', './assets/ground.png');
 };
 
 Game.create = function() {
@@ -36,6 +37,12 @@ Game.create = function() {
 
     game.add.sprite(0, 0, 'background');
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    ground = game.add.sprite(0, 1020, 'ground');
+    ground.width = 4329;
+    game.physics.arcade.enable(ground);
+    ground.body.immovable = true;
+    ground.body.gravity.y = 0;
 
     game.world.setBounds(0, 0, Game.worldWidth, Game.worldHeight, false, false, false, false);
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -55,11 +62,11 @@ Game.create = function() {
 Game.update = function() {
     if (cursors.left.isDown && power > 800) {
         power -= 5;
-        Client.turretPower(power / 3);
+        Client.turretPower(power / 4);
 
-    } else if (cursors.right.isDown && power < 2200) {
+    } else if (cursors.right.isDown && power < 3000) {
         power += 5;
-        Client.turretPower(power / 3);
+        Client.turretPower(power / 4);
     }
 
     if (cursors.up.isDown && fakeAngle > -90) {
@@ -76,11 +83,11 @@ Game.update = function() {
         if (game.physics.arcade.collide(bullet, target)) {
             Client.playerHit();
         }
+        if (game.physics.arcade.collide(bullet, ground)) {
+            console.log(bullet.body.velocity.x);
+            bullet.body.velocity.x = 0;
+        }
     }
-
-    // if(bullet.body.touching.down){
-    //     bullet.body.velocity.x = 0;
-    // }
 
     powerText.text = 'Power: ' + power;
 };
@@ -141,7 +148,7 @@ Game.addNewPlayer = function(id, x, y) {
     viking.animations.add('idle', [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32], 10, true);
     viking.animations.play('idle');
 
-    turret.width = power / 3;
+    turret.width = power / 4;
 
     viking.anchor.setTo(0.5,0.5);
     game.physics.arcade.enable(viking);
@@ -166,11 +173,14 @@ Game.fireBullet = function(power, angle, player) {
         console.log("SHOTS FIRED");
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
+
         game.physics.arcade.enable(bullet);
-        bullet.body.collideWorldBounds = true;
+
         bullet.body.gravity.y = 900;
 
         bullet.anchor.setTo(0.5, 0.5);
+        bullet.body.blocked.down === true;
+
         game.camera.follow(bullet);
 
         let p = new Phaser.Point(turret.x, turret.y);
