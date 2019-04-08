@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "__viking_archer_fire_arrow_up_000.png",
+	"frame": {"x":1,"y":537,"w":376,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":54,"y":18,"w":376,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_fire_arrow_up_001.png",
+	"frame": {"x":1,"y":1,"w":441,"h":534},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":41,"w":441,"h":534},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_fire_arrow_up_002.png",
+	"frame": {"x":379,"y":549,"w":470,"h":491},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":159,"y":84,"w":470,"h":491},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_fire_arrow_up_003.png",
+	"frame": {"x":1,"y":1096,"w":455,"h":510},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":152,"y":65,"w":455,"h":510},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_fire_arrow_up_004.png",
+	"frame": {"x":444,"y":1,"w":414,"h":546},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":129,"y":29,"w":414,"h":546},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_fire_arrow_up_005.png",
+	"frame": {"x":458,"y":1042,"w":341,"h":562},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":13,"w":341,"h":562},
+	"sourceSize": {"w":767,"h":617}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "brown_shoot.png",
+	"format": "RGBA8888",
+	"size": {"w":859,"h":1607},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b4ec86f9fd5d380d6d6690feba95bc82:b65d6eb163e1fb6437792bda1fe6750f:34d3c58f30fb2184dcb5b9c96adfa39c$"
+}
+}
