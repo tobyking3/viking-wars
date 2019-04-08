@@ -9,7 +9,7 @@ let target = null;
 let turret = null;
 let bullet = null;
 let fakeAngle = 0;
-let power = 300;
+let power = 800;
 let powerText = null;
 
 let cursors = null;
@@ -26,7 +26,8 @@ Game.preload = function() {
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('arrow', './assets/left_arrow.png');
-    game.load.image('turret', './assets/turret.png');
+    game.load.image('turret_player_1', './assets/turret-player1.png');
+    game.load.image('turret_player_2', './assets/turret-player2.png');
 };
 
 Game.create = function() {
@@ -52,13 +53,13 @@ Game.create = function() {
 };
 
 Game.update = function() {
-    if (cursors.left.isDown && power > 100) {
+    if (cursors.left.isDown && power > 800) {
         power -= 5;
-        Client.turretPower(power);
+        Client.turretPower(power / 3);
 
-    } else if (cursors.right.isDown && power < 1200) {
+    } else if (cursors.right.isDown && power < 2200) {
         power += 5;
-        Client.turretPower(power);
+        Client.turretPower(power / 3);
     }
 
     if (cursors.up.isDown && fakeAngle > -90) {
@@ -76,6 +77,10 @@ Game.update = function() {
             Client.playerHit();
         }
     }
+
+    // if(bullet.body.touching.down){
+    //     bullet.body.velocity.x = 0;
+    // }
 
     powerText.text = 'Power: ' + power;
 };
@@ -113,14 +118,14 @@ Game.addNewPlayer = function(id, x, y) {
     if (id === 0) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(-0.5, 0.5);
-        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret');
+        turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret_player_1');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
         game.camera.x = x + (viking.width / 2);
     } else if (id === 1) {
         viking = game.add.sprite(x, y, 'red_viking');
         viking.scale.setTo(0.5, 0.5);
-        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret');
+        turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret_player_2');
         turret.anchor.x = 1;
         turret.anchor.y = 0;
 
@@ -136,7 +141,7 @@ Game.addNewPlayer = function(id, x, y) {
     viking.animations.add('idle', [8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32], 10, true);
     viking.animations.play('idle');
 
-    turret.scale.setTo(0.25, 0.25);
+    turret.width = power / 3;
 
     viking.anchor.setTo(0.5,0.5);
     game.physics.arcade.enable(viking);
@@ -163,8 +168,7 @@ Game.fireBullet = function(power, angle, player) {
         bullet.scale.setTo(0.2, 0.2);
         game.physics.arcade.enable(bullet);
         bullet.body.collideWorldBounds = true;
-        bullet.body.bounce.setTo(0.1, 0.5);
-        bullet.body.gravity.y = 1000;
+        bullet.body.gravity.y = 900;
 
         bullet.anchor.setTo(0.5, 0.5);
         game.camera.follow(bullet);
