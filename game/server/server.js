@@ -1,98 +1,78 @@
 const PORT = 55000;
-
 // Make a new HTTP server
-var server = require('http').createServer();
+let server = require('http').createServer();
 
-//Socket takes in the HTTP server created above, and adds it's own
-//layer on top of it for ease of use. 'io' is the Socket.io server object. You could call it
-// 'socketIOServer' or something similar if you wish, but all of the documentation for Socket.io uses just 'io'.
+// client takes in the HTTP server created above, and adds it's own
+// layer on top of it for ease of use. 'io' is the client.io server object. You could call it
+// 'clientIOServer' or something similar if you wish, but all of the documentation for client.io uses just 'io'.
 let io = require('socket.io')(server);
 
-// Use to manage the players in the game
+// Lobby class
+let Game = require('./game.js');
+// Players
 let players = {};
-let activePlayer = 0;
 
-io.on('connection', function(socket) {
+main();
 
-    socket.on('newplayer',function() {
+function main() {
+    let game = new Game(io);
 
-        let playerId = server.lastPlayerID++;
+    if (game.checkSlotAvailable()) {
+        io.on('connection', function(client) {
+            client.on('newplayer', function() {
+                game.addPlayer(client, io);
+                players = game.getAllPlayers(io);
+                client.emit('allplayers', players);
 
-        socket.player = {
-            id: playerId,
-            x: playerId === 0 ? 100 : 1000,
-            y: 900,
-            health: 100,
-            turn: playerId === 0 ? true : false
-        };
+                client.broadcast.emit('newplayer', client.player);
 
-        socket.emit('allplayers', getAllPlayers());
+                client.on('click', function(data) {
+                    client.player.x = data.x;
+                    client.player.y = data.y;
+                    io.emit('move', client.player);
+                });
 
-        socket.broadcast.emit('newplayer', socket.player);
+                client.on('disconnect', function(client, io) {
+                    client.lastPlayerID--;
+                    game.disconnect(client, io);
 
-        socket.on('click', function(data) {
-            socket.player.x = data.x;
-            socket.player.y = data.y;
-            io.emit('move',socket.player);
+                });
+
+            });
+
+            client.on('space', function(data) {
+                io.emit('fire', data.power, data.angle, client.player);
+            });
+
+            client.on('turntaken', function() {
+                client.player.turn = !client.player.turn;
+            });
+
+            client.on('playerhit', function() {
+                if (client.player.turn) {
+                    if (client.player.health > 20) {
+                        client.player.health -= 20;
+                    } else {
+                        io.emit('playerdied', client.player.id);
+                    }
+                }
+            });
+
+            client.on('turretangle', function(turretAngle) {
+                io.emit('updateturretangle', turretAngle, client.player);
+            });
+
+            client.on('turretpower', function(turretPower) {
+                io.emit('updateturretpower', turretPower, client.player);
+            });
         });
-
-        socket.on('disconnect', function() {
-            socket.lastPlayerID--;
-            io.emit('remove', socket.player.id);
-        });
-
-    });
-
-
-
-
-
-    socket.on('space', function(data) {
-        io.emit('fire', data.power, data.angle, socket.player);
-    });
-
-    socket.on('turntaken', function() {
-        socket.player.turn = !socket.player.turn;
-    });
-
-    socket.on('playerhit', function() {
-        if (socket.player.turn) {
-            if (socket.player.health > 20) {
-                socket.player.health -= 20;
-            } else {
-                io.emit('playerdied', socket.player.id);
-            }
-        }
-    });
-
-    socket.on('turretangle', function(turretAngle) {
-        io.emit('updateturretangle', turretAngle, socket.player);
-    });
-
-    socket.on('turretpower', function(turretPower) {
-        io.emit('updateturretpower', turretPower, socket.player);
-    });
-    
-});
-
+    } else {
+        console.log('NOT AVAILABLE');
+    }
+}
 
 server.listen(PORT, function(){
     console.log('Listening on ' + server.address().port);
 });
 
 server.lastPlayerID = 0;
-
-function getAllPlayers(){
-    let players = [];
-    Object.keys(io.sockets.connected).forEach(function(socketID){
-        let player = io.sockets.connected[socketID].player;
-        if(player) players.push(player);
-    });
-
-    return players;
-}
-
-function randomInt(low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
-}
-

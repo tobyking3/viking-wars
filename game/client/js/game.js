@@ -17,6 +17,8 @@ let fireButton = null;
 
 let fireAllowed = false;
 
+let readyButton;
+
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
 };
@@ -29,6 +31,7 @@ Game.preload = function() {
     game.load.image('turret_player_1', './assets/turret-player1.png');
     game.load.image('turret_player_2', './assets/turret-player2.png');
     game.load.image('ground', './assets/ground.png');
+    game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
 };
 
 Game.create = function() {
@@ -56,7 +59,8 @@ Game.create = function() {
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     fireButton.onDown.add(Game.fireProperties, this);
 
-    Client.askNewPlayer();
+    readyButton = game.add.button(400, 300, 'ready_button', onReadyClick);
+    readyButton.scale.setTo(0.5, 0.5);
 };
 
 Game.update = function() {
@@ -109,6 +113,7 @@ Game.updateTurretPower = function(turretPower, playerId) {
 };
 
 Game.fireProperties = function() {
+    console.log('fireProperties');
     Client.sendSpace(power, fakeAngle);
 };
 
@@ -164,6 +169,7 @@ Game.addNewPlayer = function(id, x, y) {
     game.camera.y = y;
 
     Game.vikingMap[id] = playerGroup;
+    console.log(Game.vikingMap);
 };
 
 function allowFire() {
@@ -211,10 +217,15 @@ Game.killPlayer = function(playerId) {
     Game.vikingMap[playerId].children[0].animations.play('death');
 };
 
+function onReadyClick() {
+    readyButton.destroy();
+    Client.askNewPlayer();
+};
+
 function registerTurn() {
     Client.turnTaken();
     clickable = true;
-}
+};
 
 Game.removePlayer = function(id) {
     Game.vikingMap[id].destroy();

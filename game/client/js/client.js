@@ -6,7 +6,8 @@ Client.askNewPlayer = function() {
 };
 
 Client.sendClick = function(x, y) {
-  Client.socket.emit('click',{x: x, y: y});
+    console.log('Send click');
+    Client.socket.emit('click', {x: x, y: y});
 };
 
 Client.playerHit = function() {
@@ -43,6 +44,7 @@ Client.socket.on('updateturretpower', function(turretPower, player) {
 });
 
 Client.sendSpace = function(power, angle) {
+    console.log('sendSpace');
     Client.socket.emit('space', {power: power, angle: angle});
 };
 
@@ -54,10 +56,6 @@ Client.socket.on('allplayers',function(data) {
     for (let i = 0; i < data.length; i++) {
         Game.addNewPlayer(data[i].id,data[i].x,data[i].y);
     }
-
-    Client.socket.on('move',function(data) {
-        Game.movePlayer(data.id,data.x,data.y,data.turn);
-    });
 
     Client.socket.on('remove',function(id) {
         Game.removePlayer(id);
