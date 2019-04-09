@@ -55,7 +55,6 @@ Game.create = function() {
     ground.body.gravity.y = 0;
 
     game.world.setBounds(0, 0, Game.worldWidth, Game.worldHeight, false, false, false, false);
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
     power = 800;
     powerText = game.add.text(8, 8, 'Power: 800', {font: "18px Arial", fill: "#ffffff"});
