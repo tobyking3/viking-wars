@@ -30,8 +30,12 @@ Client.turretPower = function(turretPower) {
   Client.socket.emit('turretpower', turretPower);
 };
 
-Client.socket.on('playerdied', function(playerId) {
-    console.log('Kill the player!');
+Client.socket.on('healthChange', function(id, health) {
+    console.log('healthChange', id, health);
+    Game.setPlayerHealth(id, health);
+});
+
+Client.socket.on('playerDied', function(playerId) {
     Game.killPlayer(playerId);
 });
 
@@ -44,7 +48,6 @@ Client.socket.on('updateturretpower', function(turretPower, player) {
 });
 
 Client.sendSpace = function(power, angle) {
-    console.log('sendSpace');
     Client.socket.emit('space', {power: power, angle: angle});
 };
 
