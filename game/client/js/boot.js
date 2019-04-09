@@ -1,6 +1,6 @@
 let Boot = {};
 
-let playerCount = false;
+let playersReady = false;
 
 let waitingMessage;
 
@@ -29,13 +29,13 @@ Boot.create = function() {
     waitingMessage.y = game.height / 2 - waitingMessage.height / 2;
 };
 
-Boot.setConnectionCount = function(connectionCounter) {
-    playerCount = connectionCounter;
-    if (playerCount === 2) {
+Boot.setConnectionCount = function(connectionState) {
+    playersReady = connectionState;
+    if (playersReady) {
         Boot.startGame();
-    } 
-}
+    }
+};
 
 Boot.startGame = function() {
     game.state.start('Game');
-}
+};

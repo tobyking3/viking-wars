@@ -228,6 +228,6 @@ Game.removePlayer = function(id) {
     };
 };
 
-Game.setConnectionCount = function(connectionCount) {
-    console.log('Here', connectionCount)
+Game.setConnectionCount = function(connectionState) {
+    console.log('Game.setConnectionCount', connectionState)
 };

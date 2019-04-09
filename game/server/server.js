@@ -14,73 +14,19 @@ let players = {};
 
 let game = new Game(io);
 
-
-
-
 let connectionCounter = 0;
 
 io.on('connection', function(client) {
 
-
     connectionCounter++;
-    console.log(connectionCounter);
-    client.emit('connection_change', connectionCounter);
-    client.broadcast.emit('connection_change', connectionCounter);      
-
+    client.emit('connection_change', checkConnectionState());
+    client.broadcast.emit('connection_change', checkConnectionState());
 
     client.on('disconnect', function() {
         connectionCounter--;
-        console.log(connectionCounter);
-        client.emit('connection_change', connectionCounter);
-        client.broadcast.emit('connection_change', connectionCounter);      
+        client.emit('connection_change', checkConnectionState());
+        client.broadcast.emit('connection_change', checkConnectionState());
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     client.on('newplayer', function() {
 
@@ -126,6 +72,10 @@ io.on('connection', function(client) {
         io.emit('updateturretpower', turretPower, client.player);
     });
 });
+
+function checkConnectionState() {
+    return connectionCounter === 2 ? true : false;
+};
 
 server.lastPlayerID = 0;
 

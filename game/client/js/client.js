@@ -1,21 +1,10 @@
 let Client = {};
 Client.socket = io('http://localhost:55000');
 
-Client.socket.on('connection_change', function(connectionCounter){
-    Boot.setConnectionCount(connectionCounter);
-    Game.setConnectionCount(connectionCounter);
-})
-
-
-
-
-
-
-
-
-
-
-
+Client.socket.on('connection_change', function(connectionState){
+    Boot.setConnectionCount(connectionState);
+    Game.setConnectionCount(connectionState);
+});
 
 Client.askNewPlayer = function() {
     Client.socket.emit('newplayer');

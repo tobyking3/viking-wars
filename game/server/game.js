@@ -1,12 +1,7 @@
 module.exports = class Game {
     constructor() {
-        this.playerOne = 0;
         this.playerTwo = 1;
         this.connectedPlayers = 0;
-        this.minPlayers = 1;
-        this.maxPlayers = 2;
-        this.gameReady = false;
-        this.gameInProgress = false;
     }
 
     addPlayer(client, playerID) {
@@ -33,10 +28,6 @@ module.exports = class Game {
         });
 
         return players;
-    }
-
-    checkSlotAvailable() {
-        return this.connectedPlayers < 2;
     }
 
     disconnect() {
