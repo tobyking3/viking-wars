@@ -19,6 +19,9 @@ let fireAllowed = false;
 let readyButton;
 let ground;
 
+let playerOneTween;
+let playerTwoTween;
+
 Game.init = function() {
     game.stage.disableVisibilityChange = true;
 };
@@ -41,6 +44,10 @@ Game.create = function() {
 
     game.add.sprite(0, 0, 'background');
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    game.camera.x = 0;
+    playerOneTween = game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None);
+    playerTwoTween = game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None);
 
     ground = game.add.sprite(0, 1020, 'ground');
     ground.width = 4329;
@@ -88,13 +95,31 @@ Game.update = function() {
             console.log("PLAYER HIT");
             Client.playerHit();
         }
-        if (game.physics.arcade.collide(bullet, ground)) {
-            bullet.body.velocity.x = 0;
-        }
+
+        game.physics.arcade.collide(bullet, ground, function () {
+            if (!bullet.hasCollided) {
+                bullet.hasCollided = true;
+                bullet.body.velocity.x = 0;
+                console.log('BULLET FALLEN');
+                Game.cameraUpdate();
+            }
+        });
+
     }
 
     powerText.text = 'Power: ' + power;
 };
+
+Game.cameraUpdate = function(){
+    console.log("CAMERA UPDATE");
+    game.camera.target = null;
+    game.time.events.add(Phaser.Timer.SECOND * 3, Game.moveCamera, this);
+}
+
+Game.moveCamera = function(){
+    console.log("CAMERA MOVE");
+    game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
+}
 
 Game.updateTurretAngle = function(turretAngle, playerId) {
     if (playerId === 0) {
@@ -129,7 +154,6 @@ Game.addNewPlayer = function(id, x, y) {
         turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret_player_1');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
-        game.camera.x = x + (viking.width / 2);
     } else if (id === 1) {
         viking = game.add.sprite(x, y, 'red_viking');
         viking.scale.setTo(0.5, 0.5);
@@ -137,8 +161,6 @@ Game.addNewPlayer = function(id, x, y) {
         turret.anchor.x = 1;
         turret.anchor.y = 0;
 
-        let playerOneTween = game.add.tween(game.camera).to( { x: 4000 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
-        let playerTwoTween = game.add.tween(game.camera).to( { x: 100 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
         playerOneTween.chain(playerTwoTween);
         playerTwoTween.onComplete.add(allowFire, this);
         playerOneTween.start();
