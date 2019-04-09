@@ -9,6 +9,7 @@ Boot.init = function() {
 };
 
 Boot.preload = function() {
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.load.image('background', 'assets/backgrounds/long_scene.png');
     game.load.image('waiting', 'assets/waiting.png');
 };
