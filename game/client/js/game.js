@@ -24,7 +24,8 @@ let powerText = null;
 let cursors = null;
 let fireButton = null;
 let fireAllowed = false;
-let whoosh = undefined;
+let whooshSound = undefined;
+let deathSound = undefined;
 
 let readyButton;
 let ground;
@@ -44,6 +45,7 @@ Game.preload = function() {
     game.load.image('ground', './assets/ground.png');
     game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
     game.load.audio('whoosh', 'assets/whoosh.wav');
+    game.load.audio('death', 'assets/death_sound.wav');
 };
 
 Game.create = function() {
@@ -68,7 +70,8 @@ Game.create = function() {
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     fireButton.onDown.add(Game.fireProperties, this);
-    whoosh = game.add.audio('whoosh');
+    whooshSound = game.add.audio('whoosh');
+    deathSound = game.add.audio('death');
 
     readyButton = game.add.button(400, 300, 'ready_button', onReadyClick);
     readyButton.scale.setTo(0.5, 0.5);
@@ -234,11 +237,11 @@ Game.fireBullet = function(power, angle, player) {
 
         if (player.id === 0) {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, power, bullet.body.velocity);
-            whoosh.play();
+            whooshSound.play();
             target = Game.vikingMap[player.id + 1].children[0];
         } else {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
-            whoosh.play();
+            whooshSound.play();
             target = Game.vikingMap[player.id - 1].children[0];
         }
 
@@ -249,6 +252,7 @@ Game.fireBullet = function(power, angle, player) {
 Game.killPlayer = function(playerId) {
     Game.vikingMap[playerId].children[0].animations.stop();
     Game.vikingMap[playerId].children[0].animations.play('death');
+    deathSound.play();
     game.state.start('Start');
 };
 
