@@ -3,6 +3,8 @@ let Game = {
     worldHeight: 1080,
 };
 
+let gameStarted = false;
+
 let playerHealth = {
     0: 100,
     1: 100
@@ -268,5 +270,9 @@ Game.removePlayer = function(id) {
 };
 
 Game.setConnectionCount = function(connectionState) {
-    // Implement disconnect logic
+    if (connectionState) {
+        gameStarted = true;
+    } else if (!connectionState && gameStarted) {
+        game.state.start('End');
+    }
 };
