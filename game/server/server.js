@@ -20,11 +20,10 @@ function main() {
     if (game.checkSlotAvailable()) {
         io.on('connection', function(client) {
             client.on('newplayer', function() {
-                game.addPlayer(client, io);
-                players = game.getAllPlayers(io);
-                client.emit('allplayers', players);
 
-                client.broadcast.emit('newplayer', client.player);
+                let playerID = server.lastPlayerID++;
+                game.addPlayer(client, playerID);
+                client.emit('allplayers', game.getAllPlayers(io));
 
                 client.on('click', function(data) {
                     client.player.x = data.x;
@@ -35,9 +34,7 @@ function main() {
                 client.on('disconnect', function(client, io) {
                     client.lastPlayerID--;
                     game.disconnect(client, io);
-
                 });
-
             });
 
             client.on('space', function(data) {
@@ -71,8 +68,8 @@ function main() {
     }
 }
 
+server.lastPlayerID = 0;
+
 server.listen(PORT, function(){
     console.log('Listening on ' + server.address().port);
 });
-
-server.lastPlayerID = 0;

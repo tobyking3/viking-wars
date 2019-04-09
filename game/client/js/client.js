@@ -6,7 +6,6 @@ Client.askNewPlayer = function() {
 };
 
 Client.sendClick = function(x, y) {
-    console.log('Send click');
     Client.socket.emit('click', {x: x, y: y});
 };
 

@@ -18,6 +18,7 @@ let fireButton = null;
 let fireAllowed = false;
 
 let readyButton;
+let ground;
 
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
@@ -61,6 +62,8 @@ Game.create = function() {
 
     readyButton = game.add.button(400, 300, 'ready_button', onReadyClick);
     readyButton.scale.setTo(0.5, 0.5);
+
+    // Client.askNewPlayer();
 };
 
 Game.update = function() {
@@ -127,6 +130,8 @@ Game.addNewPlayer = function(id, x, y) {
     let playerGroup = game.add.group(game.world, 'playerGroup');
     let viking;
 
+    console.log('Player ID', id);
+
     if (id === 0) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(-0.5, 0.5);
@@ -141,11 +146,11 @@ Game.addNewPlayer = function(id, x, y) {
         turret.anchor.x = 1;
         turret.anchor.y = 0;
 
-        // let playerOneTween = game.add.tween(game.camera).to( { x: 4000 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
-        // let playerTwoTween = game.add.tween(game.camera).to( { x: 100 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
-        // playerOneTween.chain(playerTwoTween);
-        // playerTwoTween.onComplete.add(allowFire, this);
-        // playerOneTween.start();
+        let playerOneTween = game.add.tween(game.camera).to( { x: 4000 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
+        let playerTwoTween = game.add.tween(game.camera).to( { x: 100 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
+        playerOneTween.chain(playerTwoTween);
+        playerTwoTween.onComplete.add(allowFire, this);
+        playerOneTween.start();
     }
 
     viking.animations.add('death', [0,1,2,3,4,5,6,7], 10);
@@ -169,20 +174,15 @@ Game.addNewPlayer = function(id, x, y) {
     game.camera.y = y;
 
     Game.vikingMap[id] = playerGroup;
-    console.log(Game.vikingMap);
 };
 
 function allowFire() {
-    console.log("allow fire called");
     fireAllowed = true;
 }
 
 Game.fireBullet = function(power, angle, player) {
-
-    // && fireAllowed--------------------
-
-    if (player.turn) {
-        console.log("SHOTS FIRED");
+    // && fireAllowed
+    if (player.turn && fireAllowed) {
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
 
@@ -229,14 +229,13 @@ function registerTurn() {
 
 Game.removePlayer = function(id) {
     Game.vikingMap[id].destroy();
-
     console.log("PLAYER " + id + " HAS LEFT THE GAME");
 
-    if(id === 0){
+    if (id === 0){
         game.camera.follow(Game.vikingMap[1].children[0]);
     };
 
-    if(id === 1){
+    if (id === 1){
         game.camera.follow(Game.vikingMap[0].children[0]);
     };
 };
