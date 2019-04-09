@@ -23,17 +23,6 @@ Game.init = function() {
     game.stage.disableVisibilityChange = true;
 };
 
-Game.preload = function() {
-    game.load.image('background', 'assets/backgrounds/long_scene.png');
-    game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.image('arrow', './assets/left_arrow.png');
-    game.load.image('turret_player_1', './assets/turret-player1.png');
-    game.load.image('turret_player_2', './assets/turret-player2.png');
-    game.load.image('ground', './assets/ground.png');
-    game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
-};
-
 Game.create = function() {
     Game.playerMap = {};
     Game.vikingMap = {};
@@ -114,7 +103,7 @@ Game.updateTurretPower = function(turretPower, playerId) {
 
 Game.fireProperties = function() {
     console.log('fireProperties');
-    Client.sendSpace(power, fakeAngle);
+    Client.sendSpace(power, angle);
 };
 
 Game.getCoordinates = function(pointer) {
@@ -212,6 +201,8 @@ Game.fireBullet = function(power, angle, player) {
 Game.killPlayer = function(playerId) {
     Game.vikingMap[playerId].children[0].animations.stop();
     Game.vikingMap[playerId].children[0].animations.play('death');
+
+    game.state.start('Start');
 };
 
 function onReadyClick() {
@@ -235,4 +226,8 @@ Game.removePlayer = function(id) {
     if (id === 1) {
         game.camera.follow(Game.vikingMap[0].children[0]);
     };
+};
+
+Game.setConnectionCount = function(connectionCount) {
+    console.log('Here', connectionCount)
 };

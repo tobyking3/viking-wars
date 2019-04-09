@@ -12,61 +12,120 @@ let Game = require('./game.js');
 // Players
 let players = {};
 
-main();
+let game = new Game(io);
 
-function main() {
-    let game = new Game(io);
 
-    if (game.checkSlotAvailable()) {
-        io.on('connection', function(client) {
-            client.on('newplayer', function() {
 
-                let playerID = server.lastPlayerID++;
-                game.addPlayer(client, playerID);
-                client.emit('allplayers', game.getAllPlayers(io));
 
-                client.on('click', function(data) {
-                    client.player.x = data.x;
-                    client.player.y = data.y;
-                    io.emit('move', client.player);
-                });
+let connectionCounter = 0;
 
-                client.on('disconnect', function(client, io) {
-                    client.lastPlayerID--;
-                    game.disconnect();
-                });
-            });
+io.on('connection', function(client) {
 
-            client.on('space', function(data) {
-                io.emit('fire', data.power, data.angle, client.player);
-            });
 
-            client.on('turntaken', function() {
-                client.player.turn = !client.player.turn;
-            });
+    connectionCounter++;
+    console.log(connectionCounter);
+    client.emit('connection_change', connectionCounter);
+    client.broadcast.emit('connection_change', connectionCounter);      
 
-            client.on('playerhit', function() {
-                if (client.player.turn) {
-                    if (client.player.health > 20) {
-                        client.player.health -= 20;
-                    } else {
-                        io.emit('playerdied', client.player.id);
-                    }
-                }
-            });
 
-            client.on('turretangle', function(turretAngle) {
-                io.emit('updateturretangle', turretAngle, client.player);
-            });
+    client.on('disconnect', function() {
+        connectionCounter--;
+        console.log(connectionCounter);
+        client.emit('connection_change', connectionCounter);
+        client.broadcast.emit('connection_change', connectionCounter);      
+    });
 
-            client.on('turretpower', function(turretPower) {
-                io.emit('updateturretpower', turretPower, client.player);
-            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    client.on('newplayer', function() {
+
+        let playerID = server.lastPlayerID++;
+        game.addPlayer(client, playerID);
+        client.emit('allplayers', game.getAllPlayers(io));
+
+        client.on('click', function(data) {
+            client.player.x = data.x;
+            client.player.y = data.y;
+            io.emit('move', client.player);
         });
-    } else {
-        console.log('NOT AVAILABLE');
-    }
-}
+
+        client.on('disconnect', function(client, io) {
+            client.lastPlayerID--;
+            game.disconnect();
+        });
+    });
+
+    client.on('space', function(data) {
+        io.emit('fire', data.power, data.angle, client.player);
+    });
+
+    client.on('turntaken', function() {
+        client.player.turn = !client.player.turn;
+    });
+
+    client.on('playerhit', function() {
+        if (client.player.turn) {
+            if (client.player.health > 20) {
+                client.player.health -= 20;
+            } else {
+                io.emit('playerdied', client.player.id);
+            }
+        }
+    });
+
+    client.on('turretangle', function(turretAngle) {
+        io.emit('updateturretangle', turretAngle, client.player);
+    });
+
+    client.on('turretpower', function(turretPower) {
+        io.emit('updateturretpower', turretPower, client.player);
+    });
+});
 
 server.lastPlayerID = 0;
 
