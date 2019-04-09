@@ -11,7 +11,7 @@ module.exports = {
         // If it's player two,
         // emit to add the player for player one
         if (playerID === 1) {
-            client.broadcast.emit('newplayer', client.player);
+            client.broadcast.emit('newPlayer', client.player);
         }
     },
 

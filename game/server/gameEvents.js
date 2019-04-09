@@ -21,10 +21,10 @@ module.exports = {
     },
 
     updateTurretAngle(io, turretAngle, client) {
-        io.emit('updateturretangle', turretAngle, client.player);
+        io.emit('updateTurretAngle', turretAngle, client.player);
     },
 
     updateTurretPower(io, turretPower, client) {
-        io.emit('updateturretpower', turretPower, client.player);
+        io.emit('updateTurretPower', turretPower, client.player);
     }
 };

@@ -1,33 +1,33 @@
 let Client = {};
 Client.socket = io('http://localhost:55000');
 
-Client.socket.on('connection_change', function(connectionState){
+Client.socket.on('connectionChange', function(connectionState){
     Boot.setConnectionCount(connectionState);
     Game.setConnectionCount(connectionState);
 });
 
 Client.askNewPlayer = function() {
-    Client.socket.emit('newplayer');
+    Client.socket.emit('newPlayer');
 };
 
 Client.playerHit = function() {
-    Client.socket.emit('playerhit');
+    Client.socket.emit('playerHit');
 };
 
 Client.turnTaken = function(activePlayerID) {
-  Client.socket.emit('turntaken', activePlayerID);
+  Client.socket.emit('turnTaken', activePlayerID);
 };
 
-Client.socket.on('newplayer',function(data) {
+Client.socket.on('newPlayer',function(data) {
     Game.addNewPlayer(data.id, data.x, data.y);
 });
 
 Client.turretAngle = function(turretAngle) {
-  Client.socket.emit('turretangle', turretAngle);
+  Client.socket.emit('turretAngle', turretAngle);
 };
 
 Client.turretPower = function(turretPower) {
-  Client.socket.emit('turretpower', turretPower);
+  Client.socket.emit('turretPower', turretPower);
 };
 
 Client.socket.on('healthChange', function(id, health) {
@@ -39,11 +39,11 @@ Client.socket.on('playerDied', function(playerId) {
     Game.killPlayer(playerId);
 });
 
-Client.socket.on('updateturretangle', function(turretAngle, player) {
+Client.socket.on('updateTurretAngle', function(turretAngle, player) {
     Game.updateTurretAngle(turretAngle, player.id);
 });
 
-Client.socket.on('updateturretpower', function(turretPower, player) {
+Client.socket.on('updateTurretPower', function(turretPower, player) {
     Game.updateTurretPower(turretPower, player.id);
 });
 
@@ -55,7 +55,7 @@ Client.socket.on('fire', function(power, angle, player) {
     Game.fireBullet(power, angle, player);
 });
 
-Client.socket.on('allplayers',function(data) {
+Client.socket.on('allPlayers',function(data) {
     for (let i = 0; i < data.length; i++) {
         Game.addNewPlayer(data[i].id,data[i].x,data[i].y);
     }
