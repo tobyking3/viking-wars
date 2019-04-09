@@ -24,6 +24,7 @@ let powerText = null;
 let cursors = null;
 let fireButton = null;
 let fireAllowed = false;
+let whoosh = undefined;
 
 let readyButton;
 let ground;
@@ -42,6 +43,7 @@ Game.preload = function() {
     game.load.image('turret_player_2', './assets/turret-player2.png');
     game.load.image('ground', './assets/ground.png');
     game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
+    game.load.audio('whoosh', 'assets/whoosh.wav');
 };
 
 Game.create = function() {
@@ -66,6 +68,7 @@ Game.create = function() {
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     fireButton.onDown.add(Game.fireProperties, this);
+    whoosh = game.add.audio('whoosh');
 
     readyButton = game.add.button(400, 300, 'ready_button', onReadyClick);
     readyButton.scale.setTo(0.5, 0.5);
@@ -231,9 +234,11 @@ Game.fireBullet = function(power, angle, player) {
 
         if (player.id === 0) {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, power, bullet.body.velocity);
+            whoosh.play();
             target = Game.vikingMap[player.id + 1].children[0];
         } else {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
+            whoosh.play();
             target = Game.vikingMap[player.id - 1].children[0];
         }
 
