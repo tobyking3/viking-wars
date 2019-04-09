@@ -118,12 +118,6 @@ Game.fireProperties = function() {
     Client.sendSpace(power, angle);
 };
 
-Game.getCoordinates = function(pointer) {
-    if (clickable) {
-        Client.sendClick(pointer.worldX, pointer.worldY);
-    }
-};
-
 Game.addNewPlayer = function(id, x, y) {
     let playerGroup = game.add.group(game.world, 'playerGroup');
     let viking;

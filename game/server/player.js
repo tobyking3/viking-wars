@@ -1,9 +1,4 @@
-module.exports = class Game {
-    constructor() {
-        this.playerTwo = 1;
-        this.connectedPlayers = 0;
-    }
-
+module.exports = {
     addPlayer(client, playerID) {
         client.player = {
             id: playerID,
@@ -13,12 +8,12 @@ module.exports = class Game {
             turn: playerID === 0 ? true : false
         };
 
-        if (playerID === this.playerTwo) {
+        // If it's player two,
+        // emit to add the player for player one
+        if (playerID === 1) {
             client.broadcast.emit('newplayer', client.player);
         }
-
-        this.connectedPlayers++;
-    }
+    },
 
     getAllPlayers(io) {
         let players = [];
@@ -28,9 +23,5 @@ module.exports = class Game {
         });
 
         return players;
-    }
-
-    disconnect() {
-        this.connectedPlayers--;
     }
 };

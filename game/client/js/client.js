@@ -10,10 +10,6 @@ Client.askNewPlayer = function() {
     Client.socket.emit('newplayer');
 };
 
-Client.sendClick = function(x, y) {
-    Client.socket.emit('click', {x: x, y: y});
-};
-
 Client.playerHit = function() {
     Client.socket.emit('playerhit');
 };
