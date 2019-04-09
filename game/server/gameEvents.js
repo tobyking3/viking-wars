@@ -11,17 +11,20 @@ module.exports = {
         if (client.player.turn) {
             if (client.player.health > 20) {
                 client.player.health -= 20;
+                io.emit('healthChange', client.player.id, client.player.health);
             } else {
-                io.emit('playerdied', client.player.id);
+                client.player.health -= 20;
+                io.emit('healthChange', client.player.id, client.player.health);
+                io.emit('playerDied', client.player.id);
             }
         }
     },
 
     updateTurretAngle(io, turretAngle, client) {
-        io.emit('updateturretangle', turretAngle, client.player);
+        io.emit('updateTurretAngle', turretAngle, client.player);
     },
 
     updateTurretPower(io, turretPower, client) {
-        io.emit('updateturretpower', turretPower, client.player);
+        io.emit('updateTurretPower', turretPower, client.player);
     }
 };

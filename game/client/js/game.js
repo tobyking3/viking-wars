@@ -3,10 +3,19 @@ let Game = {
     worldHeight: 1080,
 };
 
+let gameStarted = false;
+
+let playerHealth = {
+    0: 100,
+    1: 100
+};
+
 let clickable = true;
 let target = null;
 
 let turret = null;
+let playerOneHealthBar = null;
+let playerTwoHealthBar = null;
 let bullet = null;
 let angle = 0;
 let power = 800;
@@ -15,6 +24,8 @@ let powerText = null;
 let cursors = null;
 let fireButton = null;
 let fireAllowed = false;
+let whooshSound = undefined;
+let deathSound = undefined;
 
 let readyButton;
 let ground;
@@ -36,10 +47,11 @@ Game.preload = function() {
     game.load.image('turret_player_2', './assets/turret-player2.png');
     game.load.image('ground', './assets/ground.png');
     game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
+    game.load.audio('whoosh', 'assets/whoosh.wav');
+    game.load.audio('death', 'assets/death_sound.wav');
 };
 
 Game.create = function() {
-    Game.playerMap = {};
     Game.vikingMap = {};
 
     game.add.sprite(0, 0, 'background');
@@ -65,6 +77,8 @@ Game.create = function() {
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     fireButton.onDown.add(Game.fireProperties, this);
+    whooshSound = game.add.audio('whoosh');
+    deathSound = game.add.audio('death');
 
     readyButton = game.add.button(400, 300, 'ready_button', onReadyClick);
     readyButton.scale.setTo(0.5, 0.5);
@@ -92,7 +106,6 @@ Game.update = function() {
     if (bullet) {
         bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x);
         if (game.physics.arcade.collide(bullet, target)) {
-            console.log("PLAYER HIT");
             Client.playerHit();
         }
 
@@ -138,7 +151,6 @@ Game.updateTurretPower = function(turretPower, playerId) {
 };
 
 Game.fireProperties = function() {
-    console.log('fireProperties');
     Client.sendSpace(power, angle);
 };
 
@@ -146,20 +158,49 @@ Game.addNewPlayer = function(id, x, y) {
     let playerGroup = game.add.group(game.world, 'playerGroup');
     let viking;
 
-    console.log('Player ID', id);
-
     if (id === 0) {
         viking = game.add.sprite(x, y, 'brown_viking');
         viking.scale.setTo(-0.5, 0.5);
         turret = game.add.sprite(viking.x + 100, viking.y + 14, 'turret_player_1');
         turret.anchor.x = 0;
         turret.anchor.y = 0;
+        // Player health
+        let barConfig = {
+            x: viking.x + 35,
+            y: viking.y - 200,
+            width: 150,
+            height: 30,
+            bg: {
+                color: '#E2574C'
+            },
+            bar: {
+                color: '#59FF8A'
+            }
+        };
+        playerOneHealthBar = new HealthBar(game, barConfig);
+        playerOneHealthBar.setPercent(playerHealth[0]);
+
     } else if (id === 1) {
         viking = game.add.sprite(x, y, 'red_viking');
         viking.scale.setTo(0.5, 0.5);
         turret = game.add.sprite(viking.x - 100, viking.y + 14, 'turret_player_2');
         turret.anchor.x = 1;
         turret.anchor.y = 0;
+        // Player health
+        let barConfig = {
+            x: viking.x - 35,
+            y: viking.y - 200,
+            width: 150,
+            height: 30,
+            bg: {
+                color: '#E2574C'
+            },
+            bar: {
+                color: '#59FF8A'
+            }
+        };
+        playerTwoHealthBar = new HealthBar(game, barConfig);
+        playerTwoHealthBar.setPercent(playerHealth[1]);
 
         playerOneTween.chain(playerTwoTween);
         playerTwoTween.onComplete.add(allowFire, this);
@@ -185,13 +226,17 @@ Game.addNewPlayer = function(id, x, y) {
     playerGroup.add(turret);
 
     game.camera.y = y;
-
     Game.vikingMap[id] = playerGroup;
 };
 
 function allowFire() {
     fireAllowed = true;
 }
+
+Game.setPlayerHealth = function(playerID, health) {
+    playerHealth[playerID] = health;
+    playerID === 0 ? playerOneHealthBar.setPercent(playerHealth[playerID]) : playerTwoHealthBar.setPercent(playerHealth[playerID]);
+};
 
 Game.fireBullet = function(power, angle, player) {
     // && fireAllowed
@@ -215,9 +260,11 @@ Game.fireBullet = function(power, angle, player) {
 
         if (player.id === 0) {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, power, bullet.body.velocity);
+            whooshSound.play();
             target = Game.vikingMap[player.id + 1].children[0];
         } else {
             game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
+            whooshSound.play();
             target = Game.vikingMap[player.id - 1].children[0];
         }
 
@@ -228,7 +275,7 @@ Game.fireBullet = function(power, angle, player) {
 Game.killPlayer = function(playerId) {
     Game.vikingMap[playerId].children[0].animations.stop();
     Game.vikingMap[playerId].children[0].animations.play('death');
-
+    deathSound.play();
     game.state.start('Start');
 };
 
@@ -244,7 +291,6 @@ function registerTurn() {
 
 Game.removePlayer = function(id) {
     Game.vikingMap[id].destroy();
-    console.log("PLAYER " + id + " HAS LEFT THE GAME");
 
     if (id === 0) {
         game.camera.follow(Game.vikingMap[1].children[0]);
@@ -256,5 +302,9 @@ Game.removePlayer = function(id) {
 };
 
 Game.setConnectionCount = function(connectionState) {
-    console.log('Game.setConnectionCount', connectionState)
+    if (connectionState) {
+        gameStarted = true;
+    } else if (!connectionState && gameStarted) {
+        game.state.start('End');
+    }
 };

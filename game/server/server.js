@@ -17,39 +17,39 @@ let connectionCounter = 0;
 
 io.on('connection', function(client) {
     connectionCounter++;
-    client.emit('connection_change', checkConnectionState());
-    client.broadcast.emit('connection_change', checkConnectionState());
+    client.emit('connectionChange', checkConnectionState());
+    client.broadcast.emit('connectionChange', checkConnectionState());
 
     client.on('disconnect', function() {
         connectionCounter--;
         client.lastPlayerID--;
-        client.emit('connection_change', checkConnectionState());
-        client.broadcast.emit('connection_change', checkConnectionState());
+        client.emit('connectionChange', checkConnectionState());
+        client.broadcast.emit('connectionChange', checkConnectionState());
     });
 
-    client.on('newplayer', function() {
+    client.on('newPlayer', function() {
         let playerID = server.lastPlayerID++;
         Player.addPlayer(client, playerID);
-        client.emit('allplayers', Player.getAllPlayers(io));
+        client.emit('allPlayers', Player.getAllPlayers(io));
     });
 
     client.on('space', function(data) {
         GameEvent.fire(io, data, client);
     });
 
-    client.on('turntaken', function() {
+    client.on('turnTaken', function() {
         GameEvent.turnTaken(client);
     });
 
-    client.on('playerhit', function() {
+    client.on('playerHit', function() {
         GameEvent.hit(io, client);
     });
 
-    client.on('turretangle', function(turretAngle) {
+    client.on('turretAngle', function(turretAngle) {
         GameEvent.updateTurretAngle(io, turretAngle, client);
     });
 
-    client.on('turretpower', function(turretPower) {
+    client.on('turretPower', function(turretPower) {
         GameEvent.updateTurretPower(io, turretPower, client);
     });
 });
