@@ -33,7 +33,7 @@ function main() {
 
                 client.on('disconnect', function(client, io) {
                     client.lastPlayerID--;
-                    game.disconnect(client, io);
+                    game.disconnect();
                 });
             });
 

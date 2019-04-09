@@ -12,7 +12,7 @@ module.exports = class Game {
     addPlayer(client, playerID) {
         client.player = {
             id: playerID,
-            x: playerID === 0 ? 100 : 1000,
+            x: playerID === 0 ? 100 : 4150,
             y: 900,
             health: 100,
             turn: playerID === 0 ? true : false
@@ -39,8 +39,7 @@ module.exports = class Game {
         return this.connectedPlayers < 2;
     }
 
-    disconnect(client, io) {
+    disconnect() {
         this.connectedPlayers--;
-        io.emit('remove', client.player.id);
     }
 };

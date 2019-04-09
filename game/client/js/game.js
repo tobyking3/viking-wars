@@ -8,19 +8,18 @@ let target = null;
 
 let turret = null;
 let bullet = null;
-let fakeAngle = 0;
+let angle = 0;
 let power = 800;
 let powerText = null;
 
 let cursors = null;
 let fireButton = null;
-
 let fireAllowed = false;
 
 let readyButton;
 let ground;
 
-Game.init = function(){
+Game.init = function() {
     game.stage.disableVisibilityChange = true;
 };
 
@@ -62,8 +61,6 @@ Game.create = function() {
 
     readyButton = game.add.button(400, 300, 'ready_button', onReadyClick);
     readyButton.scale.setTo(0.5, 0.5);
-
-    // Client.askNewPlayer();
 };
 
 Game.update = function() {
@@ -76,12 +73,12 @@ Game.update = function() {
         Client.turretPower(power / 4);
     }
 
-    if (cursors.up.isDown && fakeAngle > -90) {
-        let angleToSend = fakeAngle--;
+    if (cursors.up.isDown && angle > -90) {
+        let angleToSend = angle--;
         Client.turretAngle(angleToSend);
 
-    } else if (cursors.down.isDown && fakeAngle < 0) {
-        let angleToSend = fakeAngle++;
+    } else if (cursors.down.isDown && angle < 0) {
+        let angleToSend = angle++;
         Client.turretAngle(angleToSend);
     }
 
@@ -231,11 +228,11 @@ Game.removePlayer = function(id) {
     Game.vikingMap[id].destroy();
     console.log("PLAYER " + id + " HAS LEFT THE GAME");
 
-    if (id === 0){
+    if (id === 0) {
         game.camera.follow(Game.vikingMap[1].children[0]);
     };
 
-    if (id === 1){
+    if (id === 1) {
         game.camera.follow(Game.vikingMap[0].children[0]);
     };
 };
