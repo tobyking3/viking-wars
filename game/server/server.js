@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
 
         socket.player = {
             id: playerId,
-            x: playerId === 0 ? 100 : 4000,
+            x: playerId === 0 ? 100 : 1000,
             y: 900,
             health: 100,
             turn: playerId === 0 ? true : false
@@ -42,6 +42,10 @@ io.on('connection', function(socket) {
         });
 
     });
+
+
+
+
 
     socket.on('space', function(data) {
         io.emit('fire', data.power, data.angle, socket.player);

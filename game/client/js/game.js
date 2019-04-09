@@ -81,10 +81,10 @@ Game.update = function() {
     if (bullet) {
         bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x);
         if (game.physics.arcade.collide(bullet, target)) {
+            console.log("PLAYER HIT");
             Client.playerHit();
         }
         if (game.physics.arcade.collide(bullet, ground)) {
-            console.log(bullet.body.velocity.x);
             bullet.body.velocity.x = 0;
         }
     }
@@ -136,11 +136,11 @@ Game.addNewPlayer = function(id, x, y) {
         turret.anchor.x = 1;
         turret.anchor.y = 0;
 
-        let playerOneTween = game.add.tween(game.camera).to( { x: 4000 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
-        let playerTwoTween = game.add.tween(game.camera).to( { x: 100 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
-        playerOneTween.chain(playerTwoTween);
-        playerTwoTween.onComplete.add(allowFire, this);
-        playerOneTween.start();
+        // let playerOneTween = game.add.tween(game.camera).to( { x: 4000 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
+        // let playerTwoTween = game.add.tween(game.camera).to( { x: 100 - viking.width / 2 }, 4000, Phaser.Easing.Linear.None);
+        // playerOneTween.chain(playerTwoTween);
+        // playerTwoTween.onComplete.add(allowFire, this);
+        // playerOneTween.start();
     }
 
     viking.animations.add('death', [0,1,2,3,4,5,6,7], 10);
@@ -152,7 +152,9 @@ Game.addNewPlayer = function(id, x, y) {
 
     viking.anchor.setTo(0.5,0.5);
     game.physics.arcade.enable(viking);
-    viking.body.setSize(303, 167, 0, 0);
+
+    viking.body.enable = true;
+    viking.body.setSize(240, 800, 240, 200);
     viking.body.immovable = true;
     viking.body.gravity.y = 0;
 
@@ -170,15 +172,17 @@ function allowFire() {
 }
 
 Game.fireBullet = function(power, angle, player) {
-    if (player.turn && fireAllowed) {
+
+    // && fireAllowed--------------------
+
+    if (player.turn) {
         console.log("SHOTS FIRED");
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
 
         game.physics.arcade.enable(bullet);
-
         bullet.body.gravity.y = 900;
-
+        bullet.body.bounce.set(0.1);
         bullet.anchor.setTo(0.5, 0.5);
 
         Game.vikingMap[player.id].children[0].animations.play('shoot').onComplete.add(function() {
@@ -213,6 +217,15 @@ function registerTurn() {
 }
 
 Game.removePlayer = function(id) {
-    // Game.playerMap[id].destroy();
-    // delete Game.playerMap[id];
+    Game.vikingMap[id].destroy();
+
+    console.log("PLAYER " + id + " HAS LEFT THE GAME");
+
+    if(id === 0){
+        game.camera.follow(Game.vikingMap[1].children[0]);
+    };
+
+    if(id === 1){
+        game.camera.follow(Game.vikingMap[0].children[0]);
+    };
 };
