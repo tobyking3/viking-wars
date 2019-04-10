@@ -46,7 +46,6 @@ io.on('connection', function(client) {
     });
 
     client.on('groundHit', function() {
-        console.log("SERVER ON GROUND HIT");
         GameEvent.groundHit(io, client);
     });
 

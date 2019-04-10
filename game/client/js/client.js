@@ -33,18 +33,9 @@ Client.socket.on('groundHit', function(playerId) {
     Game.setCamera(playerId);
 });
 
-
-
-
-
-
-
-
-
-
-
 Client.turnTaken = function(activePlayerID) {
-  Client.socket.emit('turnTaken', activePlayerID);
+    console.log('client turnTaken');
+    Client.socket.emit('turnTaken', activePlayerID);
 };
 
 Client.socket.on('newPlayer',function(data) {

@@ -4,11 +4,12 @@ module.exports = {
     },
 
     turnTaken (client) {
+        console.log('server turnTaken');
         client.player.turn = !client.player.turn;
     },
 
     hit (io, client) {
-        if (!client.player.turn) {
+        if (client.player.turn) {
             if (client.player.health > 20) {
                 client.player.health -= 20;
                 io.emit('healthChange', client.player.id, client.player.health);
@@ -22,7 +23,6 @@ module.exports = {
 
     groundHit (io, client){
         if (client.player.turn) {
-            console.log("SERVER GAME EVENTS - player id = " + client.player.id);
             io.emit('groundHit', client.player.id);
         }
     },

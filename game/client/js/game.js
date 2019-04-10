@@ -110,7 +110,6 @@ Game.update = function() {
             if (!bullet.hasCollided) {
                 bullet.hasCollided = true;
                 bullet.body.moves = false;
-                console.log('PLAYER HIT');
                 Client.playerHit();
             }
         });
@@ -123,9 +122,8 @@ Game.update = function() {
             }
         });
 
-        if(bullet.x < 0 || bullet.x > Game.worldWidth){
+        if (bullet.x < 0 || bullet.x > Game.worldWidth) {
             if (!bullet.hasCollided) {
-                console.log("HELLO JAKE");
                 bullet.hasCollided = true;
                 game.add.tween(game.camera).to( { y: 280 }, 2000, Phaser.Easing.Linear.None, true);
                 Client.groundHit();
@@ -139,17 +137,17 @@ Game.update = function() {
 Game.setCamera = function(id){
     game.camera.target = null;
     game.time.events.add(Phaser.Timer.SECOND * 3, function(){
-        if(id === 1){
+        if (id === 0) {
             let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None, true);
-            toPlayerTwo.onComplete.add(registerTurn, this);
+            toPlayerTwo.onComplete.add(allowFire, this);
         }
 
-        if(id === 0){
+        if (id === 1) {
             let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
-            toPlayerOne.onComplete.add(registerTurn, this);
+            toPlayerOne.onComplete.add(allowFire, this);
         }
     });
-}
+};
 
 Game.updateTurretAngle = function(turretAngle, playerId) {
     if (playerId === 0) {
@@ -283,6 +281,8 @@ Game.fireBullet = function(power, angle, player) {
             whooshSound.play();
             target = Game.vikingMap[player.id - 1].children[0];
         }
+
+        registerTurn();
     }
 };
 
@@ -299,9 +299,7 @@ function onReadyClick() {
 };
 
 function registerTurn() {
-    console.log("TURN REGISTERED");
     Client.turnTaken();
-    allowFire();
     clickable = true;
 };
 
