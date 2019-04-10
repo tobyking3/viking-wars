@@ -136,14 +136,14 @@ Game.update = function() {
 
 Game.setCamera = function(id){
     game.camera.target = null;
-    game.time.events.add(Phaser.Timer.SECOND * 3, function(){
+    game.time.events.add(Phaser.Timer.SECOND * 3, function() {
         if (id === 0) {
-            let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None, true);
+            let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, calculateDistanceToPlayer(id), Phaser.Easing.Linear.None, true);
             toPlayerTwo.onComplete.add(allowFire, this);
         }
 
         if (id === 1) {
-            let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
+            let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, calculateDistanceToPlayer(id), Phaser.Easing.Linear.None, true);
             toPlayerOne.onComplete.add(allowFire, this);
         }
     });
@@ -245,6 +245,7 @@ Game.addNewPlayer = function(id, x, y) {
 };
 
 function allowFire() {
+    console.log('Can fire!');
     fireAllowed = true;
 }
 
@@ -302,6 +303,10 @@ function registerTurn() {
     Client.turnTaken();
     clickable = true;
 };
+
+ function calculateDistanceToPlayer(id) {
+    return Game.vikingMap[id].children[0].x - bullet.body.x;
+ };
 
 Game.removePlayer = function(id) {
     Game.vikingMap[id].destroy();
