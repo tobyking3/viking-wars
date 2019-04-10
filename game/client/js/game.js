@@ -117,6 +117,7 @@ Game.update = function() {
 
         game.physics.arcade.collide(bullet, ground, function () {
             if (!bullet.hasCollided) {
+                console.log("COLLISION WITH GROUND");
                 bullet.hasCollided = true;
                 bullet.body.moves = false;
                 console.log('BULLET FALLEN');
@@ -129,39 +130,22 @@ Game.update = function() {
 };
 
 Game.setCamera = function(id){
-    console.log("ID IS : " + id);
+    console.log("GAME SET CAMERA = " + id);
     game.camera.target = null;
     game.time.events.add(Phaser.Timer.SECOND * 3, function(){
         if(id === 0){
             console.log("CAMERA UPDATE 0");
-            game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None, true);
+            let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None, true);
+            toPlayerTwo.onComplete.add(registerTurn, this);
         }
 
         if(id === 1){
             console.log("CAMERA UPDATE 1");
-            game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
+            let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
+            toPlayerOne.onComplete.add(registerTurn, this);
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Game.updateTurretAngle = function(turretAngle, playerId) {
     if (playerId === 0) {
@@ -295,8 +279,6 @@ Game.fireBullet = function(power, angle, player) {
             whooshSound.play();
             target = Game.vikingMap[player.id - 1].children[0];
         }
-
-        registerTurn();
     }
 };
 
@@ -313,6 +295,7 @@ function onReadyClick() {
 };
 
 function registerTurn() {
+    console.log("TURN REGISTERED");
     Client.turnTaken();
     clickable = true;
 };

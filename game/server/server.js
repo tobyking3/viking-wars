@@ -46,7 +46,8 @@ io.on('connection', function(client) {
     });
 
     client.on('groundHit', function() {
-        io.emit('groundHit', client.player.id);
+        console.log("SERVER ON GROUND HIT");
+        GameEvent.groundHit(io, client);
     });
 
     client.on('turretAngle', function(turretAngle) {

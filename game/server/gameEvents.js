@@ -20,6 +20,11 @@ module.exports = {
         }
     },
 
+    groundHit (io, client){
+        console.log("SERVER GAME EVENTS - player id = " + client.player.id);
+        io.emit('groundHit', client.player.id);
+    },
+
     updateTurretAngle(io, turretAngle, client) {
         io.emit('updateTurretAngle', turretAngle, client.player);
     },
