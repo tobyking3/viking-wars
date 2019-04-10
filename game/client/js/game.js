@@ -117,30 +117,34 @@ Game.update = function() {
 
         game.physics.arcade.collide(bullet, ground, function () {
             if (!bullet.hasCollided) {
-                console.log("COLLISION WITH GROUND");
                 bullet.hasCollided = true;
                 bullet.body.moves = false;
-                console.log('BULLET FALLEN');
                 Client.groundHit();
             }
         });
+
+        if(bullet.x < 0 || bullet.x > Game.worldWidth){
+            if (!bullet.hasCollided) {
+                console.log("HELLO JAKE");
+                bullet.hasCollided = true;
+                game.add.tween(game.camera).to( { y: 280 }, 2000, Phaser.Easing.Linear.None, true);
+                Client.groundHit();
+            }
+        }
     }
 
     powerText.text = 'Power: ' + power;
 };
 
 Game.setCamera = function(id){
-    console.log("GAME SET CAMERA = " + id);
     game.camera.target = null;
     game.time.events.add(Phaser.Timer.SECOND * 3, function(){
-        if(id === 0){
-            console.log("CAMERA UPDATE 0");
+        if(id === 1){
             let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None, true);
             toPlayerTwo.onComplete.add(registerTurn, this);
         }
 
-        if(id === 1){
-            console.log("CAMERA UPDATE 1");
+        if(id === 0){
             let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
             toPlayerOne.onComplete.add(registerTurn, this);
         }
@@ -252,8 +256,8 @@ Game.setPlayerHealth = function(playerID, health) {
 };
 
 Game.fireBullet = function(power, angle, player) {
-    // && fireAllowed
     if (player.turn && fireAllowed) {
+        fireAllowed = false;
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
 
@@ -297,6 +301,7 @@ function onReadyClick() {
 function registerTurn() {
     console.log("TURN REGISTERED");
     Client.turnTaken();
+    allowFire();
     clickable = true;
 };
 

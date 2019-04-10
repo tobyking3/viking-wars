@@ -30,7 +30,6 @@ Client.groundHit = function() {
 };
 
 Client.socket.on('groundHit', function(playerId) {
-    console.log("CLIENT SOCKET ON = " + playerId);
     Game.setCamera(playerId);
 });
 

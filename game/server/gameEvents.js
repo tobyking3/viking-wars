@@ -8,7 +8,7 @@ module.exports = {
     },
 
     hit (io, client) {
-        if (client.player.turn) {
+        if (!client.player.turn) {
             if (client.player.health > 20) {
                 client.player.health -= 20;
                 io.emit('healthChange', client.player.id, client.player.health);
@@ -21,8 +21,10 @@ module.exports = {
     },
 
     groundHit (io, client){
-        console.log("SERVER GAME EVENTS - player id = " + client.player.id);
-        io.emit('groundHit', client.player.id);
+        if (client.player.turn) {
+            console.log("SERVER GAME EVENTS - player id = " + client.player.id);
+            io.emit('groundHit', client.player.id);
+        }
     },
 
     updateTurretAngle(io, turretAngle, client) {
