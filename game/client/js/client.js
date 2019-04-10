@@ -14,18 +14,7 @@ Client.playerHit = function() {
     Client.socket.emit('playerHit');
 };
 
-
-
-
-
-
-
-
-
-
-
 Client.groundHit = function() {
-    console.log("CLIENT SOCKET EMIT GROUND HIT");
     Client.socket.emit('groundHit');
 };
 
@@ -34,7 +23,6 @@ Client.socket.on('groundHit', function(playerId) {
 });
 
 Client.turnTaken = function(activePlayerID) {
-    console.log('client turnTaken');
     Client.socket.emit('turnTaken', activePlayerID);
 };
 
@@ -51,7 +39,6 @@ Client.turretPower = function(turretPower) {
 };
 
 Client.socket.on('healthChange', function(id, health) {
-    console.log('healthChange', id, health);
     Game.setPlayerHealth(id, health);
     Game.setCamera(id);
 });

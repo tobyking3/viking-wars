@@ -245,7 +245,6 @@ Game.addNewPlayer = function(id, x, y) {
 };
 
 function allowFire() {
-    console.log('Can fire!');
     fireAllowed = true;
 }
 

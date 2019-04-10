@@ -4,7 +4,6 @@ module.exports = {
     },
 
     turnTaken (client) {
-        console.log('server turnTaken');
         client.player.turn = !client.player.turn;
     },
 
