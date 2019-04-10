@@ -105,14 +105,21 @@ Game.update = function() {
 
     if (bullet) {
         bullet.rotation = Math.atan2(bullet.body.velocity.y, bullet.body.velocity.x);
-        if (game.physics.arcade.collide(bullet, target)) {
-            Client.playerHit();
-        }
+
+        game.physics.arcade.collide(bullet, target, function () {
+            if (!bullet.hasCollided) {
+                bullet.hasCollided = true;
+                bullet.body.moves = false;
+                console.log('PLAYER HIT');
+                Client.playerHit();
+                Game.cameraUpdate();
+            }
+        });
 
         game.physics.arcade.collide(bullet, ground, function () {
             if (!bullet.hasCollided) {
                 bullet.hasCollided = true;
-                bullet.body.velocity.x = 0;
+                bullet.body.moves = false;
                 console.log('BULLET FALLEN');
                 Game.cameraUpdate();
             }
@@ -246,7 +253,6 @@ Game.fireBullet = function(power, angle, player) {
 
         game.physics.arcade.enable(bullet);
         bullet.body.gravity.y = 900;
-        bullet.body.bounce.set(0.1);
         bullet.anchor.setTo(0.5, 0.5);
 
         Game.vikingMap[player.id].children[0].animations.play('shoot').onComplete.add(function() {
