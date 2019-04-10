@@ -112,7 +112,6 @@ Game.update = function() {
                 bullet.body.moves = false;
                 console.log('PLAYER HIT');
                 Client.playerHit();
-                Game.cameraUpdate();
             }
         });
 
@@ -121,25 +120,48 @@ Game.update = function() {
                 bullet.hasCollided = true;
                 bullet.body.moves = false;
                 console.log('BULLET FALLEN');
-                Game.cameraUpdate();
+                Client.groundHit();
             }
         });
-
     }
 
     powerText.text = 'Power: ' + power;
 };
 
-Game.cameraUpdate = function(){
-    console.log("CAMERA UPDATE");
+Game.setCamera = function(id){
+    console.log("ID IS : " + id);
     game.camera.target = null;
-    game.time.events.add(Phaser.Timer.SECOND * 3, Game.moveCamera, this);
+    game.time.events.add(Phaser.Timer.SECOND * 3, function(){
+        if(id === 0){
+            console.log("CAMERA UPDATE 0");
+            game.add.tween(game.camera).to( { x: 0 }, 4000, Phaser.Easing.Linear.None, true);
+        }
+
+        if(id === 1){
+            console.log("CAMERA UPDATE 1");
+            game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
+        }
+    });
 }
 
-Game.moveCamera = function(){
-    console.log("CAMERA MOVE");
-    game.add.tween(game.camera).to( { x: 4000 }, 4000, Phaser.Easing.Linear.None, true);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Game.updateTurretAngle = function(turretAngle, playerId) {
     if (playerId === 0) {

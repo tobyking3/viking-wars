@@ -45,6 +45,10 @@ io.on('connection', function(client) {
         GameEvent.hit(io, client);
     });
 
+    client.on('groundHit', function() {
+        io.emit('groundHit', client.player.id);
+    });
+
     client.on('turretAngle', function(turretAngle) {
         GameEvent.updateTurretAngle(io, turretAngle, client);
     });
