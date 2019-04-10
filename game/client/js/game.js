@@ -126,7 +126,7 @@ Game.update = function() {
             if (!bullet.hasCollided) {
                 bullet.hasCollided = true;
                 game.add.tween(game.camera).to( { y: 280 }, 2000, Phaser.Easing.Linear.None, true);
-                Client.groundHit();
+                allowFire();
             }
         }
     }
@@ -134,19 +134,25 @@ Game.update = function() {
     powerText.text = 'Power: ' + power;
 };
 
-Game.setCamera = function(id){
+Game.setCamera = function(id) {
     game.camera.target = null;
-    game.time.events.add(Phaser.Timer.SECOND * 3, function() {
-        if (id === 0) {
-            let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, calculateDistanceToPlayer(id), Phaser.Easing.Linear.None, true);
-            toPlayerTwo.onComplete.add(allowFire, this);
-        }
+    let distanceToPlayer = calculateDistanceToPlayer(id);
 
-        if (id === 1) {
-            let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, calculateDistanceToPlayer(id), Phaser.Easing.Linear.None, true);
-            toPlayerOne.onComplete.add(allowFire, this);
-        }
-    });
+    if (distanceToPlayer > 200 || distanceToPlayer < -200) {
+        game.time.events.add(Phaser.Timer.SECOND * 3, function() {
+            if (id === 0) {
+                let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+                toPlayerTwo.onComplete.add(allowFire, this);
+            }
+
+            if (id === 1) {
+                let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+                toPlayerOne.onComplete.add(allowFire, this);
+            }
+        });
+    } else {
+        allowFire();
+    }
 };
 
 Game.updateTurretAngle = function(turretAngle, playerId) {
