@@ -87,16 +87,12 @@ Game.create = function() {
 Game.update = function() {
     if (cursors.left.isDown) {
         Client.decreaseTurretPower(cursors.left.isDown);
-
     } else if (cursors.right.isDown) {
         Client.increaseTurretPower(cursors.right.isDown);
     }
 
-    if (cursors.up.isDown) {
-        Client.decreaseTurretAngle(cursors.up.isDown);
-
-    } else if (cursors.down.isDown) {
-        Client.increaseTurretAngle(cursors.down.isDown);
+    if (Object.keys(Game.vikingMap).length === 2) {
+        Client.randomAngle();
     }
 
     if (bullet) {

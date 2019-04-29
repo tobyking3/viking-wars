@@ -20,22 +20,35 @@ module.exports = {
         }
     },
 
-    groundHit (io, client){
+    groundHit(io, client){
         if (client.player.turn) {
             io.emit('groundHit', client.player.id);
         }
     },
 
-    decreaseTurretAngle(io, decrease, client) {
-        if (decrease && client.player.turretAngle >= -90) {
-            client.player.turretAngle--;
+    randomAngle(io, client) {
+        if (client.player.turn) {
+            this.updatePlayerAngle(client.player);
         }
     },
 
-    increaseTurretAngle(io, increase, client) {
-        if (increase && client.player.turretAngle <= 0) {
-            client.player.turretAngle++;
+    updatePlayerAngle(player) {
+        let currentAngle = player.turretAngle;
+        let currentDirection = player.currentDirection;
+        let angleMoveAmount = 1;
+
+        if (currentAngle >= 0 && currentDirection === +1) {
+            currentAngle = 0;
+            currentDirection = -1;
         }
+        if (currentAngle <= -90 && currentDirection === -1) {
+            currentAngle = -90;
+            currentDirection = +1;
+        }
+
+        currentAngle = currentAngle + (angleMoveAmount * currentDirection);
+        player.turretAngle = currentAngle;
+        player.currentDirection = currentDirection;
     },
 
     decreaseTurretPower(io, decrease, client) {

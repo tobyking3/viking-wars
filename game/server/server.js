@@ -49,13 +49,8 @@ io.on('connection', function(client) {
         GameEvent.groundHit(io, client);
     });
 
-    client.on('decreaseTurretAngle', function(decrease) {
-        GameEvent.decreaseTurretAngle(io, decrease, client);
-        GameEvent.updateTurretAngle(io, client);
-    });
-
-    client.on('increaseTurretAngle', function(increase) {
-        GameEvent.increaseTurretAngle(io, increase, client);
+    client.on('randomAngle', function() {
+        GameEvent.randomAngle(io, client);
         GameEvent.updateTurretAngle(io, client);
     });
 

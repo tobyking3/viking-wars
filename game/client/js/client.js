@@ -18,6 +18,10 @@ Client.groundHit = function() {
     Client.socket.emit('groundHit');
 };
 
+Client.randomAngle = function() {
+    Client.socket.emit('randomAngle');
+};
+
 Client.socket.on('groundHit', function(playerId) {
     Game.setCamera(playerId);
 });

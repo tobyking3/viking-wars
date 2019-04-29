@@ -7,6 +7,7 @@ module.exports = {
             health: 100,
             turretPower: 800,
             turretAngle: 0,
+            currentDirection: +1,
             turn: playerID === 0 ? true : false
         };
 
