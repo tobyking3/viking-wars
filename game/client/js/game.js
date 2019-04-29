@@ -85,22 +85,18 @@ Game.create = function() {
 };
 
 Game.update = function() {
-    if (cursors.left.isDown && power > 800) {
-        power -= 5;
-        Client.turretPower(power / 4);
+    if (cursors.left.isDown) {
+        Client.decreaseTurretPower(cursors.left.isDown);
 
-    } else if (cursors.right.isDown && power < 3000) {
-        power += 5;
-        Client.turretPower(power / 4);
+    } else if (cursors.right.isDown) {
+        Client.increaseTurretPower(cursors.right.isDown);
     }
 
-    if (cursors.up.isDown && angle > -90) {
-        let angleToSend = angle--;
-        Client.turretAngle(angleToSend);
+    if (cursors.up.isDown) {
+        Client.decreaseTurretAngle(cursors.up.isDown);
 
-    } else if (cursors.down.isDown && angle < 0) {
-        let angleToSend = angle++;
-        Client.turretAngle(angleToSend);
+    } else if (cursors.down.isDown) {
+        Client.increaseTurretAngle(cursors.down.isDown);
     }
 
     if (bullet) {
@@ -155,19 +151,21 @@ Game.setCamera = function(id) {
     }
 };
 
-Game.updateTurretAngle = function(turretAngle, playerId) {
-    if (playerId === 0) {
-        Game.vikingMap[playerId].children[1].angle = turretAngle;
+Game.updateTurretAngle = function(player) {
+    angle = player.turretAngle;
+    if (player.id === 0) {
+        Game.vikingMap[player.id].children[1].angle = angle;
     } else {
-        Game.vikingMap[playerId].children[1].angle = -turretAngle;
+        Game.vikingMap[player.id].children[1].angle = -angle;
     }
 };
 
-Game.updateTurretPower = function(turretPower, playerId) {
-    if (playerId === 0) {
-        Game.vikingMap[playerId].children[1].width = turretPower;
+Game.updateTurretPower = function(player) {
+    power = player.turretPower;
+    if (player.id === 0) {
+        Game.vikingMap[player.id].children[1].width = power / 4;
     } else {
-        Game.vikingMap[playerId].children[1].width = turretPower;
+        Game.vikingMap[player.id].children[1].width = power / 4;
     }
 };
 

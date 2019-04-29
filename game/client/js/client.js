@@ -30,12 +30,20 @@ Client.socket.on('newPlayer',function(data) {
     Game.addNewPlayer(data.id, data.x, data.y);
 });
 
-Client.turretAngle = function(turretAngle) {
-  Client.socket.emit('turretAngle', turretAngle);
+Client.decreaseTurretAngle = function(decrease) {
+    Client.socket.emit('decreaseTurretAngle', decrease);
 };
 
-Client.turretPower = function(turretPower) {
-  Client.socket.emit('turretPower', turretPower);
+Client.increaseTurretAngle = function(increase) {
+    Client.socket.emit('increaseTurretAngle', increase);
+};
+
+Client.decreaseTurretPower = function(decrease) {
+    Client.socket.emit('decreaseTurretPower', decrease);
+};
+
+Client.increaseTurretPower = function(increase) {
+    Client.socket.emit('increaseTurretPower', increase);
 };
 
 Client.socket.on('healthChange', function(id, health) {
@@ -47,12 +55,12 @@ Client.socket.on('playerDied', function(playerId) {
     Game.killPlayer(playerId);
 });
 
-Client.socket.on('updateTurretAngle', function(turretAngle, player) {
-    Game.updateTurretAngle(turretAngle, player.id);
+Client.socket.on('updateTurretAngle', function(player) {
+    Game.updateTurretAngle(player);
 });
 
-Client.socket.on('updateTurretPower', function(turretPower, player) {
-    Game.updateTurretPower(turretPower, player.id);
+Client.socket.on('updateTurretPower', function(player) {
+    Game.updateTurretPower(player);
 });
 
 Client.sendSpace = function(power, angle) {

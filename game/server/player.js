@@ -5,6 +5,8 @@ module.exports = {
             x: playerID === 0 ? 100 : 4150,
             y: 900,
             health: 100,
+            turretPower: 800,
+            turretAngle: 0,
             turn: playerID === 0 ? true : false
         };
 

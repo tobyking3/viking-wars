@@ -26,11 +26,35 @@ module.exports = {
         }
     },
 
-    updateTurretAngle(io, turretAngle, client) {
-        io.emit('updateTurretAngle', turretAngle, client.player);
+    decreaseTurretAngle(io, decrease, client) {
+        if (decrease && client.player.turretAngle >= -90) {
+            client.player.turretAngle--;
+        }
     },
 
-    updateTurretPower(io, turretPower, client) {
-        io.emit('updateTurretPower', turretPower, client.player);
+    increaseTurretAngle(io, increase, client) {
+        if (increase && client.player.turretAngle <= 0) {
+            client.player.turretAngle++;
+        }
+    },
+
+    decreaseTurretPower(io, decrease, client) {
+        if (decrease && client.player.turretPower > 400) {
+            client.player.turretPower = client.player.turretPower - 20;
+        }
+    },
+
+    increaseTurretPower(io, increase, client) {
+        if (increase && client.player.turretPower < 3000) {
+            client.player.turretPower = client.player.turretPower + 20;
+        }
+    },
+
+    updateTurretPower(io, client) {
+        io.emit('updateTurretPower', client.player);
+    },
+
+    updateTurretAngle(io, client) {
+        io.emit('updateTurretAngle', client.player);
     }
 };

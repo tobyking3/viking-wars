@@ -49,12 +49,24 @@ io.on('connection', function(client) {
         GameEvent.groundHit(io, client);
     });
 
-    client.on('turretAngle', function(turretAngle) {
-        GameEvent.updateTurretAngle(io, turretAngle, client);
+    client.on('decreaseTurretAngle', function(decrease) {
+        GameEvent.decreaseTurretAngle(io, decrease, client);
+        GameEvent.updateTurretAngle(io, client);
     });
 
-    client.on('turretPower', function(turretPower) {
-        GameEvent.updateTurretPower(io, turretPower, client);
+    client.on('increaseTurretAngle', function(increase) {
+        GameEvent.increaseTurretAngle(io, increase, client);
+        GameEvent.updateTurretAngle(io, client);
+    });
+
+    client.on('decreaseTurretPower', function(decrease) {
+        GameEvent.decreaseTurretPower(io, decrease, client);
+        GameEvent.updateTurretPower(io, client);
+    });
+
+    client.on('increaseTurretPower', function(increase) {
+        GameEvent.increaseTurretPower(io, increase, client);
+        GameEvent.updateTurretPower(io, client);
     });
 });
 
