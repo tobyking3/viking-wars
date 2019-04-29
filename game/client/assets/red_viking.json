@@ -1,0 +1,316 @@
+{"frames": [
+
+{
+	"filename": "__viking_archer_red_tunic_die_000.png",
+	"frame": {"x":1,"y":243,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_001.png",
+	"frame": {"x":2978,"y":1,"w":389,"h":538},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":158,"y":33,"w":389,"h":538},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_002.png",
+	"frame": {"x":1105,"y":1,"w":499,"h":417},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":171,"y":122,"w":499,"h":417},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_003.png",
+	"frame": {"x":552,"y":1,"w":551,"h":270},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":180,"y":279,"w":551,"h":270},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_004.png",
+	"frame": {"x":1,"y":1,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_005.png",
+	"frame": {"x":1,"y":1,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_006.png",
+	"frame": {"x":1,"y":1,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_die_007.png",
+	"frame": {"x":1,"y":1,"w":549,"h":240},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":205,"y":370,"w":549,"h":240},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_fire_arrow_up_000.png",
+	"frame": {"x":302,"y":273,"w":376,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":54,"y":18,"w":376,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_fire_arrow_up_001.png",
+	"frame": {"x":2535,"y":1,"w":441,"h":534},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":41,"w":441,"h":534},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_fire_arrow_up_002.png",
+	"frame": {"x":1606,"y":1,"w":470,"h":491},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":159,"y":84,"w":470,"h":491},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_fire_arrow_up_003.png",
+	"frame": {"x":2078,"y":1,"w":455,"h":510},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":152,"y":65,"w":455,"h":510},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_fire_arrow_up_004.png",
+	"frame": {"x":3369,"y":1,"w":414,"h":546},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":129,"y":29,"w":414,"h":546},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_fire_arrow_up_005.png",
+	"frame": {"x":3572,"y":1109,"w":341,"h":562},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":128,"y":13,"w":341,"h":562},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_000.png",
+	"frame": {"x":1,"y":243,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_001.png",
+	"frame": {"x":680,"y":273,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_002.png",
+	"frame": {"x":981,"y":420,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_003.png",
+	"frame": {"x":1282,"y":420,"w":297,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":18,"w":297,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_004.png",
+	"frame": {"x":2183,"y":513,"w":297,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_005.png",
+	"frame": {"x":2482,"y":537,"w":297,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_006.png",
+	"frame": {"x":2781,"y":541,"w":296,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_007.png",
+	"frame": {"x":3079,"y":549,"w":296,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_008.png",
+	"frame": {"x":3377,"y":549,"w":296,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_009.png",
+	"frame": {"x":1,"y":802,"w":295,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_010.png",
+	"frame": {"x":298,"y":832,"w":295,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_011.png",
+	"frame": {"x":595,"y":832,"w":295,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_012.png",
+	"frame": {"x":3675,"y":549,"w":294,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":294,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_013.png",
+	"frame": {"x":892,"y":979,"w":294,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":294,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_014.png",
+	"frame": {"x":1188,"y":979,"w":295,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_015.png",
+	"frame": {"x":1485,"y":1053,"w":295,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_016.png",
+	"frame": {"x":1782,"y":1072,"w":295,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":295,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_017.png",
+	"frame": {"x":2079,"y":1073,"w":296,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_018.png",
+	"frame": {"x":2377,"y":1097,"w":296,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":296,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_019.png",
+	"frame": {"x":2675,"y":1101,"w":297,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_020.png",
+	"frame": {"x":2974,"y":1109,"w":297,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_021.png",
+	"frame": {"x":3273,"y":1109,"w":297,"h":558},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":132,"y":17,"w":297,"h":558},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_022.png",
+	"frame": {"x":1581,"y":494,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+},
+{
+	"filename": "__viking_archer_red_tunic_idle_023.png",
+	"frame": {"x":1882,"y":513,"w":299,"h":557},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":131,"y":18,"w":299,"h":557},
+	"sourceSize": {"w":767,"h":617}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "red-viking.png",
+	"format": "RGBA8888",
+	"size": {"w":3970,"h":1672},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1b2565d81dbd828d38d348c8979b8ae7:0801f3c16944390da19e22bb441d9d4f:089954f5cc2900c94215827d8cb5fa78$"
+}
+}
