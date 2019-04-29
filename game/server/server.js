@@ -14,23 +14,53 @@ let GameEvent = require('./gameEvents.js');
 
 // Count for connected player
 let connectionCounter = 0;
+let roomCounter = 0;
+let roomName;
+const gameRooms = [];
+
+function isOdd(value) {
+    if (value%2 == 0)
+        return false;
+    else
+        return true;
+}
 
 io.on('connection', function(client) {
+
     connectionCounter++;
-    client.emit('connectionChange', checkConnectionState());
-    client.broadcast.emit('connectionChange', checkConnectionState());
+
+    if(isOdd(connectionCounter)){
+        roomCounter++;
+        roomName = 'room' + roomCounter;
+        client.nickname = 'playerOne';
+        client.join(roomName);
+    } else {
+        roomName = 'room' + roomCounter;
+        client.nickname = 'playerTwo';
+        client.join(roomName);
+    };
+
+    let clientRoom = Object.keys( io.sockets.adapter.sids[client.id] )[1];
+
+    io.sockets.to(clientRoom).emit('connectionChange', checkConnectionState());
+
+    //PAY ATTENTION TO BROADCAST CASES
+
+    //----------------------ACCESS CLIENT ROOM-----------------------//
+
+    client.on('newPlayer', function() {
+        let playerID = server.lastPlayerID++;
+
+        Player.addPlayer(client, playerID);
+
+        client.emit('allPlayers', Player.getAllPlayers(io));
+    });
 
     client.on('disconnect', function() {
         connectionCounter--;
         client.lastPlayerID--;
         client.emit('connectionChange', checkConnectionState());
         client.broadcast.emit('connectionChange', checkConnectionState());
-    });
-
-    client.on('newPlayer', function() {
-        let playerID = server.lastPlayerID++;
-        Player.addPlayer(client, playerID);
-        client.emit('allPlayers', Player.getAllPlayers(io));
     });
 
     client.on('space', function(data) {
