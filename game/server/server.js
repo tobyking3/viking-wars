@@ -16,20 +16,16 @@ let GameEvent = require('./gameEvents.js');
 let connectionCounter = 0;
 let roomCounter = 0;
 let roomName;
-const gameRooms = [];
+// const gameRooms = [];
 
 function isOdd(value) {
-    if (value%2 == 0)
-        return false;
-    else
-        return true;
+    return value % 2 === 0 ? false : true;
 }
 
 io.on('connection', function(client) {
-
     connectionCounter++;
 
-    if(isOdd(connectionCounter)){
+    if (isOdd(connectionCounter)) {
         roomCounter++;
         roomName = 'room' + roomCounter;
         client.nickname = 'playerOne';
@@ -44,7 +40,7 @@ io.on('connection', function(client) {
 
     io.sockets.to(clientRoom).emit('connectionChange', checkConnectionState());
 
-    //PAY ATTENTION TO BROADCAST CASES
+    // PAY ATTENTION TO BROADCAST CASES
 
     //----------------------ACCESS CLIENT ROOM-----------------------//
 
