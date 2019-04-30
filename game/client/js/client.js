@@ -26,21 +26,13 @@ Client.socket.on('groundHit', function(playerId) {
     Game.setCamera(playerId);
 });
 
-Client.turnTaken = function(activePlayerID) {
-    Client.socket.emit('turnTaken', activePlayerID);
+Client.turnTaken = function() {
+    Client.socket.emit('turnTaken');
 };
 
 Client.socket.on('newPlayer',function(data) {
     Game.addNewPlayer(data.id, data.x, data.y);
 });
-
-Client.decreaseTurretAngle = function(decrease) {
-    Client.socket.emit('decreaseTurretAngle', decrease);
-};
-
-Client.increaseTurretAngle = function(increase) {
-    Client.socket.emit('increaseTurretAngle', increase);
-};
 
 Client.decreaseTurretPower = function(decrease) {
     Client.socket.emit('decreaseTurretPower', decrease);
@@ -67,12 +59,12 @@ Client.socket.on('updateTurretPower', function(player) {
     Game.updateTurretPower(player);
 });
 
-Client.sendSpace = function(power, angle) {
-    Client.socket.emit('space', {power: power, angle: angle});
+Client.sendSpace = function() {
+    Client.socket.emit('space');
 };
 
-Client.socket.on('fire', function(power, angle, player) {
-    Game.fireBullet(power, angle, player);
+Client.socket.on('fire', function(player) {
+    Game.fireBullet(player);
 });
 
 Client.socket.on('allPlayers',function(data) {

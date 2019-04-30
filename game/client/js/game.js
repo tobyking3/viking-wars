@@ -166,7 +166,7 @@ Game.updateTurretPower = function(player) {
 };
 
 Game.fireProperties = function() {
-    Client.sendSpace(power, angle);
+    Client.sendSpace();
 };
 
 Game.addNewPlayer = function(id, x, y) {
@@ -253,7 +253,7 @@ Game.setPlayerHealth = function(playerID, health) {
     playerID === 0 ? playerOneHealthBar.setPercent(playerHealth[playerID]) : playerTwoHealthBar.setPercent(playerHealth[playerID]);
 };
 
-Game.fireBullet = function(power, angle, player) {
+Game.fireBullet = function(player) {
     if (player.turn && fireAllowed) {
         fireAllowed = false;
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
@@ -273,11 +273,11 @@ Game.fireBullet = function(power, angle, player) {
         p.rotate(p.x, p.y, turret.rotation, false, 34);
 
         if (player.id === 0) {
-            game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, power, bullet.body.velocity);
+            game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation, player.turretPower, bullet.body.velocity);
             whooshSound.play();
             target = Game.vikingMap[player.id + 1].children[0];
         } else {
-            game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, power, bullet.body.velocity);
+            game.physics.arcade.velocityFromRotation(Game.vikingMap[player.id].children[1].rotation + 3.14159, player.turretPower, bullet.body.velocity);
             whooshSound.play();
             target = Game.vikingMap[player.id - 1].children[0];
         }

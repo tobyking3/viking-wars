@@ -46,9 +46,7 @@ io.on('connection', function(client) {
 
     client.on('newPlayer', function() {
         let playerID = server.lastPlayerID++;
-
         Player.addPlayer(client, playerID);
-
         client.emit('allPlayers', Player.getAllPlayers(io));
     });
 
@@ -59,8 +57,8 @@ io.on('connection', function(client) {
         client.broadcast.emit('connectionChange', checkConnectionState());
     });
 
-    client.on('space', function(data) {
-        GameEvent.fire(io, data, client);
+    client.on('space', function() {
+        GameEvent.fire(io, client);
     });
 
     client.on('turnTaken', function() {

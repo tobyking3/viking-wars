@@ -1,6 +1,6 @@
 module.exports = {
-    fire (io, data, client) {
-        io.emit('fire', data.power, data.angle, client.player);
+    fire (io, client) {
+        io.emit('fire', client.player);
     },
 
     turnTaken (client) {
