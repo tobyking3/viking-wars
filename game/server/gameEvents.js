@@ -1,6 +1,9 @@
 module.exports = {
     fire (io, client) {
-        io.emit('fire', client.player);
+
+        let clientRoom1 = Object.keys( io.sockets.adapter.sids[client.id] )[1];
+
+        io.sockets.to(clientRoom1).emit('fire', client.player);
     },
 
     turnTaken (client) {
@@ -8,14 +11,17 @@ module.exports = {
     },
 
     hit (io, client) {
+
+        let clientRoom2 = Object.keys( io.sockets.adapter.sids[client.id] )[1];
+
         if (client.player.turn) {
             if (client.player.health > 20) {
                 client.player.health -= 20;
-                io.emit('healthChange', client.player.id, client.player.health);
+                io.sockets.to(clientRoom2).emit('healthChange', client.player.id, client.player.health);
             } else {
                 client.player.health -= 20;
-                io.emit('healthChange', client.player.id, client.player.health);
-                io.emit('playerDied', client.player.id);
+                io.sockets.to(clientRoom2).emit('healthChange', client.player.id, client.player.health);
+                io.sockets.to(clientRoom2).emit('playerDied', client.player.id);
             }
         }
     },

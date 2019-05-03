@@ -25,6 +25,7 @@ Boot.create = function() {
 
 Boot.setConnectionCount = function(connectionState) {
     playersReady = connectionState;
+
     if (playersReady) {
         Boot.startGame();
     }

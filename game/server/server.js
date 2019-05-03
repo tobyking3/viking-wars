@@ -45,9 +45,11 @@ io.on('connection', function(client) {
     //----------------------ACCESS CLIENT ROOM-----------------------//
 
     client.on('newPlayer', function() {
+
         let playerID = server.lastPlayerID++;
-        Player.addPlayer(client, playerID);
-        client.emit('allPlayers', Player.getAllPlayers(io));
+        
+        Player.addPlayer(client, io, playerID);
+        client.emit('allPlayers', Player.getAllPlayers(io, client));
     });
 
     client.on('disconnect', function() {
@@ -90,7 +92,7 @@ io.on('connection', function(client) {
 });
 
 function checkConnectionState() {
-    return connectionCounter === 2 ? true : false;
+    return connectionCounter % 2 == 0 ? true : false;
 };
 
 server.lastPlayerID = 0;
