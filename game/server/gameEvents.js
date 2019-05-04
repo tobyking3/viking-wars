@@ -3,19 +3,22 @@ module.exports = {
         io.sockets.to(client.player.room).emit('fire', client.player);
     },
 
-    turnTaken (client) {
+    turnTaken (io, client) {
         client.player.turn = !client.player.turn;
-        io.sockets.to(client.player.room).emit('turnUpdated', client.player);
+    },
+
+    checkTurn (client) {
+        client.emit('turnUpdate', client.player.turn);
     },
 
     hit (io, client) {
         if (client.player.turn) {
             if (client.player.health > 20) {
                 client.player.health -= 20;
-                io.sockets.to(client.player.room).emit('healthChange', client.player.id, client.player.health);
+                io.sockets.to(client.player.room).emit('healthChange', client.player);
             } else {
                 client.player.health -= 20;
-                io.sockets.to(client.player.room).emit('healthChange', client.player.id, client.player.health);
+                io.sockets.to(client.player.room).emit('healthChange', client.player);
                 io.sockets.to(client.player.room).emit('playerDied', client.player.id);
             }
         }
@@ -23,7 +26,7 @@ module.exports = {
 
     groundHit(io, client){
         if (client.player.turn) {
-            io.sockets.to(client.player.room).emit('groundHit', client.player.id);
+            io.sockets.to(client.player.room).emit('groundHit', client.player);
         }
     },
 

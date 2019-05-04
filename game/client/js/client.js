@@ -22,16 +22,20 @@ Client.randomAngle = () => {
     Client.socket.emit('randomAngle');
 };
 
-Client.socket.on('groundHit', (playerId) => {
-    Game.setCamera(playerId);
+Client.socket.on('groundHit', (player) => {
+    Game.setCamera(player);
 });
 
 Client.turnTaken = () => {
     Client.socket.emit('turnTaken');
 };
 
-Client.socket.on('turnUpdated', (player) => {
-    Game.turnUpdated(player);
+Client.checkTurn = () => {
+    Client.socket.emit('checkTurn');
+};
+
+Client.socket.on('turnUpdate', (turn) => {
+    Game.turnUpdate(turn);
 });
 
 Client.socket.on('newPlayer', (data) => {
@@ -46,9 +50,9 @@ Client.increaseTurretPower = (increase) => {
     Client.socket.emit('increaseTurretPower', increase);
 };
 
-Client.socket.on('healthChange', (id, health) => {
-    Game.setPlayerHealth(id, health);
-    Game.setCamera(id);
+Client.socket.on('healthChange', (player) => {
+    Game.setPlayerHealth(player.id, player.health);
+    Game.setCamera(player);
 });
 
 Client.socket.on('playerDied', (playerId) => {

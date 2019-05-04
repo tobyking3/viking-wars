@@ -4,6 +4,7 @@ let Game = {
 };
 
 let gameStarted = false;
+let thisGamesTurn = false;
 
 let playerHealth = {
     0: 100,
@@ -13,13 +14,14 @@ let playerHealth = {
 let clickable = true;
 let target = null;
 
+let turnSprite = null;
+let enemiesTurnSprite = null;
 let turret = null;
 let playerOneHealthBar = null;
 let playerTwoHealthBar = null;
 let bullet = null;
 let angle = 0;
 let power = 800;
-let powerText = null;
 
 let cursors = null;
 let fireButton = null;
@@ -43,6 +45,8 @@ Game.preload = () => {
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('arrow', './assets/left_arrow.png');
+    game.load.image('turn_arrow', './assets/turn_arrow.png');
+    game.load.image('enemies_turn', './assets/enemies_turn.png');
     game.load.image('turret_player_1', './assets/turret-player1.png');
     game.load.image('turret_player_2', './assets/turret-player2.png');
     game.load.image('ground', './assets/ground.png');
@@ -69,11 +73,7 @@ Game.create = () => {
     ground.body.gravity.y = 0;
 
     game.world.setBounds(0, 0, Game.worldWidth, Game.worldHeight, false, false, false, false);
-
     power = 800;
-    powerText = game.add.text(8, 8, 'Power: 800', {font: "18px Arial", fill: "#ffffff"});
-    powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
-    powerText.fixedToCamera = true;
 
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -94,6 +94,7 @@ Game.update = () => {
 
     if (Object.keys(Game.vikingMap).length === 2) {
         Client.randomAngle();
+        Client.checkTurn();
     }
 
     if (bullet) {
@@ -123,28 +124,33 @@ Game.update = () => {
             }
         }
     }
-
-    powerText.text = 'Power: ' + power;
 };
 
-Game.setCamera = (id) => {
+Game.setCamera = (player) => {
     game.camera.target = null;
-    let distanceToPlayer = calculateDistanceToPlayer(id);
+    let distanceToPlayer = calculateDistanceToPlayer(player.id);
 
     if (distanceToPlayer > 200 || distanceToPlayer < -200) {
         game.time.events.add(Phaser.Timer.SECOND * 3, function() {
-            if (id === 0) {
+            if (player.id === 0) {
                 let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
-                toPlayerTwo.onComplete.add(allowFire, this);
+                toPlayerTwo.onComplete.add(() => {
+                    allowFire();
+                    turnMessage(player);
+                });
             }
 
-            if (id === 1) {
+            if (player.id === 1) {
                 let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
-                toPlayerOne.onComplete.add(allowFire, this);
+                toPlayerOne.onComplete.add(() => {
+                    allowFire();
+                    turnMessage(player);
+                });
             }
         });
     } else {
         allowFire();
+        turnMessage(player);
     }
 };
 
@@ -303,8 +309,20 @@ registerTurn = () => {
     clickable = true;
 };
 
-Game.turnUpdated = () => {
+turnMessage = (player) => {
+    if (thisGamesTurn) {
+        if (enemiesTurnSprite) {
+            enemiesTurnSprite.destroy();
+        }
 
+        spawnTurnArrow(player);
+    } else {
+        if (turnSprite) {
+            turnSprite.destroy();
+        }
+
+        spawnTurnText(player);
+    }
 };
 
 calculateDistanceToPlayer = (id) => Game.vikingMap[id].children[0].x - bullet.body.x;
@@ -319,6 +337,27 @@ Game.removePlayer = (id) => {
     if (id === 1) {
         game.camera.follow(Game.vikingMap[0].children[0]);
     };
+};
+
+spawnTurnArrow = (player) => {
+    let turnSpriteX = (player.id === 0) ? Game.vikingMap[player.id].children[0].x : Game.vikingMap[player.id].children[0].x - 75;
+    turnSprite = game.add.sprite(turnSpriteX, Game.vikingMap[player.id].children[0].y - 375, 'turn_arrow');
+    turnSprite.scale.setTo(0.5, 0.5);
+    let turnTween = game.add.tween(turnSprite).to( { y: '-50' }, 500, Phaser.Easing.Linear.None, true).loop(true);
+    turnTween.yoyo(true, 100);
+};
+
+spawnTurnText = () => {
+    enemiesTurnSprite = game.add.sprite(0, 0, 'enemies_turn');
+    enemiesTurnSprite.x = game.width / 2 - enemiesTurnSprite.width / 2;
+    enemiesTurnSprite.y = game.height / 4 - enemiesTurnSprite.height / 2;
+    enemiesTurnSprite.fixedToCamera = true;
+    let enemiesTurnTween = game.add.tween(enemiesTurnSprite).to( { alpha: 0.5 }, 500, Phaser.Easing.Linear.None, true).loop(true);
+    enemiesTurnTween.yoyo(true, 100);
+};
+
+Game.turnUpdate = (turn) => {
+    thisGamesTurn = turn;
 };
 
 Game.setConnectionCount = (connectionState) => {

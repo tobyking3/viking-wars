@@ -62,7 +62,11 @@ io.on('connection', (client) => {
     });
 
     client.on('turnTaken', () => {
-        GameEvent.turnTaken(client);
+        GameEvent.turnTaken(io, client);
+    });
+
+    client.on('checkTurn', () => {
+        GameEvent.checkTurn(client);
     });
 
     client.on('playerHit', () => {
