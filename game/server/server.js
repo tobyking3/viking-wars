@@ -77,6 +77,10 @@ io.on('connection', (client) => {
         GameEvent.groundHit(io, client);
     });
 
+    client.on('outOfBounds', () => {
+        GameEvent.outOfBounds(io, client);
+    });
+
     client.on('randomAngle', () => {
         GameEvent.randomAngle(io, client);
         GameEvent.updateTurretAngle(io, client);

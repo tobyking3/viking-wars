@@ -30,6 +30,12 @@ module.exports = {
         }
     },
 
+    outOfBounds(io, client) {
+        if (client.player.turn) {
+            io.sockets.to(client.player.room).emit('outOfBounds', client.player);
+        }
+    },
+
     randomAngle(io, client) {
         if (client.player.turn) {
             this.updatePlayerAngle(client.player);

@@ -18,6 +18,10 @@ Client.groundHit = () => {
     Client.socket.emit('groundHit');
 };
 
+Client.outOfBounds = () => {
+    Client.socket.emit('outOfBounds');
+};
+
 Client.randomAngle = () => {
     Client.socket.emit('randomAngle');
 };
@@ -26,11 +30,15 @@ Client.socket.on('groundHit', (player) => {
     Game.setCamera(player);
 });
 
+Client.socket.on('outOfBounds', (player) => {
+    Game.setCamera(player);
+});
+
 Client.turnTaken = () => {
     Client.socket.emit('turnTaken');
 };
 
-Client.checkTurn = () => {
+Client.checkGameTurn = () => {
     Client.socket.emit('checkTurn');
 };
 

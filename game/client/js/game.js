@@ -94,7 +94,7 @@ Game.update = () => {
 
     if (Object.keys(Game.vikingMap).length === 2) {
         Client.randomAngle();
-        Client.checkTurn();
+        Client.checkGameTurn();
     }
 
     if (bullet) {
@@ -121,6 +121,7 @@ Game.update = () => {
                 bullet.hasCollided = true;
                 game.add.tween(game.camera).to( { y: 280 }, 2000, Phaser.Easing.Linear.None, true);
                 allowFire();
+                Client.outOfBounds();
             }
         }
     }
@@ -307,6 +308,10 @@ onReadyClick = () => {
 registerTurn = () => {
     Client.turnTaken();
     clickable = true;
+};
+
+Game.outOfBounds = (player) => {
+    turnMessage(player);
 };
 
 turnMessage = (player) => {
