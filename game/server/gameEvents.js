@@ -5,6 +5,7 @@ module.exports = {
 
     turnTaken (client) {
         client.player.turn = !client.player.turn;
+        io.sockets.to(client.player.room).emit('turnUpdated', client.player);
     },
 
     hit (io, client) {

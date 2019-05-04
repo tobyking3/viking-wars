@@ -37,7 +37,7 @@ Game.init = function() {
     game.stage.disableVisibilityChange = true;
 };
 
-Game.preload = function() {
+Game.preload = () => {
     game.load.image('background', 'assets/backgrounds/long_scene.png');
     game.load.image('waiting', 'assets/waiting.png');
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
@@ -52,7 +52,7 @@ Game.preload = function() {
     game.load.audio('music', 'assets/viking_wars.mp3');
 };
 
-Game.create = function() {
+Game.create = () => {
     Game.vikingMap = {};
 
     game.add.sprite(0, 0, 'background');
@@ -85,7 +85,7 @@ Game.create = function() {
     readyButton.scale.setTo(0.5, 0.5);
 };
 
-Game.update = function() {
+Game.update = () => {
     if (cursors.left.isDown) {
         Client.decreaseTurretPower(cursors.left.isDown);
     } else if (cursors.right.isDown) {
@@ -127,7 +127,7 @@ Game.update = function() {
     powerText.text = 'Power: ' + power;
 };
 
-Game.setCamera = function(id) {
+Game.setCamera = (id) => {
     game.camera.target = null;
     let distanceToPlayer = calculateDistanceToPlayer(id);
 
@@ -148,7 +148,7 @@ Game.setCamera = function(id) {
     }
 };
 
-Game.updateTurretAngle = function(player) {
+Game.updateTurretAngle = (player) => {
     angle = player.turretAngle;
     if (player.id === 0) {
         Game.vikingMap[player.id].children[1].angle = angle;
@@ -157,7 +157,7 @@ Game.updateTurretAngle = function(player) {
     }
 };
 
-Game.updateTurretPower = function(player) {
+Game.updateTurretPower = (player) => {
     power = player.turretPower;
     if (player.id === 0) {
         Game.vikingMap[player.id].children[1].width = power / 4;
@@ -166,11 +166,11 @@ Game.updateTurretPower = function(player) {
     }
 };
 
-Game.fireProperties = function() {
+Game.fireProperties = () => {
     Client.sendSpace();
 };
 
-Game.addNewPlayer = function(id, x, y) {
+Game.addNewPlayer = (id, x, y) => {
     let playerGroup = game.add.group(game.world, 'playerGroup');
     let viking;
 
@@ -245,14 +245,14 @@ Game.addNewPlayer = function(id, x, y) {
     Game.vikingMap[id] = playerGroup;
 };
 
-allowFire = _ => fireAllowed = true;
+allowFire = () => fireAllowed = true;
 
-Game.setPlayerHealth = function(playerID, health) {
+Game.setPlayerHealth = (playerID, health) => {
     playerHealth[playerID] = health;
     playerID === 0 ? playerOneHealthBar.setPercent(playerHealth[playerID]) : playerTwoHealthBar.setPercent(playerHealth[playerID]);
 };
 
-Game.fireBullet = function(player) {
+Game.fireBullet = (player) => {
     if (player.turn && fireAllowed) {
         fireAllowed = false;
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
@@ -285,27 +285,31 @@ Game.fireBullet = function(player) {
     }
 };
 
-Game.killPlayer = function(playerId) {
+Game.killPlayer = (playerId) => {
     Game.vikingMap[playerId].children[0].animations.stop();
     Game.vikingMap[playerId].children[0].animations.play('death');
     deathSound.play();
     game.state.start('Start');
 };
 
-onReadyClick = _ => {
+onReadyClick = () => {
     // music = new Phaser.Sound(game,'music',1,true); music.volume = 0.2; music.play();
     readyButton.destroy();
     Client.askNewPlayer();
 };
 
-registerTurn = _ => {
+registerTurn = () => {
     Client.turnTaken();
     clickable = true;
-}
+};
 
-calculateDistanceToPlayer = id => Game.vikingMap[id].children[0].x - bullet.body.x;
+Game.turnUpdated = () => {
 
-Game.removePlayer = function(id) {
+};
+
+calculateDistanceToPlayer = (id) => Game.vikingMap[id].children[0].x - bullet.body.x;
+
+Game.removePlayer = (id) => {
     Game.vikingMap[id].destroy();
 
     if (id === 0) {
@@ -317,7 +321,7 @@ Game.removePlayer = function(id) {
     };
 };
 
-Game.setConnectionCount = function(connectionState) {
+Game.setConnectionCount = (connectionState) => {
     if (connectionState) {
         gameStarted = true;
     } else if (!connectionState && gameStarted) {

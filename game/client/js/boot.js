@@ -4,17 +4,17 @@ let playersReady = false;
 
 let waitingMessage;
 
-Boot.init = function() {
+Boot.init = () => {
     game.stage.disableVisibilityChange = true;
 };
 
-Boot.preload = function() {
+Boot.preload = () => {
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     game.load.image('background', 'assets/backgrounds/long_scene.png');
     game.load.image('waiting', 'assets/waiting.png');
 };
 
-Boot.create = function() {
+Boot.create = () => {
     powerText = game.add.text(400, 200, 'START GAME', {font: "40px Arial", fill: "#ffffff"});
     game.add.sprite(0, 0, 'background');
 
@@ -24,7 +24,7 @@ Boot.create = function() {
     waitingMessage.y = game.height / 2 - waitingMessage.height / 2;
 };
 
-Boot.setConnectionCount = function(connectionState) {
+Boot.setConnectionCount = (connectionState) => {
     playersReady = connectionState;
 
     if (playersReady) {
@@ -32,6 +32,6 @@ Boot.setConnectionCount = function(connectionState) {
     }
 };
 
-Boot.startGame = function() {
+Boot.startGame = () => {
     game.state.start('Game');
 };

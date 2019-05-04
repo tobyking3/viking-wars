@@ -22,7 +22,7 @@ function isOdd(value) {
     return value % 2 === 0 ? false : true;
 }
 
-io.on('connection', function(client) {
+io.on('connection', (client) => {
     connectionCounter++;
 
     if (isOdd(connectionCounter)) {
@@ -44,56 +44,55 @@ io.on('connection', function(client) {
 
     //----------------------ACCESS CLIENT ROOM-----------------------//
 
-    client.on('newPlayer', function() {
-
+    client.on('newPlayer', () => {
         let playerID = server.lastPlayerID++;
 
         Player.addPlayer(client, io, playerID);
         client.emit('allPlayers', Player.getAllPlayers(io, client));
     });
 
-    client.on('disconnect', function() {
+    client.on('disconnect', () => {
         connectionCounter--;
         client.lastPlayerID--;
         io.sockets.to(clientRoom).emit('connectionChange', checkConnectionState());
     });
 
-    client.on('space', function() {
+    client.on('space', () => {
         GameEvent.fire(io, client);
     });
 
-    client.on('turnTaken', function() {
+    client.on('turnTaken', () => {
         GameEvent.turnTaken(client);
     });
 
-    client.on('playerHit', function() {
+    client.on('playerHit', () => {
         GameEvent.hit(io, client);
     });
 
-    client.on('groundHit', function() {
+    client.on('groundHit', () => {
         GameEvent.groundHit(io, client);
     });
 
-    client.on('randomAngle', function() {
+    client.on('randomAngle', () => {
         GameEvent.randomAngle(io, client);
         GameEvent.updateTurretAngle(io, client);
     });
 
-    client.on('decreaseTurretPower', function(decrease) {
+    client.on('decreaseTurretPower', (decrease) => {
         GameEvent.decreaseTurretPower(io, decrease, client);
         GameEvent.updateTurretPower(io, client);
     });
 
-    client.on('increaseTurretPower', function(increase) {
+    client.on('increaseTurretPower', (increase) => {
         GameEvent.increaseTurretPower(io, increase, client);
         GameEvent.updateTurretPower(io, client);
     });
 });
 
-checkConnectionState = _ => connectionCounter % 2 == 0 ? true : false;
+checkConnectionState = _ => connectionCounter % 2 === 0 ? true : false;
 
 server.lastPlayerID = 0;
 
-server.listen(PORT, function(){
+server.listen(PORT, () => {
     console.log('Listening on ' + server.address().port);
 });
