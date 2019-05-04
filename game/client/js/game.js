@@ -49,6 +49,7 @@ Game.preload = function() {
     game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
     game.load.audio('whoosh', 'assets/whoosh.wav');
     game.load.audio('death', 'assets/death_sound.wav');
+    game.load.audio('music', 'assets/viking_wars.mp3');
 };
 
 Game.create = function() {
@@ -244,9 +245,7 @@ Game.addNewPlayer = function(id, x, y) {
     Game.vikingMap[id] = playerGroup;
 };
 
-function allowFire() {
-    fireAllowed = true;
-}
+allowFire = _ => fireAllowed = true;
 
 Game.setPlayerHealth = function(playerID, health) {
     playerHealth[playerID] = health;
@@ -293,19 +292,18 @@ Game.killPlayer = function(playerId) {
     game.state.start('Start');
 };
 
-function onReadyClick() {
+onReadyClick = _ => {
+    // music = new Phaser.Sound(game,'music',1,true); music.volume = 0.2; music.play();
     readyButton.destroy();
     Client.askNewPlayer();
 };
 
-function registerTurn() {
+registerTurn = _ => {
     Client.turnTaken();
     clickable = true;
-};
+}
 
- function calculateDistanceToPlayer(id) {
-    return Game.vikingMap[id].children[0].x - bullet.body.x;
- };
+calculateDistanceToPlayer = id => Game.vikingMap[id].children[0].x - bullet.body.x;
 
 Game.removePlayer = function(id) {
     Game.vikingMap[id].destroy();

@@ -27,8 +27,9 @@ module.exports = {
     },
 
     groundHit(io, client){
+        let clientRoom3 = Object.keys( io.sockets.adapter.sids[client.id] )[1];
         if (client.player.turn) {
-            io.emit('groundHit', client.player.id);
+            io.sockets.to(clientRoom3).emit('groundHit', client.player.id);
         }
     },
 
@@ -70,10 +71,12 @@ module.exports = {
     },
 
     updateTurretPower(io, client) {
-        io.emit('updateTurretPower', client.player);
+        let clientRoom4 = Object.keys( io.sockets.adapter.sids[client.id] )[1];
+        io.sockets.to(clientRoom4).emit('updateTurretPower', client.player);
     },
 
     updateTurretAngle(io, client) {
-        io.emit('updateTurretAngle', client.player);
+        let clientRoom5 = Object.keys( io.sockets.adapter.sids[client.id] )[1];
+        io.sockets.to(clientRoom5).emit('updateTurretAngle', client.player);
     }
 };

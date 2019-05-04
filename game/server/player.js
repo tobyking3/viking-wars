@@ -41,8 +41,6 @@ module.exports = {
 
         Object.keys(socketsInRoom).forEach(function(socketID) {
 
-            console.log(socketID);
-
             let player = io.sockets.connected[socketID].player;
 
             if (player) io.sockets.adapter.rooms[thisRoom]['playersInRoom'].push(player);

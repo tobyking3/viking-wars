@@ -47,7 +47,7 @@ io.on('connection', function(client) {
     client.on('newPlayer', function() {
 
         let playerID = server.lastPlayerID++;
-        
+
         Player.addPlayer(client, io, playerID);
         client.emit('allPlayers', Player.getAllPlayers(io, client));
     });
@@ -55,8 +55,7 @@ io.on('connection', function(client) {
     client.on('disconnect', function() {
         connectionCounter--;
         client.lastPlayerID--;
-        client.emit('connectionChange', checkConnectionState());
-        client.broadcast.emit('connectionChange', checkConnectionState());
+        io.sockets.to(clientRoom).emit('connectionChange', checkConnectionState());
     });
 
     client.on('space', function() {
@@ -91,9 +90,7 @@ io.on('connection', function(client) {
     });
 });
 
-function checkConnectionState() {
-    return connectionCounter % 2 == 0 ? true : false;
-};
+checkConnectionState = _ => connectionCounter % 2 == 0 ? true : false;
 
 server.lastPlayerID = 0;
 

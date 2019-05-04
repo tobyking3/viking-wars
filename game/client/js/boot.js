@@ -17,6 +17,7 @@ Boot.preload = function() {
 Boot.create = function() {
     powerText = game.add.text(400, 200, 'START GAME', {font: "40px Arial", fill: "#ffffff"});
     game.add.sprite(0, 0, 'background');
+
     waitingMessage = waitingMessage = game.add.sprite(0, 0, 'waiting');
     waitingMessage.scale.setTo(0.5, 0.5);
     waitingMessage.x = game.width / 2 - waitingMessage.width / 2;

@@ -52,7 +52,7 @@ Client.socket.on('playerDied', function(playerId) {
 });
 
 Client.socket.on('updateTurretAngle', function(player) {
-    // Game.updateTurretAngle(player);
+    Game.updateTurretAngle(player);
 });
 
 Client.socket.on('updateTurretPower', function(player) {
