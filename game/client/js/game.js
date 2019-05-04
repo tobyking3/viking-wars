@@ -119,8 +119,6 @@ Game.update = () => {
         if (bullet.x < 0 || bullet.x > Game.worldWidth) {
             if (!bullet.hasCollided) {
                 bullet.hasCollided = true;
-                game.add.tween(game.camera).to( { y: 280 }, 2000, Phaser.Easing.Linear.None, true);
-                allowFire();
                 Client.outOfBounds();
             }
         }
@@ -134,24 +132,24 @@ Game.setCamera = (player) => {
     if (distanceToPlayer > 200 || distanceToPlayer < -200) {
         game.time.events.add(Phaser.Timer.SECOND * 3, function() {
             if (player.id === 0) {
-                let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+                let toPlayerTwo = game.add.tween(game.camera).to( { x: 0, y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
                 toPlayerTwo.onComplete.add(() => {
-                    allowFire();
                     turnMessage(player);
+                    allowFire();
                 });
             }
 
             if (player.id === 1) {
-                let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+                let toPlayerOne = game.add.tween(game.camera).to( { x: 4000, y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
                 toPlayerOne.onComplete.add(() => {
-                    allowFire();
                     turnMessage(player);
+                    allowFire();
                 });
             }
         });
     } else {
-        allowFire();
         turnMessage(player);
+        allowFire();
     }
 };
 

@@ -24,7 +24,7 @@ module.exports = {
         }
     },
 
-    groundHit(io, client){
+    groundHit(io, client) {
         if (client.player.turn) {
             io.sockets.to(client.player.room).emit('groundHit', client.player);
         }
