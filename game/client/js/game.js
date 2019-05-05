@@ -4,6 +4,7 @@ let Game = {
 };
 
 let gameStarted = false;
+let thisGamesTurn = false;
 
 let playerHealth = {
     0: 100,
@@ -13,13 +14,17 @@ let playerHealth = {
 let clickable = true;
 let target = null;
 
+// Turn UI
+let turnSprite = null;
+let enemiesTurnSprite = null;
+let shotsFired = 0;
+
 let turret = null;
 let playerOneHealthBar = null;
 let playerTwoHealthBar = null;
 let bullet = null;
 let angle = 0;
 let power = 800;
-let powerText = null;
 
 let cursors = null;
 let fireButton = null;
@@ -37,21 +42,24 @@ Game.init = function() {
     game.stage.disableVisibilityChange = true;
 };
 
-Game.preload = function() {
+Game.preload = () => {
     game.load.image('background', 'assets/backgrounds/long_scene.png');
     game.load.image('waiting', 'assets/waiting.png');
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.image('arrow', './assets/left_arrow.png');
+    game.load.image('turn_arrow', './assets/turn_arrow.png');
+    game.load.image('enemies_turn', './assets/enemies_turn.png');
     game.load.image('turret_player_1', './assets/turret-player1.png');
     game.load.image('turret_player_2', './assets/turret-player2.png');
     game.load.image('ground', './assets/ground.png');
     game.load.spritesheet('ready_button', 'assets/ready.png', 1000, 365);
     game.load.audio('whoosh', 'assets/whoosh.wav');
     game.load.audio('death', 'assets/death_sound.wav');
+    game.load.audio('music', 'assets/viking_wars.mp3');
 };
 
-Game.create = function() {
+Game.create = () => {
     Game.vikingMap = {};
 
     game.add.sprite(0, 0, 'background');
@@ -68,11 +76,7 @@ Game.create = function() {
     ground.body.gravity.y = 0;
 
     game.world.setBounds(0, 0, Game.worldWidth, Game.worldHeight, false, false, false, false);
-
     power = 800;
-    powerText = game.add.text(8, 8, 'Power: 800', {font: "18px Arial", fill: "#ffffff"});
-    powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
-    powerText.fixedToCamera = true;
 
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -84,7 +88,7 @@ Game.create = function() {
     readyButton.scale.setTo(0.5, 0.5);
 };
 
-Game.update = function() {
+Game.update = () => {
     if (cursors.left.isDown) {
         Client.decreaseTurretPower(cursors.left.isDown);
     } else if (cursors.right.isDown) {
@@ -93,6 +97,7 @@ Game.update = function() {
 
     if (Object.keys(Game.vikingMap).length === 2) {
         Client.randomAngle();
+        Client.checkGameTurn();
     }
 
     if (bullet) {
@@ -117,46 +122,54 @@ Game.update = function() {
         if (bullet.x < 0 || bullet.x > Game.worldWidth) {
             if (!bullet.hasCollided) {
                 bullet.hasCollided = true;
-                game.add.tween(game.camera).to( { y: 280 }, 2000, Phaser.Easing.Linear.None, true);
-                allowFire();
+                Client.outOfBounds();
             }
         }
     }
-
-    powerText.text = 'Power: ' + power;
 };
 
-Game.setCamera = function(id) {
+Game.setCamera = (player) => {
     game.camera.target = null;
-    let distanceToPlayer = calculateDistanceToPlayer(id);
+    let distanceToPlayer = calculateDistanceToPlayer(player.id);
 
     if (distanceToPlayer > 200 || distanceToPlayer < -200) {
-        game.time.events.add(Phaser.Timer.SECOND * 3, function() {
-            if (id === 0) {
-                let toPlayerTwo = game.add.tween(game.camera).to( { x: 0 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
-                toPlayerTwo.onComplete.add(allowFire, this);
+        game.time.events.add(Phaser.Timer.SECOND, function() {
+            if (player.id === 0) {
+                let toPlayerTwo = game.add.tween(game.camera).to( { x: 0, y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+                toPlayerTwo.onComplete.add(() => {
+                    turnMessage(player);
+                    allowFire();
+                });
             }
 
-            if (id === 1) {
-                let toPlayerOne = game.add.tween(game.camera).to( { x: 4000 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
-                toPlayerOne.onComplete.add(allowFire, this);
+            if (player.id === 1) {
+                let toPlayerOne = game.add.tween(game.camera).to( { x: 4000, y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+                toPlayerOne.onComplete.add(() => {
+                    turnMessage(player);
+                    allowFire();
+                });
             }
         });
     } else {
-        allowFire();
+        let resetCameraTween = game.add.tween(game.camera).to( {y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+        resetCameraTween.onComplete.add(() => {
+            turnMessage(player);
+            allowFire();
+        });
     }
 };
 
-Game.updateTurretAngle = function(player) {
+Game.updateTurretAngle = (player) => {
     angle = player.turretAngle;
     if (player.id === 0) {
         Game.vikingMap[player.id].children[1].angle = angle;
     } else {
         Game.vikingMap[player.id].children[1].angle = -angle;
     }
+    firstTurnUI(player);
 };
 
-Game.updateTurretPower = function(player) {
+Game.updateTurretPower = (player) => {
     power = player.turretPower;
     if (player.id === 0) {
         Game.vikingMap[player.id].children[1].width = power / 4;
@@ -165,11 +178,11 @@ Game.updateTurretPower = function(player) {
     }
 };
 
-Game.fireProperties = function() {
+Game.fireProperties = () => {
     Client.sendSpace();
 };
 
-Game.addNewPlayer = function(id, x, y) {
+Game.addNewPlayer = (id, x, y) => {
     let playerGroup = game.add.group(game.world, 'playerGroup');
     let viking;
 
@@ -244,17 +257,16 @@ Game.addNewPlayer = function(id, x, y) {
     Game.vikingMap[id] = playerGroup;
 };
 
-function allowFire() {
-    fireAllowed = true;
-}
+allowFire = () => fireAllowed = true;
 
-Game.setPlayerHealth = function(playerID, health) {
+Game.setPlayerHealth = (playerID, health) => {
     playerHealth[playerID] = health;
     playerID === 0 ? playerOneHealthBar.setPercent(playerHealth[playerID]) : playerTwoHealthBar.setPercent(playerHealth[playerID]);
 };
 
-Game.fireBullet = function(player) {
+Game.fireBullet = (player) => {
     if (player.turn && fireAllowed) {
+        shotsFired++;
         fireAllowed = false;
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
@@ -286,28 +298,78 @@ Game.fireBullet = function(player) {
     }
 };
 
-Game.killPlayer = function(playerId) {
+Game.killPlayer = (playerId) => {
     Game.vikingMap[playerId].children[0].animations.stop();
-    Game.vikingMap[playerId].children[0].animations.play('death');
     deathSound.play();
-    game.state.start('Start');
+    Game.vikingMap[playerId].children[0].animations.play('death').onComplete.add(() => {
+        game.state.start('End');
+    });
 };
 
-function onReadyClick() {
+onReadyClick = () => {
+    // music = new Phaser.Sound(game,'music',1,true); music.volume = 0.2; music.play();
     readyButton.destroy();
     Client.askNewPlayer();
 };
 
-function registerTurn() {
+registerTurn = () => {
     Client.turnTaken();
     clickable = true;
 };
 
- function calculateDistanceToPlayer(id) {
-    return Game.vikingMap[id].children[0].x - bullet.body.x;
- };
+Game.outOfBounds = (player) => {
+    turnMessage(player);
+};
 
-Game.removePlayer = function(id) {
+turnMessage = (player) => {
+    if (thisGamesTurn) {
+        if (enemiesTurnSprite) {
+            enemiesTurnSprite.destroy();
+            enemiesTurnSprite = null;
+        }
+
+        if (!turnSprite) {
+            spawnTurnArrow(player);
+        }
+    } else {
+        if (turnSprite) {
+            turnSprite.destroy();
+            turnSprite = null;
+        }
+
+        if (!enemiesTurnSprite) {
+            spawnTurnText(player);
+        }
+    }
+};
+
+firstTurnUI = (player) => {
+    if (shotsFired === 0) {
+        if (thisGamesTurn) {
+            if (enemiesTurnSprite) {
+                enemiesTurnSprite.destroy();
+                enemiesTurnSprite = null;
+            }
+
+            if (!turnSprite) {
+                spawnTurnArrow(player);
+            }
+        } else {
+            if (turnSprite) {
+                turnSprite.destroy();
+                turnSprite = null;
+            }
+
+            if (!enemiesTurnSprite) {
+                spawnTurnText(player);
+            }
+        }
+    }
+};
+
+calculateDistanceToPlayer = (id) => Game.vikingMap[id].children[0].x - bullet.body.x;
+
+Game.removePlayer = (id) => {
     Game.vikingMap[id].destroy();
 
     if (id === 0) {
@@ -319,7 +381,28 @@ Game.removePlayer = function(id) {
     };
 };
 
-Game.setConnectionCount = function(connectionState) {
+spawnTurnArrow = (player) => {
+    let turnSpriteX = (player.id === 0) ? Game.vikingMap[player.id].children[0].x : Game.vikingMap[player.id].children[0].x - 75;
+    turnSprite = game.add.sprite(turnSpriteX, Game.vikingMap[player.id].children[0].y - 375, 'turn_arrow');
+    turnSprite.scale.setTo(0.5, 0.5);
+    let turnTween = game.add.tween(turnSprite).to( { y: '-50' }, 500, Phaser.Easing.Linear.None, true).loop(true);
+    turnTween.yoyo(true, 100);
+};
+
+spawnTurnText = () => {
+    enemiesTurnSprite = game.add.sprite(0, 0, 'enemies_turn');
+    enemiesTurnSprite.x = game.width / 2 - enemiesTurnSprite.width / 2;
+    enemiesTurnSprite.y = game.height / 4 - enemiesTurnSprite.height / 2;
+    enemiesTurnSprite.fixedToCamera = true;
+    let enemiesTurnTween = game.add.tween(enemiesTurnSprite).to( { alpha: 0.5 }, 500, Phaser.Easing.Linear.None, true).loop(true);
+    enemiesTurnTween.yoyo(true, 100);
+};
+
+Game.turnUpdate = (turn) => {
+    thisGamesTurn = turn;
+};
+
+Game.setConnectionCount = (connectionState) => {
     if (connectionState) {
         gameStarted = true;
     } else if (!connectionState && gameStarted) {

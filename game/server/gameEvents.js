@@ -1,28 +1,38 @@
 module.exports = {
     fire (io, client) {
-        io.emit('fire', client.player);
+        io.sockets.to(client.player.room).emit('fire', client.player);
     },
 
-    turnTaken (client) {
+    turnTaken (io, client) {
         client.player.turn = !client.player.turn;
+    },
+
+    checkTurn (client) {
+        client.emit('turnUpdate', client.player.turn);
     },
 
     hit (io, client) {
         if (client.player.turn) {
             if (client.player.health > 20) {
                 client.player.health -= 20;
-                io.emit('healthChange', client.player.id, client.player.health);
+                io.sockets.to(client.player.room).emit('healthChange', client.player);
             } else {
                 client.player.health -= 20;
-                io.emit('healthChange', client.player.id, client.player.health);
-                io.emit('playerDied', client.player.id);
+                io.sockets.to(client.player.room).emit('healthChange', client.player);
+                io.sockets.to(client.player.room).emit('playerDied', client.player.id);
             }
         }
     },
 
-    groundHit(io, client){
+    groundHit(io, client) {
         if (client.player.turn) {
-            io.emit('groundHit', client.player.id);
+            io.sockets.to(client.player.room).emit('groundHit', client.player);
+        }
+    },
+
+    outOfBounds(io, client) {
+        if (client.player.turn) {
+            io.sockets.to(client.player.room).emit('outOfBounds', client.player);
         }
     },
 
@@ -64,10 +74,10 @@ module.exports = {
     },
 
     updateTurretPower(io, client) {
-        io.emit('updateTurretPower', client.player);
+        io.sockets.to(client.player.room).emit('updateTurretPower', client.player);
     },
 
     updateTurretAngle(io, client) {
-        io.emit('updateTurretAngle', client.player);
+        io.sockets.to(client.player.room).emit('updateTurretAngle', client.player);
     }
 };
