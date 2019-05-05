@@ -43,11 +43,11 @@ Game.init = function() {
 };
 
 Game.preload = () => {
-    game.load.image('background', 'assets/backgrounds/long_scene.png');
+    game.load.image('background', 'assets/long_scene.png');
     game.load.image('waiting', 'assets/waiting.png');
     game.load.atlas('brown_viking', 'assets/brown_viking.png', 'assets/brown_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     game.load.atlas('red_viking', 'assets/red_viking.png', 'assets/red_viking.json', Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
-    game.load.image('arrow', './assets/left_arrow.png');
+    game.load.image('arrow', './assets/arrow.png');
     game.load.image('turn_arrow', './assets/turn_arrow.png');
     game.load.image('enemies_turn', './assets/enemies_turn.png');
     game.load.image('turret_player_1', './assets/turret-player1.png');
