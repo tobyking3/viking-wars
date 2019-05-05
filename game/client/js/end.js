@@ -5,11 +5,15 @@ End.init = function() {
 };
 
 End.preload = function() {
-
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.load.image('background', 'assets/backgrounds/long_scene.png');
+    game.load.image('game_over', 'assets/game_over.png');
 };
 
 End.create = function() {
-    powerText = game.add.text(400, 200, 'GAME OVER', {font: "40px Arial", fill: "#ffffff"});
-    powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
-    powerText.fixedToCamera = true;
+    game.add.sprite(0, 0, 'background');
+    waitingMessage = waitingMessage = game.add.sprite(0, 0, 'game_over');
+    waitingMessage.scale.setTo(0.5, 0.5);
+    waitingMessage.x = game.width / 2 - waitingMessage.width / 2;
+    waitingMessage.y = game.height / 2 - waitingMessage.height / 2;
 };

@@ -300,8 +300,8 @@ Game.fireBullet = (player) => {
 
 Game.killPlayer = (playerId) => {
     Game.vikingMap[playerId].children[0].animations.stop();
-    Game.vikingMap[playerId].children[0].animations.play('death');
-    deathSound.play().onComplete.add(() => {
+    deathSound.play();
+    Game.vikingMap[playerId].children[0].animations.play('death').onComplete.add(() => {
         game.state.start('End');
     });
 };
