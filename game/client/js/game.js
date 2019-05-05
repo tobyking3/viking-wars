@@ -307,7 +307,7 @@ Game.killPlayer = (playerId) => {
 };
 
 onReadyClick = () => {
-    // music = new Phaser.Sound(game,'music',1,true); music.volume = 0.2; music.play();
+    let music = new Phaser.Sound(game,'music', 1, true); music.volume = 0.2; music.play();
     readyButton.destroy();
     Client.askNewPlayer();
 };
