@@ -14,8 +14,11 @@ let playerHealth = {
 let clickable = true;
 let target = null;
 
+// Turn UI
 let turnSprite = null;
 let enemiesTurnSprite = null;
+let shotsFired = 0;
+
 let turret = null;
 let playerOneHealthBar = null;
 let playerTwoHealthBar = null;
@@ -130,7 +133,7 @@ Game.setCamera = (player) => {
     let distanceToPlayer = calculateDistanceToPlayer(player.id);
 
     if (distanceToPlayer > 200 || distanceToPlayer < -200) {
-        game.time.events.add(Phaser.Timer.SECOND * 3, function() {
+        game.time.events.add(Phaser.Timer.SECOND, function() {
             if (player.id === 0) {
                 let toPlayerTwo = game.add.tween(game.camera).to( { x: 0, y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
                 toPlayerTwo.onComplete.add(() => {
@@ -148,8 +151,11 @@ Game.setCamera = (player) => {
             }
         });
     } else {
-        turnMessage(player);
-        allowFire();
+        let resetCameraTween = game.add.tween(game.camera).to( {y: 280 }, distanceToPlayer, Phaser.Easing.Linear.None, true);
+        resetCameraTween.onComplete.add(() => {
+            turnMessage(player);
+            allowFire();
+        });
     }
 };
 
@@ -160,6 +166,7 @@ Game.updateTurretAngle = (player) => {
     } else {
         Game.vikingMap[player.id].children[1].angle = -angle;
     }
+    firstTurnUI(player);
 };
 
 Game.updateTurretPower = (player) => {
@@ -259,6 +266,7 @@ Game.setPlayerHealth = (playerID, health) => {
 
 Game.fireBullet = (player) => {
     if (player.turn && fireAllowed) {
+        shotsFired++;
         fireAllowed = false;
         bullet = game.add.sprite(Game.vikingMap[player.id].children[1].x, Game.vikingMap[player.id].children[1].y, 'arrow');
         bullet.scale.setTo(0.2, 0.2);
@@ -293,8 +301,9 @@ Game.fireBullet = (player) => {
 Game.killPlayer = (playerId) => {
     Game.vikingMap[playerId].children[0].animations.stop();
     Game.vikingMap[playerId].children[0].animations.play('death');
-    deathSound.play();
-    game.state.start('Start');
+    deathSound.play().onComplete.add(() => {
+        game.state.start('End');
+    });
 };
 
 onReadyClick = () => {
@@ -316,15 +325,45 @@ turnMessage = (player) => {
     if (thisGamesTurn) {
         if (enemiesTurnSprite) {
             enemiesTurnSprite.destroy();
+            enemiesTurnSprite = null;
         }
 
-        spawnTurnArrow(player);
+        if (!turnSprite) {
+            spawnTurnArrow(player);
+        }
     } else {
         if (turnSprite) {
             turnSprite.destroy();
+            turnSprite = null;
         }
 
-        spawnTurnText(player);
+        if (!enemiesTurnSprite) {
+            spawnTurnText(player);
+        }
+    }
+};
+
+firstTurnUI = (player) => {
+    if (shotsFired === 0) {
+        if (thisGamesTurn) {
+            if (enemiesTurnSprite) {
+                enemiesTurnSprite.destroy();
+                enemiesTurnSprite = null;
+            }
+
+            if (!turnSprite) {
+                spawnTurnArrow(player);
+            }
+        } else {
+            if (turnSprite) {
+                turnSprite.destroy();
+                turnSprite = null;
+            }
+
+            if (!enemiesTurnSprite) {
+                spawnTurnText(player);
+            }
+        }
     }
 };
 
