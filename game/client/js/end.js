@@ -6,7 +6,7 @@ End.init = function() {
 
 End.preload = function() {
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    game.load.image('background', 'assets/backgrounds/long_scene.png');
+    game.load.image('background', 'assets/long_scene.png');
     game.load.image('game_over', 'assets/game_over.png');
 };
 
